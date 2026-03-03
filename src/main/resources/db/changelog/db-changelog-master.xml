@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<databaseChangeLog
+        xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+        xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+        xsi:schemaLocation="
+        http://www.liquibase.org/xml/ns/dbchangelog
+        http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-latest.xsd">
+    <include file="db/changelog/database/Avatar.xml"/>
+    <include file="db/changelog/database/Employee.xml"/>
+    <include file="db/changelog/database/Exercise.xml"/>
+    <include file="db/changelog/database/Male.xml"/>
+    <include file="db/changelog/database/Inventory.xml"/>
+    <include file="db/changelog/database/Males.xml"/>
+    <include file="db/changelog/database/Items.xml"/>
+    <include file="db/changelog/database/Favourites.xml"/>
+    <include file="db/changelog/data/data-Avatar.xml"/>
+    <include file="db/changelog/data/data-Employee.xml"/>
+    <include file="db/changelog/data/data-Exercise.xml"/>
+    <include file="db/changelog/data/data-Favourites.xml"/>
+    <include file="db/changelog/data/data-Inventory.xml"/>
+    <include file="db/changelog/data/data-Items.xml"/>
+    <include file="db/changelog/data/data-Male.xml"/>
+    <include file="db/changelog/data/data-Males.xml"/>
+</databaseChangeLog>
