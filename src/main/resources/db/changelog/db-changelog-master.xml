@@ -5,20 +5,22 @@
         xsi:schemaLocation="
         http://www.liquibase.org/xml/ns/dbchangelog
         http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-latest.xsd">
-    <include file="db/changelog/database/Avatar.xml"/>
-    <include file="db/changelog/database/Employee.xml"/>
-    <include file="db/changelog/database/Exercise.xml"/>
-    <include file="db/changelog/database/Male.xml"/>
-    <include file="db/changelog/database/Inventory.xml"/>
-    <include file="db/changelog/database/Males.xml"/>
-    <include file="db/changelog/database/Items.xml"/>
-    <include file="db/changelog/database/Favourites.xml"/>
-    <include file="db/changelog/data/data-Avatar.xml"/>
-    <include file="db/changelog/data/data-Employee.xml"/>
-    <include file="db/changelog/data/data-Exercise.xml"/>
-    <include file="db/changelog/data/data-Favourites.xml"/>
-    <include file="db/changelog/data/data-Inventory.xml"/>
-    <include file="db/changelog/data/data-Items.xml"/>
-    <include file="db/changelog/data/data-Male.xml"/>
-    <include file="db/changelog/data/data-Males.xml"/>
+    <include file="db/changelog/database-Avatar/Avatar.xml"/>
+    <include file="db/changelog/database-Employee/Employee.xml"/>
+    <include file="db/changelog/database-Calendar/Calendar.xml"/>
+    <include file="db/changelog/database-Exercise/Exercise.xml"/>
+    <include file="db/changelog/database-Male/Male.xml"/>
+    <include file="db/changelog/database-Inventory/Inventory.xml"/>
+    <include file="db/changelog/database-Males/Males.xml"/>
+    <include file="db/changelog/database-Items/Items.xml"/>
+    <include file="db/changelog/database-Favourites/Favourites.xml"/>
+    <include file="db/changelog/database-Avatar/data-Avatar.xml"/>
+    <include file="db/changelog/database-Employee/data-Employee.xml"/>
+    <include file="db/changelog/database-Calendar/data-Calendar.xml"/>
+    <include file="db/changelog/database-Exercise/data-Exercise.xml"/>
+    <include file="db/changelog/database-Favourites/data-Favourites.xml"/>
+    <include file="db/changelog/database-Inventory/data-Inventory.xml"/>
+    <include file="db/changelog/database-Items/data-Items.xml"/>
+    <include file="db/changelog/database-Male/data-Male.xml"/>
+    <include file="db/changelog/database-Males/data-Males.xml"/>
 </databaseChangeLog>
