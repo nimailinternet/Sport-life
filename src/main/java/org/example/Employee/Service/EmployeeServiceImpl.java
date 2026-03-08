@@ -52,4 +52,10 @@ public class EmployeeServiceImpl implements EmployeeService {
         String token=authClass.createToken(dto.getLogin());
         return new AuthAndCreateEmployeeResponse(token);
     }
+
+    @Override
+    public String InfoExercise_findExpertiseEmployee(String login) {
+        Employee employee=employeeRepository.findByLogin(login).orElseThrow(()->new EmployeeNotFoundException("",HttpStatus.UNAUTHORIZED));
+        return employee.getExpertise();
+    }
 }

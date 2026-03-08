@@ -20,6 +20,7 @@ public class Exercise {
     private String video;
     private String description;
     private String photo;
+    private String expertise;
     @OneToMany(fetch = FetchType.LAZY,cascade = CascadeType.ALL)
     private List<Favourites> favourites=new ArrayList<>();
     @OneToMany(fetch =FetchType.LAZY,cascade = CascadeType.ALL)
@@ -41,5 +42,9 @@ public class Exercise {
 
     public String getDescription() {
         return description;
+    }
+
+    public String getExpertise() {
+        return expertise;
     }
 }

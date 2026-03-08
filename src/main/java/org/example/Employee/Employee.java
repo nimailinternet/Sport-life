@@ -40,4 +40,8 @@ public class Employee {
     public String getPassword() {
         return password;
     }
+
+    public String getExpertise() {
+        return expertise;
+    }
 }

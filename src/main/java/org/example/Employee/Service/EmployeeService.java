@@ -9,5 +9,6 @@ import org.springframework.stereotype.Service;
 public interface EmployeeService {
      AuthAndCreateEmployeeResponse AuthEmployee(AuthEmployeeRequest dto);
      AuthAndCreateEmployeeResponse CreateEmployee(CreateEmployeeRequest dto);
+     String InfoExercise_findExpertiseEmployee(String login);
 
 }

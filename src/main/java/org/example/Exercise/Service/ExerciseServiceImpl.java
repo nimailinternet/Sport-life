@@ -1,6 +1,7 @@
 package org.example.Exercise.Service;
 
 import jakarta.persistence.criteria.CriteriaBuilder;
+import org.example.Employee.Service.EmployeeService;
 import org.example.Exceptions.ExerciseNotFoundException;
 import org.example.Exercise.Exercise;
 import org.example.Exercise.dto.request.InfoExerciseRequest;
@@ -12,6 +13,7 @@ import org.example.Items.Service.ItemsService;
 import org.example.Male.Service.MaleService;
 import org.example.Males.Service.MalesService;
 import org.example.Security.AuthClass;
+import org.example.Security.SecurityFilterException;
 import org.springframework.http.HttpStatus;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Service;
@@ -26,22 +28,25 @@ public class ExerciseServiceImpl implements ExerciseService {
     private final MalesService malesService;
     private  final InventoryService inventoryService;
     private final ItemsService itemsService;
-    public ExerciseServiceImpl(MaleService maleService, MalesService malesService, InventoryRepository inventoryRepository, ItemsRepository itemsRepository, InventoryService inventoryService, ItemsService itemsService, AuthClass authClass) {
+    private  final EmployeeService employeeService;
+    public ExerciseServiceImpl(MaleService maleService, MalesService malesService, InventoryRepository inventoryRepository, ItemsRepository itemsRepository, InventoryService inventoryService, ItemsService itemsService, AuthClass authClass, EmployeeService employeeService) {
         this.maleService = maleService;
         this.malesService = malesService;
         this.inventoryService = inventoryService;
         this.itemsService = itemsService;
+        this.employeeService = employeeService;
     }
 
     @Override
     public InfoExerciseResponse infoExercise(InfoExerciseRequest dto) {
+        String login=SecurityContextHolder.getContext().getAuthentication().getName();
         Set<Exercise> exercisesMale=malesService.infoExercise_FindExercise(maleService.infoExercise_FindMale(dto.getMales()));
         Set<Exercise> exercisesInventory=itemsService.infoExercise_FindExercise(inventoryService.infoExercise_FindInventory(dto.getItems()));
         List<Exercise> exercises=new ArrayList<>();
-        for(Exercise exercise:exercisesMale){
-            if(exercisesInventory.contains(exercise)){
+        for(Exercise exercise:exercisesMale) {
+            if (exercisesInventory.contains(exercise) & exercise.getExpertise().equals(employeeService.InfoExercise_findExpertiseEmployee(login))) {
                 exercises.add(exercise);
-            }else{
+            } else {
                 continue;
             }
         }
