@@ -1,6 +1,7 @@
 package org.example.Employee;
 
 import jakarta.persistence.*;
+import lombok.Builder;
 import lombok.Data;
 import org.example.Avatar.Avatar;
 import org.example.Calendar.Calendar;
@@ -12,6 +13,7 @@ import java.util.List;
 @Entity
 @Data
 @Table(name = "Employee")
+@Builder
 public class Employee {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -23,12 +25,15 @@ public class Employee {
     private Avatar avatar;
     @OneToMany(fetch = FetchType.LAZY,cascade = CascadeType.ALL)
     private List<Favourites> favourites=new ArrayList<>();
-    @JoinColumn(name = "Activity_interest")
-    private Long interest;
-    @JoinColumn(name = "Activity_Visits")
-    private Long visits;
-    @JoinColumn(name = "Activity_employment")
-    private Long employment;
+    private Long activity;
+    private String expertise;
     @OneToMany(fetch = FetchType.LAZY,cascade = CascadeType.ALL)
     private List<Calendar> calendars=new ArrayList<>();
+
+    public Employee(String login, Avatar avatar, String password) {
+    }
+
+    public String getPassword() {
+        return password;
+    }
 }

@@ -1,20 +1,24 @@
 package org.example.Security;
 
 import io.jsonwebtoken.Jwts;
+import io.jsonwebtoken.SignatureAlgorithm;
 import io.jsonwebtoken.security.Keys;
+import org.springframework.beans.factory.annotation.Value;
+import org.springframework.stereotype.Component;
 import org.springframework.stereotype.Service;
 
+import java.util.Base64;
 import java.util.Date;
-@Service
+@Component
 public class AuthClass{
-    private final String SECRET="dfdsfdfsdfsdfdsf";
+    private final String SECRET="dfdsfsdfdsfsdfsdffdgsffdgsfsgfsdf";
     public String createToken(String login){
         return Jwts
                 .builder()
                 .setSubject(login)
                 .setIssuedAt(new Date())
                 .signWith(Keys.hmacShaKeyFor(SECRET.getBytes()))
-                .setExpiration(new Date(System.currentTimeMillis() + 3600000))
+                .setExpiration(new Date(System.currentTimeMillis() + 360000))
                 .claim("ROLE","USER")
                 .compact();
     }

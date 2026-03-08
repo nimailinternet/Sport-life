@@ -1,0 +1,378 @@
+openapi: 3.0.3
+info:
+  title: Sport Life API
+  description: API for Sport Life training application
+  version: 1.0.0
+
+servers:
+  - url: http://localhost:49182
+
+components:
+
+  securitySchemes:
+    BearerAuth:
+      type: http
+      scheme: bearer
+      bearerFormat: JWT
+
+  schemas:
+
+    ErrorResponse:
+      type: object
+      properties:
+        error:
+          type: integer
+          example: 401
+        message:
+          type: string
+          example: Unauthorized
+
+    LoginRequest:
+      type: object
+      properties:
+        login:
+          type: string
+        password:
+          type: string
+
+    RegisterRequest:
+      type: object
+      properties:
+        login:
+          type: string
+        password:
+          type: string
+        Avatar:
+          type: string
+          nullable: true
+
+    ExpertsRequest:
+      type: object
+      properties:
+        experts:
+          type: string
+          example: beginner
+
+    ExerciseSearchRequest:
+      type: object
+      properties:
+        Males:
+          type: array
+          items:
+            type: string
+        Items:
+          type: array
+          items:
+            type: string
+
+    FavouriteRequest:
+      type: object
+      properties:
+        name:
+          type: string
+
+    UpdateEmployeeRequest:
+      type: object
+      properties:
+        login:
+          type: string
+        Avatar:
+          type: string
+
+    CalendarCreateRequest:
+      type: object
+      properties:
+        name:
+          type: string
+          example: Monday
+        time:
+          type: string
+          example: "18:00"
+
+    CalendarDeleteRequest:
+      type: object
+      properties:
+        name:
+          type: string
+        time:
+          type: string
+
+    Muscle:
+      type: object
+      properties:
+        name:
+          type: string
+        photo:
+          type: string
+
+    Item:
+      type: object
+      properties:
+        name:
+          type: string
+        photo:
+          type: string
+
+    Exercise:
+      type: object
+      properties:
+        name:
+          type: string
+        video:
+          type: string
+        description:
+          type: string
+        photo:
+          type: string
+        Males:
+          type: array
+          items:
+            $ref: '#/components/schemas/Muscle'
+        Items:
+          type: array
+          items:
+            $ref: '#/components/schemas/Item'
+
+paths:
+
+  /api/Employee/auth:
+    post:
+      summary: Login employee
+      requestBody:
+        required: true
+        content:
+          application/json:
+            example:
+              login: "user1"
+              password: "12345"
+      responses:
+        "200":
+          description: JWT token
+          content:
+            application/json:
+              example:
+                token: "jwt-token-string"
+        "401":
+          description: Unauthorized
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+
+  /api/Employee/create:
+    post:
+      summary: Register employee
+      requestBody:
+        required: true
+        content:
+          application/json:
+            example:
+              login: "user1"
+              password: "12345"
+              Avatar: "https://img.com/avatar.png"
+      responses:
+        "200":
+          description: JWT token
+          content:
+            application/json:
+              example:
+                token: "jwt-token"
+
+  /api/Employee/experts:
+    patch:
+      summary: Set user experience level
+      security:
+        - BearerAuth: []
+      requestBody:
+        content:
+          application/json:
+            example:
+              experts: "beginner"
+      responses:
+        "200":
+          description: Updated
+
+  /api/Exercise/info:
+    post:
+      summary: Search exercises
+      security:
+        - BearerAuth: []
+      requestBody:
+        content:
+          application/json:
+            example:
+              Males:
+                - chest
+                - triceps
+              Items:
+                - dumbbells
+      responses:
+        "200":
+          description: List of exercises
+          content:
+            application/json:
+              example:
+                Exercise:
+                  - name: Push Up
+                    video: https://youtube.com/video
+                    description: Classic push ups
+                    photo: https://img.com/pushup.png
+                    Males:
+                      - name: chest
+                        photo: https://img.com/chest.png
+                    Items:
+                      - name: bodyweight
+                        photo: https://img.com/bodyweight.png
+
+  /api/Favourites/create:
+    post:
+      summary: Add exercise to favourites
+      security:
+        - BearerAuth: []
+      requestBody:
+        content:
+          application/json:
+            example:
+              name: Push Up
+      responses:
+        "200":
+          description: Added
+
+  /api/Favorites/delete:
+    delete:
+      summary: Remove exercise from favourites
+      security:
+        - BearerAuth: []
+      requestBody:
+        content:
+          application/json:
+            example:
+              name: Push Up
+      responses:
+        "200":
+          description: Deleted
+
+  /api/Employee/info:
+    get:
+      summary: Get employee profile
+      security:
+        - BearerAuth: []
+      responses:
+        "200":
+          description: Employee info
+          content:
+            application/json:
+              example:
+                login: user1
+                Avatar: https://img.com/avatar.png
+                experts: beginner
+                activity: 120
+
+  /api/Employee/update:
+    post:
+      summary: Update profile
+      security:
+        - BearerAuth: []
+      requestBody:
+        content:
+          application/json:
+            example:
+              login: newLogin
+              Avatar: https://img.com/newAvatar.png
+      responses:
+        "200":
+          description: Updated
+
+  /api/Exercise/employee:
+    get:
+      summary: Get user exercise history
+      security:
+        - BearerAuth: []
+      responses:
+        "200":
+          description: Exercise history
+          content:
+            application/json:
+              example:
+                Exercise: []
+
+  /api/Employee/top:
+    get:
+      summary: Get rating leaderboard
+      responses:
+        "200":
+          description: Top users
+          content:
+            application/json:
+              example:
+                top:
+                  - login: user1
+                    result: 120
+                    Avatar: https://img.com/avatar.png
+
+  /api/Calendar/info:
+    get:
+      summary: Get reminders
+      security:
+        - BearerAuth: []
+      responses:
+        "200":
+          description: List reminders
+          content:
+            application/json:
+              example:
+                date:
+                  - "2026-03-01T18:00"
+
+  /api/Calendar/create:
+    post:
+      summary: Create reminder
+      security:
+        - BearerAuth: []
+      requestBody:
+        content:
+          application/json:
+            example:
+              name: Monday
+              time: "18:00"
+      responses:
+        "200":
+          description: Created
+
+  /api/Calendar/delete:
+    delete:
+      summary: Delete reminder
+      security:
+        - BearerAuth: []
+      requestBody:
+        content:
+          application/json:
+            example:
+              name: Monday
+              time: "18:00"
+      responses:
+        "200":
+          description: Deleted
+  /api/Employee/activity:
+    patch:
+      summary: Increase employee activity score
+      description: Adds activity points to the authorized employee
+      security:
+        - BearerAuth: [ ]
+      responses:
+        "200":
+          description: Activity updated successfully
+        "401":
+          description: Unauthorized
+          content:
+            application/json:
+              example:
+                error: 401
+                message: Unauthorized
+        "500":
+          description: Server error
+          content:
+            application/json:
+              example:
+                error: 500
+                message: Internal server error

@@ -19,6 +19,7 @@ public class Exercise {
     private String name;
     private String video;
     private String description;
+    private String photo;
     @OneToMany(fetch = FetchType.LAZY,cascade = CascadeType.ALL)
     private List<Favourites> favourites=new ArrayList<>();
     @OneToMany(fetch =FetchType.LAZY,cascade = CascadeType.ALL)

@@ -21,4 +21,8 @@ public class Avatar {
     private String name;
     @OneToMany(fetch = FetchType.LAZY,cascade = CascadeType.ALL)
     private List<Employee> employee=new ArrayList<>();
+
+    public Long getId() {
+        return id;
+    }
 }

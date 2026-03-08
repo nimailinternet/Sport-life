@@ -16,6 +16,7 @@ public class Inventory {
     private Long id;
     private String name;
     @OneToMany(fetch = FetchType.LAZY,cascade = CascadeType.ALL)
+    private String photo;
     private List<Items> items=new ArrayList<>();
 
 }

@@ -24,13 +24,16 @@ public class SecurityConfig {
     @Autowired
     private JwtFilter jwtFilter;
     @Bean
-    public SecurityFilterChain SecurityConfig(HttpSecurity http,SecurityEntryPoint securityEntryPoint) throws Exception{
+    public SecurityFilterChain SecurityConfig(HttpSecurity http,SecurityEntryPoint securityEntryPoint, SecurityFilterException securityFilterException) throws Exception{
         http.csrf(csrf->csrf.disable())
                 .sessionManagement(ses->ses.sessionCreationPolicy(SessionCreationPolicy.STATELESS))
                 .authorizeHttpRequests(auth->auth
                         .requestMatchers("/swagger-ui/index.html")
                         .permitAll().anyRequest().authenticated())
-                .exceptionHandling(ex->ex.authenticationEntryPoint(securityEntryPoint))
+                .exceptionHandling(
+                        ex->
+                                ex.authenticationEntryPoint(securityEntryPoint)
+                                        .accessDeniedHandler(securityFilterException))
                 .addFilterBefore(jwtFilter, UsernamePasswordAuthenticationFilter.class);
         return http.build();
     }
