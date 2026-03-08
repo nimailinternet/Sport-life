@@ -19,4 +19,8 @@ public class InfoExerciseRequest {
     public List<String> getMales() {
         return males;
     }
+
+    public List<String> getItems() {
+        return items;
+    }
 }

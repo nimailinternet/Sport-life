@@ -16,7 +16,6 @@ spring:
 
 server:
   port: 49182
-  address: 192.168.2.61
   servlet:
     context-path: /api
   error:

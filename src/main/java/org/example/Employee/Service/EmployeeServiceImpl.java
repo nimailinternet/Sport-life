@@ -7,9 +7,9 @@ import org.example.Employee.EmployeeRepository;
 import org.example.Employee.dto.request.AuthEmployeeRequest;
 import org.example.Employee.dto.request.CreateEmployeeRequest;
 import org.example.Employee.dto.response.AuthAndCreateEmployeeResponse;
-import org.example.Exceptions.EmployeeFound;
-import org.example.Exceptions.EmployeeNotFound;
-import org.example.Exceptions.UnauthorizedEmployee;
+import org.example.Exceptions.EmployeeFoundException;
+import org.example.Exceptions.EmployeeNotFoundException;
+import org.example.Exceptions.UnauthorizedEmployeeException;
 import org.example.Security.AuthClass;
 import org.springframework.http.HttpStatus;
 import org.springframework.security.crypto.password.PasswordEncoder;
@@ -32,9 +32,9 @@ public class EmployeeServiceImpl implements EmployeeService {
     public AuthAndCreateEmployeeResponse AuthEmployee(AuthEmployeeRequest dto) {
         Employee employee=employeeRepository
                 .findByLogin(dto.getLogin())
-                .orElseThrow(()->new EmployeeNotFound("",HttpStatus.NOT_FOUND));
+                .orElseThrow(()->new EmployeeNotFoundException("",HttpStatus.NOT_FOUND));
         if(!passwordEncoder.matches(employee.getPassword(),dto.getPassword())){
-            throw new UnauthorizedEmployee("",HttpStatus.UNAUTHORIZED);
+            throw new UnauthorizedEmployeeException("",HttpStatus.UNAUTHORIZED);
         }
         String token=authClass.createToken(dto.getLogin());
         return new AuthAndCreateEmployeeResponse(token);
@@ -43,7 +43,7 @@ public class EmployeeServiceImpl implements EmployeeService {
     @Override
     public AuthAndCreateEmployeeResponse CreateEmployee(CreateEmployeeRequest dto) {
         if(employeeRepository.findByLogin(dto.getLogin()).isPresent()){
-            throw new EmployeeFound("",HttpStatus.CONFLICT);
+            throw new EmployeeFoundException("",HttpStatus.CONFLICT);
         }
         Avatar avatar=avatarService.findAvatar(new FindNameAvatarRequest(dto.getAvatar())).getAvatar();
         String password=passwordEncoder.encode(dto.getPassword());

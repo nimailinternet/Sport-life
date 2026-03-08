@@ -6,11 +6,12 @@ import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
 
 import java.util.List;
+import java.util.Optional;
 import java.util.Set;
 
 @Repository
 public interface MalesRepository extends JpaRepository<Males,Long> {
-    List<Males> findByMale(Male male);
+    Optional<List<Males>> findByMale(Male male);
 
-    Set<Males> findByExercise(Exercise exercise);
+    Optional<List<Males>> findByExercise(Exercise exercise);
 }

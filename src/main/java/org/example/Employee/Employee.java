@@ -1,8 +1,10 @@
 package org.example.Employee;
 
 import jakarta.persistence.*;
+import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
+import lombok.NoArgsConstructor;
 import org.example.Avatar.Avatar;
 import org.example.Calendar.Calendar;
 import org.example.Favourites.Favourites;
@@ -14,6 +16,8 @@ import java.util.List;
 @Data
 @Table(name = "Employee")
 @Builder
+@NoArgsConstructor
+@AllArgsConstructor
 public class Employee {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)

@@ -15,8 +15,8 @@ public class Male {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
     private String name;
-    @OneToMany(fetch = FetchType.LAZY,cascade = CascadeType.ALL)
     private String photo;
+    @OneToMany(fetch = FetchType.LAZY,cascade = CascadeType.ALL)
     private List<Males> males=new ArrayList<>();
 
     public Long getId() {

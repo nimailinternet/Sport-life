@@ -3,10 +3,10 @@ package org.example.Exceptions;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.ResponseStatus;
 
-@ResponseStatus(HttpStatus.UNAUTHORIZED)
-public class UnauthorizedEmployee extends BusinessException {
+@ResponseStatus(HttpStatus.NOT_FOUND)
+public class AvatarNotFoundException extends BusinessException {
     private HttpStatus status;
-    public UnauthorizedEmployee(String message, HttpStatus status) {
+    public AvatarNotFoundException(String message, HttpStatus status) {
         super(message,status);
     }
 }

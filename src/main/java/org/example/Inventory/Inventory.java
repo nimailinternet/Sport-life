@@ -15,8 +15,11 @@ public class Inventory {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
     private String name;
-    @OneToMany(fetch = FetchType.LAZY,cascade = CascadeType.ALL)
     private String photo;
+    @OneToMany(fetch = FetchType.LAZY,cascade = CascadeType.ALL)
     private List<Items> items=new ArrayList<>();
 
+    public String getName() {
+        return name;
+    }
 }

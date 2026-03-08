@@ -4,7 +4,7 @@ import org.example.Avatar.Avatar;
 import org.example.Avatar.AvatarRepository;
 import org.example.Avatar.dto.request.FindNameAvatarRequest;
 import org.example.Avatar.dto.response.FindNameAvatarResponse;
-import org.example.Exceptions.AvatarNotFound;
+import org.example.Exceptions.AvatarNotFoundException;
 import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
 
@@ -19,7 +19,7 @@ public class AvatarServiceImpl implements AvatarService {
     @Override
     public FindNameAvatarResponse findAvatar(FindNameAvatarRequest dto) {
         Avatar avatar=avatarRepository.findByName(dto.getName())
-                .orElseThrow(()->new AvatarNotFound("", HttpStatus.NOT_FOUND));
+                .orElseThrow(()->new AvatarNotFoundException("", HttpStatus.NOT_FOUND));
         return new FindNameAvatarResponse(avatar);
     }
 }

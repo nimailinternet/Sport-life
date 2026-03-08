@@ -18,4 +18,12 @@ public class Items {
     @ManyToOne(fetch = FetchType.LAZY,cascade = CascadeType.ALL)
     @JoinColumn(name = "Exercise_id")
     private Exercise exercise;
+
+    public Exercise getExercise() {
+        return exercise;
+    }
+
+    public Inventory getInventory() {
+        return inventory;
+    }
 }

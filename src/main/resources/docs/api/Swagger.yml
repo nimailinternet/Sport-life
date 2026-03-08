@@ -97,7 +97,7 @@ components:
         time:
           type: string
 
-    Muscle:
+    Males:
       type: object
       properties:
         name:
@@ -132,7 +132,6 @@ components:
           type: array
           items:
             $ref: '#/components/schemas/Item'
-
 paths:
 
   /api/Employee/auth:
@@ -158,6 +157,19 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/ErrorResponse'
+        "404":
+          description: Not_Found
+          content:
+            application/json:
+              shema:
+                $ref: '#/components/schemas/ErrorResponse'
+        "500":
+          description: Server error
+          content:
+            application/json:
+              example:
+                error: 500
+                message: Internal server error
 
   /api/Employee/create:
     post:
@@ -177,6 +189,25 @@ paths:
             application/json:
               example:
                 token: "jwt-token"
+        "409":
+          description: Conflict
+          content:
+            application/json:
+              schema:
+                $res: '#/component/schemas/ErrorResponse'
+        "404":
+          description: Conflict
+          content:
+            application/json:
+              schema:
+                $ref: '#/component/schemas/ErrorResponse'
+        "500":
+          description: Server error
+          content:
+            application/json:
+              example:
+                error: 500
+                message: Internal server error
 
   /api/Employee/experts:
     patch:
@@ -191,6 +222,19 @@ paths:
       responses:
         "200":
           description: Updated
+        "401":
+          description: Unauthorized
+          content:
+            application/json:
+              schema:
+                $ref: '#/component/schemas/ErrorResponse'
+        "500":
+          description: Server error
+          content:
+            application/json:
+              example:
+                error: 500
+                message: Internal server error
 
   /api/Exercise/info:
     post:
@@ -223,6 +267,21 @@ paths:
                     Items:
                       - name: bodyweight
                         photo: https://img.com/bodyweight.png
+        "404":
+          description: Not Found
+          content:
+            application/json:
+              schema:
+                $ref: '#/component/schemas/ErrorResponse'
+        "500":
+          description: Server error
+          content:
+            application/json:
+              example:
+                error: 500
+                message: Internal server error
+
+
 
   /api/Favourites/create:
     post:
@@ -237,6 +296,13 @@ paths:
       responses:
         "200":
           description: Added
+        "500":
+          description: Server error
+          content:
+            application/json:
+              example:
+                error: 500
+                message: Internal server error
 
   /api/Favorites/delete:
     delete:
@@ -251,6 +317,19 @@ paths:
       responses:
         "200":
           description: Deleted
+        "404":
+          description: Not Found
+          content:
+            application/json:
+              schema:
+                $ref: '#/component/schemas/ErrorResponse'
+        "500":
+          description: Server error
+          content:
+            application/json:
+              example:
+                error: 500
+                message: Internal server error
 
   /api/Employee/info:
     get:
@@ -267,6 +346,13 @@ paths:
                 Avatar: https://img.com/avatar.png
                 experts: beginner
                 activity: 120
+        "500":
+          description: Server error
+          content:
+            application/json:
+              example:
+                error: 500
+                message: Internal server error
 
   /api/Employee/update:
     post:
@@ -282,8 +368,21 @@ paths:
       responses:
         "200":
           description: Updated
+        "409":
+          description: Conflict
+          content:
+            application/json:
+              schema:
+                $ref: '#/component/schemas/ErrorResponse'
+        "500":
+          description: Server error
+          content:
+            application/json:
+              example:
+                error: 500
+                message: Internal server error
 
-  /api/Exercise/employee:
+  /api/Favourites/info:
     get:
       summary: Get user exercise history
       security:
@@ -294,7 +393,24 @@ paths:
           content:
             application/json:
               example:
-                Exercise: []
+                Exercise:
+                  - name: Push Up
+                    video: https://youtube.com/video
+                    description: Classic push ups
+                    photo: https://img.com/pushup.png
+                    Males:
+                      - name: chest
+                        photo: https://img.com/chest.png
+                    Items:
+                      - name: bodyweight
+                        photo: https://img.com/bodyweight.png
+        "500":
+          description: Server error
+          content:
+            application/json:
+              example:
+                error: 500
+                message: Internal server error
 
   /api/Employee/top:
     get:
@@ -309,6 +425,13 @@ paths:
                   - login: user1
                     result: 120
                     Avatar: https://img.com/avatar.png
+        "500":
+          description: Server error
+          content:
+            application/json:
+              example:
+                error: 500
+                message: Internal server error
 
   /api/Calendar/info:
     get:
@@ -323,6 +446,13 @@ paths:
               example:
                 date:
                   - "2026-03-01T18:00"
+        "500":
+          description: Server error
+          content:
+            application/json:
+              example:
+                error: 500
+                message: Internal server error
 
   /api/Calendar/create:
     post:
@@ -338,6 +468,20 @@ paths:
       responses:
         "200":
           description: Created
+        "409":
+          description: Conflict
+          content:
+            application/json:
+              schema:
+                $ref: '#/component/schemas/ErrorResponse'
+        "500":
+          description: Server error
+          content:
+            application/json:
+              example:
+                error: 500
+                message: Internal server error
+
 
   /api/Calendar/delete:
     delete:
@@ -353,6 +497,19 @@ paths:
       responses:
         "200":
           description: Deleted
+        "409":
+          description: Conflict
+          content:
+            application/json:
+              schema:
+                $ref: '#/component/schemas/ErrorResponse'
+        "500":
+          description: Server error
+          content:
+            application/json:
+              example:
+                error: 500
+                message: Internal server error
   /api/Employee/activity:
     patch:
       summary: Increase employee activity score

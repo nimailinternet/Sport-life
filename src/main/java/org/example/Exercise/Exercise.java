@@ -26,4 +26,20 @@ public class Exercise {
     private List<Males> males=new ArrayList<>();
     @OneToMany(fetch = FetchType.LAZY,cascade = CascadeType.ALL)
     private List<Items> items=new ArrayList<>();
+
+    public String getName() {
+        return name;
+    }
+
+    public String getVideo() {
+        return video;
+    }
+
+    public String getPhoto() {
+        return photo;
+    }
+
+    public String getDescription() {
+        return description;
+    }
 }

@@ -8,5 +8,5 @@ import java.util.List;
 
 @Service
 public interface ExerciseService {
-    List<InfoExerciseResponse> infoExercise(InfoExerciseRequest dto);
+    InfoExerciseResponse infoExercise(InfoExerciseRequest dto);
 }
