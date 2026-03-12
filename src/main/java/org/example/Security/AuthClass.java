@@ -1,17 +1,14 @@
 package org.example.Security;
 
 import io.jsonwebtoken.Jwts;
-import io.jsonwebtoken.SignatureAlgorithm;
 import io.jsonwebtoken.security.Keys;
-import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Component;
-import org.springframework.stereotype.Service;
 
-import java.util.Base64;
 import java.util.Date;
 @Component
 public class AuthClass{
     private final String SECRET="dfdsfsdfdsfsdfsdffdgsffdgsfsgfsdf";
+
     public String createToken(String login){
         return Jwts
                 .builder()

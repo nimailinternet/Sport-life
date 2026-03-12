@@ -1,10 +1,11 @@
 package org.example.Avatar.Service;
 
-import org.example.Avatar.dto.request.FindNameAvatarRequest;
-import org.example.Avatar.dto.response.FindNameAvatarResponse;
+import org.example.Avatar.Avatar;
 import org.springframework.stereotype.Service;
 
 @Service
 public interface AvatarService {
-    FindNameAvatarResponse findAvatar(FindNameAvatarRequest dto);
+     Avatar CreateEmployee_FindAvatar(String name);
+     String InfoEmployee_FindAvatarName(Avatar avatar);
+
 }

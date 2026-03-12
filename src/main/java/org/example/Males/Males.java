@@ -14,6 +14,7 @@ public class Males {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
+
     @ManyToOne(fetch=FetchType.LAZY,cascade = CascadeType.ALL)
     @JoinColumn(name = "Male_id")
     private Male male;
@@ -23,17 +24,19 @@ public class Males {
 
     public Long getId() {
         return id;
-    }
 
+    }
     public Exercise getExercise() {
         return exercise;
+
+    }
+    public Male getMale() {
+        return male;
+
     }
 
     public void setExercise(Exercise exercise) {
         this.exercise = exercise;
     }
 
-    public Male getMale() {
-        return male;
-    }
 }

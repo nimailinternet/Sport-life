@@ -1,32 +1,33 @@
 package org.example.Employee.dto.request;
 
 import jakarta.validation.constraints.NotBlank;
-import jakarta.validation.constraints.NotNull;
+import jakarta.validation.constraints.Pattern;
+import jakarta.validation.constraints.Size;
 import lombok.Builder;
 import lombok.Data;
-import org.example.Avatar.dto.request.FindNameAvatarRequest;
 
 @Data
 @Builder
 public class CreateEmployeeRequest {
-    @NotNull(message = "")
     @NotBlank(message = "")
+    @Size(min = 3,message = "")
     private String login;
     @NotBlank(message = "")
-    @NotNull(message = "")
+    @Size(min = 8,max = 20,message = "")
     private String password;
-    @NotBlank(message = "")
+    @Pattern(regexp = "^(?!\\s*$).+",message = "")
     private String avatar;
 
     public String getLogin() {
         return login;
-    }
 
+    }
     public String getAvatar() {
         return avatar;
-    }
 
+    }
     public String getPassword() {
         return password;
+
     }
 }

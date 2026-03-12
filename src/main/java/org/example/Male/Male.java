@@ -16,18 +16,18 @@ public class Male {
     private Long id;
     private String name;
     private String photo;
+
     @OneToMany(fetch = FetchType.LAZY,cascade = CascadeType.ALL)
     private List<Males> males=new ArrayList<>();
 
     public Long getId() {
         return id;
+
     }
 
     public String getName() {
         return name;
+
     }
 
-    public String getPhoto() {
-        return photo;
-    }
 }

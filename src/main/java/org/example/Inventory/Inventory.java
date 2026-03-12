@@ -16,10 +16,12 @@ public class Inventory {
     private Long id;
     private String name;
     private String photo;
+
     @OneToMany(fetch = FetchType.LAZY,cascade = CascadeType.ALL)
     private List<Items> items=new ArrayList<>();
 
     public String getName() {
         return name;
+
     }
 }

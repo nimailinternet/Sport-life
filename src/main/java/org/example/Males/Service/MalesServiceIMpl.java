@@ -9,7 +9,6 @@ import org.example.Males.MalesRepository;
 import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
 
-import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
@@ -20,24 +19,34 @@ public class MalesServiceIMpl implements MalesService {
 
     public MalesServiceIMpl(MalesRepository malesRepository) {
         this.malesRepository = malesRepository;
+
     }
 
     @Override
     public Set<Exercise> infoExercise_FindExercise(List<Male> males) {
         Set<Exercise> exercises=new HashSet<>();
+        List<Males> males1;
         for(Male male:males){
-            List<Males> males1 = malesRepository.findByMale(male).orElseThrow(()->new MaleNotFoundException("", HttpStatus.NOT_FOUND));
+            if(malesRepository.findByMale(male).isEmpty()){
+                throw new MaleNotFoundException("",HttpStatus.NOT_FOUND);
+            }else {
+                males1 = malesRepository.findByMale(male);
+            }
             for(Males males2:males1){
                 exercises.add(males2.getExercise());
             }
         }
         return exercises;
     }
-
     @Override
     public Set<Male> infoExercise_FindMale(Exercise exercises) {
         Set<Male> males=new HashSet<>();
-        List<Males> males1=malesRepository.findByExercise(exercises).orElseThrow(()->new MalesNotFoundException("",HttpStatus.NOT_FOUND));
+        List<Males> males1;
+        if(malesRepository.findByExercise(exercises).isEmpty()){
+            throw new MalesNotFoundException("",HttpStatus.NOT_FOUND);
+        }else{
+            males1=malesRepository.findByExercise(exercises);
+        }
         for(Males males2:males1){
             males.add(males2.getMale());
         }

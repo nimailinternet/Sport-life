@@ -7,5 +7,6 @@ public class AuthAndCreateEmployeeResponse {
 
     public AuthAndCreateEmployeeResponse(String token) {
         this.token=token;
+
     }
 }

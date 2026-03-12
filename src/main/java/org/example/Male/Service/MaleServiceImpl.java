@@ -16,6 +16,7 @@ public class MaleServiceImpl implements MaleService {
 
     public MaleServiceImpl(MaleRepository maleRepository) {
         this.maleRepository = maleRepository;
+
     }
 
     @Override

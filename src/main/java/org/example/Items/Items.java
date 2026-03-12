@@ -12,6 +12,7 @@ public class Items {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
+
     @ManyToOne(fetch = FetchType.LAZY,cascade = CascadeType.ALL)
     @JoinColumn(name="Inventory_id")
     private Inventory inventory;
@@ -21,9 +22,10 @@ public class Items {
 
     public Exercise getExercise() {
         return exercise;
-    }
 
+    }
     public Inventory getInventory() {
         return inventory;
+
     }
 }

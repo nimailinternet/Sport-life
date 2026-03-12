@@ -23,7 +23,7 @@
             <column name="photo" type="VARCHAR(255)">
                 <constraints nullable="false" unique="false"/>
             </column>
-            <column name="expertise" type="VARCHAR(20)">
+            <column name="experts" type="VARCHAR(20)">
                 <constraints nullable="false" unique="false"/>
             </column>
         </createTable>

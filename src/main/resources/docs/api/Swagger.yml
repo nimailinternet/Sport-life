@@ -295,7 +295,7 @@ paths:
               name: Push Up
       responses:
         "200":
-          description: Added
+          description: Created
         "500":
           description: Server error
           content:

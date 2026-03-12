@@ -1,9 +1,9 @@
 package org.example.Exercise.Service;
 
-import jakarta.persistence.criteria.CriteriaBuilder;
 import org.example.Employee.Service.EmployeeService;
 import org.example.Exceptions.ExerciseNotFoundException;
 import org.example.Exercise.Exercise;
+import org.example.Exercise.ExerciseRepository;
 import org.example.Exercise.dto.request.InfoExerciseRequest;
 import org.example.Exercise.dto.response.InfoExerciseResponse;
 import org.example.Inventory.InventoryRepository;
@@ -12,10 +12,7 @@ import org.example.Items.ItemsRepository;
 import org.example.Items.Service.ItemsService;
 import org.example.Male.Service.MaleService;
 import org.example.Males.Service.MalesService;
-import org.example.Security.AuthClass;
-import org.example.Security.SecurityFilterException;
 import org.springframework.http.HttpStatus;
-import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
@@ -29,22 +26,32 @@ public class ExerciseServiceImpl implements ExerciseService {
     private  final InventoryService inventoryService;
     private final ItemsService itemsService;
     private  final EmployeeService employeeService;
-    public ExerciseServiceImpl(MaleService maleService, MalesService malesService, InventoryRepository inventoryRepository, ItemsRepository itemsRepository, InventoryService inventoryService, ItemsService itemsService, AuthClass authClass, EmployeeService employeeService) {
+    private final ExerciseRepository exerciseRepository;
+
+    public ExerciseServiceImpl(MaleService maleService, MalesService malesService, InventoryRepository inventoryRepository, ItemsRepository itemsRepository, InventoryService inventoryService, ItemsService itemsService, EmployeeService employeeService, ExerciseRepository exerciseRepository) {
         this.maleService = maleService;
         this.malesService = malesService;
         this.inventoryService = inventoryService;
         this.itemsService = itemsService;
         this.employeeService = employeeService;
+        this.exerciseRepository = exerciseRepository;
     }
 
     @Override
-    public InfoExerciseResponse infoExercise(InfoExerciseRequest dto) {
-        String login=SecurityContextHolder.getContext().getAuthentication().getName();
+    public Exercise createFavourite_findExercise(String name) {
+        return exerciseRepository.findByName(name).orElseThrow(()->new ExerciseNotFoundException("",HttpStatus.NOT_FOUND));
+    }
+    @Override
+    public InfoExerciseResponse.ExerciseObject infoFavourites_FindExerciseObject(Exercise exercise, List<String> males, List<String> items) {
+        return new InfoExerciseResponse.ExerciseObject(exercise.getName(),exercise.getVideo(),exercise.getPhoto(),exercise.getDescription(),males,items);
+    }
+    @Override
+    public InfoExerciseResponse infoExercise(InfoExerciseRequest dto,String login) {
         Set<Exercise> exercisesMale=malesService.infoExercise_FindExercise(maleService.infoExercise_FindMale(dto.getMales()));
         Set<Exercise> exercisesInventory=itemsService.infoExercise_FindExercise(inventoryService.infoExercise_FindInventory(dto.getItems()));
         List<Exercise> exercises=new ArrayList<>();
         for(Exercise exercise:exercisesMale) {
-            if (exercisesInventory.contains(exercise) & exercise.getExpertise().equals(employeeService.InfoExercise_findExpertiseEmployee(login))) {
+            if (exercisesInventory.contains(exercise) & exercise.getExperts().equals(employeeService.infoExercise_findExpertsEmployee(login))) {
                 exercises.add(exercise);
             } else {
                 continue;
