@@ -17,17 +17,4 @@ public class CreateEmployeeRequest {
     private String password;
     @Pattern(regexp = "^(?!\\s*$).+",message = "")
     private String avatar;
-
-    public String getLogin() {
-        return login;
-
-    }
-    public String getAvatar() {
-        return avatar;
-
-    }
-    public String getPassword() {
-        return password;
-
-    }
 }

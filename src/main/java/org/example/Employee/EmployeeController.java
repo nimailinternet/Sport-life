@@ -30,12 +30,6 @@ public class EmployeeController {
         AuthAndCreateEmployeeResponse authAndCreateEmployeeResponse=employeeService.createEmployee(dto);
         return ResponseEntity.ok(authAndCreateEmployeeResponse);
     }
-    @PatchMapping("/experts")
-    public ResponseEntity<?> updateEmployeeExperts(@Valid @RequestBody  UpdateEmployeeExpertiseRequest dto){
-        String login=SecurityContextHolder.getContext().getAuthentication().getName();
-        UpdateEmployeeAndUpdateEmployeeExpertsAndUpdateEmployeeActivityResponse updateEmployeeAndUpdateEmployeeExpertsAndUpdateEmployeeActivityResponse =employeeService.updateEmployeeExpertise(dto,login);
-        return ResponseEntity.ok(updateEmployeeAndUpdateEmployeeExpertsAndUpdateEmployeeActivityResponse);
-    }
 
     @GetMapping("/info")
     public ResponseEntity<?> infoEmployee(){
@@ -60,5 +54,11 @@ public class EmployeeController {
                 new InfoEmployeeAndUpdateEmployeeActivityAndInfoEmployeeTopRequest
                         (SecurityContextHolder.getContext().getAuthentication().getName());
         return ResponseEntity.ok(employeeService.updateEmployeeActivity(result));
+    }
+    @PatchMapping("/experts")
+    public ResponseEntity<?> updateEmployeeExperts(@Valid @RequestBody  UpdateEmployeeExpertiseRequest dto){
+        String login=SecurityContextHolder.getContext().getAuthentication().getName();
+        UpdateEmployeeAndUpdateEmployeeExpertsAndUpdateEmployeeActivityResponse updateEmployeeAndUpdateEmployeeExpertsAndUpdateEmployeeActivityResponse =employeeService.updateEmployeeExpertise(dto,login);
+        return ResponseEntity.ok(updateEmployeeAndUpdateEmployeeExpertsAndUpdateEmployeeActivityResponse);
     }
 }

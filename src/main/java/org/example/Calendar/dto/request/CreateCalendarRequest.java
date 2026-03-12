@@ -18,14 +18,4 @@ public class CreateCalendarRequest {
     @JsonFormat(pattern = "HH:mm")
     @NotNull(message = "")
     private LocalTime time;
-
-
-    public String getName() {
-        return name;
-
-    }
-    public LocalTime getTime() {
-        return time;
-
-    }
 }

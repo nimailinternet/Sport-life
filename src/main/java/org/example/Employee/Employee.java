@@ -2,7 +2,6 @@ package org.example.Employee;
 
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
-import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 import org.example.Avatar.Avatar;
@@ -15,7 +14,6 @@ import java.util.List;
 @Entity
 @Data
 @Table(name = "Employee")
-@Builder
 @NoArgsConstructor
 @AllArgsConstructor
 public class Employee {
@@ -24,11 +22,12 @@ public class Employee {
     private Long id;
     private String login;
     private String password;
+    private Long activity;
+    private String experts;
+
     @ManyToOne(fetch = FetchType.LAZY,cascade = CascadeType.ALL)
     @JoinColumn(name = "Avatar_id")
     private Avatar avatar;
-    private Long activity;
-    private String experts;
 
     @OneToMany(fetch = FetchType.LAZY,cascade = CascadeType.ALL)
     private List<Favourites> favourites=new ArrayList<>();
@@ -36,49 +35,12 @@ public class Employee {
     private List<Calendar> calendars=new ArrayList<>();
 
     public Employee(String login, Avatar avatar, String password) {
-
+        this.login=login;
+        this.avatar=avatar;
+        this.password=password;
     }
     public Employee(String login, String password) {
-
+        this.login=login;
+        this.password=password;
     }
-
-    public String getPassword() {
-
-        return password;
-    }
-    public String getExperts() {
-        return experts;
-
-    }
-    public Long getActivity() {
-        return activity;
-
-    }
-    public Avatar getAvatar() {
-        return avatar;
-
-    }
-    public String getLogin() {
-        return login;
-
-    }
-
-    public void setExperts(String experts) {
-        this.experts = experts;
-
-
-    }
-    public void setLogin(String login) {
-        this.login = login;
-
-    }
-    public void setAvatar(Avatar avatar) {
-        this.avatar = avatar;
-
-    }
-    public void setActivity(Long activity) {
-        this.activity = activity;
-
-    }
-
 }

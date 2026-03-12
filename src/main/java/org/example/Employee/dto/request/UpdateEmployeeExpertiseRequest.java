@@ -9,9 +9,4 @@ import lombok.Data;
 public class UpdateEmployeeExpertiseRequest{
     @NotBlank(message = "")
     private String experts;
-
-    public String getExperts() {
-        return experts;
-
-    }
 }
