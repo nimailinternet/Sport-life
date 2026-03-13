@@ -1,5 +1,6 @@
 package org.example.Males.Service;
 
+import lombok.RequiredArgsConstructor;
 import org.example.Exceptions.MaleNotFoundException;
 import org.example.Exceptions.MalesNotFoundException;
 import org.example.Exercise.Exercise;
@@ -14,13 +15,9 @@ import java.util.List;
 import java.util.Set;
 
 @Service
+@RequiredArgsConstructor
 public class MalesServiceIMpl implements MalesService {
     private final MalesRepository malesRepository;
-
-    public MalesServiceIMpl(MalesRepository malesRepository) {
-        this.malesRepository = malesRepository;
-
-    }
 
     @Override
     public Set<Exercise> infoExercise_FindExercise(List<Male> males) {
@@ -39,7 +36,7 @@ public class MalesServiceIMpl implements MalesService {
         return exercises;
     }
     @Override
-    public Set<Male> infoExercise_FindMale(Exercise exercises) {
+    public Set<Male> infoExerciseAndInfoFavourites_FindMale(Exercise exercises) {
         Set<Male> males=new HashSet<>();
         List<Males> males1;
         if(malesRepository.findByExercise(exercises).isEmpty()){

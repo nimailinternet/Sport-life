@@ -1,16 +1,16 @@
 package org.example.Favourites.Service;
 
-import org.example.Exercise.dto.response.InfoExerciseResponse;
-import org.example.Favourites.dto.request.CreateFavouritesRequest;
-import org.example.Favourites.dto.request.DeleteFavouritesRequest;
-import org.example.Favourites.dto.request.InfoFavouritesRequest;
-import org.example.Favourites.dto.response.CreateFavouritesResponse;
-import org.example.Favourites.dto.response.DeleteFavouritesResponse;
+import jakarta.validation.Valid;
+import org.example.Exercise.dto.response.InfoExerciseAndInfoFavouritesResponse;
+import org.example.Favourites.dto.request.FavouritesCreateAndDeleteAndInfoRequest;
+import org.example.Favourites.dto.response.FavouritesDeleteAndCreateResponse;
 import org.springframework.stereotype.Service;
+import org.springframework.validation.annotation.Validated;
 
 @Service
+@Validated
 public interface FavouritesService {
-    CreateFavouritesResponse createFavourite(CreateFavouritesRequest dto,String login);
-    DeleteFavouritesResponse deleteFavourites(DeleteFavouritesRequest dto,String login);
-    InfoExerciseResponse infoFavourites(InfoFavouritesRequest dto);
+    FavouritesDeleteAndCreateResponse createFavourite(@Valid FavouritesCreateAndDeleteAndInfoRequest dto);
+    FavouritesDeleteAndCreateResponse deleteFavourites(@Valid FavouritesCreateAndDeleteAndInfoRequest dto);
+    InfoExerciseAndInfoFavouritesResponse infoFavourites(@Valid FavouritesCreateAndDeleteAndInfoRequest dto);
 }

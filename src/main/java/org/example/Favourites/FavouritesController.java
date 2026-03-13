@@ -1,28 +1,23 @@
 package org.example.Favourites;
 
 import jakarta.validation.Valid;
-import org.example.Exercise.dto.response.InfoExerciseResponse;
+import lombok.RequiredArgsConstructor;
+import org.example.Exercise.dto.response.InfoExerciseAndInfoFavouritesResponse;
 import org.example.Favourites.Service.FavouritesService;
-import org.example.Favourites.dto.request.CreateFavouritesRequest;
-import org.example.Favourites.dto.request.DeleteFavouritesRequest;
-import org.example.Favourites.dto.request.InfoFavouritesRequest;
-import org.example.Favourites.dto.response.CreateFavouritesResponse;
-import org.example.Favourites.dto.response.DeleteFavouritesResponse;
+import org.example.Favourites.dto.request.FavouritesCreateAndDeleteAndInfoRequest;
+import org.example.Favourites.dto.response.FavouritesDeleteAndCreateResponse;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.web.bind.annotation.*;
 
 @RestController
 @RequestMapping("/Favourites")
+@RequiredArgsConstructor
 public class FavouritesController {
     private final FavouritesService favouritesService;
-    public FavouritesController(FavouritesService favouritesService) {
-        this.favouritesService = favouritesService;
-
-    }
 
     @PostMapping("/create")
-    public ResponseEntity<?> createFavourites(@Valid @RequestBody CreateFavouritesRequest dto){
+    public ResponseEntity<?> createFavourites(@Valid @RequestBody FavouritesCreateAndDeleteAndInfoRequest dto){
         String login=SecurityContextHolder.getContext().getAuthentication().getName();
         CreateFavouritesResponse createFavouritesResponse=favouritesService.createFavourite(dto,login);
         return ResponseEntity.ok(createFavouritesResponse);
@@ -31,14 +26,14 @@ public class FavouritesController {
     @DeleteMapping("/delete")
     public ResponseEntity<?> deleteFavourites(@Valid @RequestBody DeleteFavouritesRequest dto){
         String login=SecurityContextHolder.getContext().getAuthentication().getName();
-        DeleteFavouritesResponse deleteFavouritesResponse=favouritesService.deleteFavourites(dto,login);
-        return  ResponseEntity.ok(deleteFavouritesResponse);
+        FavouritesDeleteAndCreateResponse favouritesDeleteAndCreateResponse =favouritesService.deleteFavourites(dto,login);
+        return  ResponseEntity.ok(favouritesDeleteAndCreateResponse);
     }
 
     @GetMapping("/info")
     public ResponseEntity<?> infoFavourites(){
         InfoFavouritesRequest infoFavouritesRequest=new InfoFavouritesRequest(SecurityContextHolder.getContext().getAuthentication().getName());
-        InfoExerciseResponse infoExerciseResponse= favouritesService.infoFavourites(infoFavouritesRequest);
-        return ResponseEntity.ok(infoExerciseResponse);
+        InfoExerciseAndInfoFavouritesResponse infoExerciseAndInfoFavouritesResponse = favouritesService.infoFavourites(infoFavouritesRequest);
+        return ResponseEntity.ok(infoExerciseAndInfoFavouritesResponse);
     }
 }

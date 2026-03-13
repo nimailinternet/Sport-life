@@ -7,6 +7,6 @@ import lombok.NoArgsConstructor;
 @Data
 @NoArgsConstructor
 @AllArgsConstructor
-public class CreateCalendarResponse {
-    private String create;
+public class DeleteAndCreateCalendarResponse {
+    private String response;
 }

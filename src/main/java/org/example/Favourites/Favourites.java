@@ -16,6 +16,7 @@ public class Favourites {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
+
     @JoinColumn(name = "Exercise_id")
     @ManyToOne(fetch = FetchType.LAZY,cascade = CascadeType.ALL)
     private Exercise exercise;
@@ -24,14 +25,5 @@ public class Favourites {
     private Employee employee;
 
     public Favourites(Exercise exercise, Employee employee) {
-    }
-
-    public Employee getEmployee() {
-        return employee;
-
-    }
-    public Exercise getExercise() {
-        return exercise;
-
     }
 }

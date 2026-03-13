@@ -1,5 +1,6 @@
 package org.example.Inventory.Service;
 
+import lombok.RequiredArgsConstructor;
 import org.example.Exceptions.InventoryNotFoundException;
 import org.example.Inventory.Inventory;
 import org.example.Inventory.InventoryRepository;
@@ -11,12 +12,9 @@ import java.util.List;
 import java.util.Set;
 
 @Service
+@RequiredArgsConstructor
 public class InventoryServiceImpl implements InventoryService {
     private final InventoryRepository inventoryRepository;
-
-    public InventoryServiceImpl(InventoryRepository inventoryRepository) {
-        this.inventoryRepository = inventoryRepository;
-    }
 
     @Override
     public List<Inventory> infoExercise_FindInventory(List<String> names) {
@@ -28,7 +26,7 @@ public class InventoryServiceImpl implements InventoryService {
     }
 
     @Override
-    public List<String> infoExercise_findInventoryName(Set<Inventory> inventories) {
+    public List<String> infoExerciseAndInfoFavourites_findInventoryName(Set<Inventory> inventories) {
         List<String> names=new ArrayList<>();
         for(Inventory inventory:inventories){
             names.add(inventory.getName());

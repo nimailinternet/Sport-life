@@ -1,5 +1,6 @@
 package org.example.Items.Service;
 
+import lombok.RequiredArgsConstructor;
 import org.example.Exceptions.InventoryNotFoundException;
 import org.example.Exceptions.ItemsNotFoundException;
 import org.example.Exercise.Exercise;
@@ -14,13 +15,9 @@ import java.util.List;
 import java.util.Set;
 
 @Service
+@RequiredArgsConstructor
 public class ItemsServiceImpl implements ItemsService {
     private  final ItemsRepository itemsRepository;
-
-    public ItemsServiceImpl(ItemsRepository itemsRepository) {
-        this.itemsRepository = itemsRepository;
-
-    }
 
     @Override
     public Set<Exercise> infoExercise_FindExercise(List<Inventory> inventories) {

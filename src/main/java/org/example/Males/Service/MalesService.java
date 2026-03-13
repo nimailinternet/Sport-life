@@ -10,5 +10,5 @@ import java.util.Set;
 @Service
 public interface MalesService {
     Set<Exercise> infoExercise_FindExercise(List<Male> males);
-    Set<Male> infoExercise_FindMale(Exercise exercises);
+    Set<Male> infoExerciseAndInfoFavourites_FindMale(Exercise exercises);
 }

@@ -2,13 +2,12 @@ package org.example.Calendar.Service;
 
 import jakarta.transaction.Transactional;
 import jakarta.validation.Valid;
+import lombok.RequiredArgsConstructor;
 import org.example.Calendar.Calendar;
 import org.example.Calendar.CalendarRepository;
-import org.example.Calendar.dto.request.CreateCalendarRequest;
-import org.example.Calendar.dto.request.DeleteCalendarRequest;
+import org.example.Calendar.dto.request.DeleteAndCreateCalendarRequest;
 import org.example.Calendar.dto.request.InfoCalendarRequest;
-import org.example.Calendar.dto.response.CreateCalendarResponse;
-import org.example.Calendar.dto.response.DeleteCalendarResponse;
+import org.example.Calendar.dto.response.DeleteAndCreateCalendarResponse;
 import org.example.Calendar.dto.response.InfoCalendarResponse;
 import org.example.Employee.Employee;
 import org.example.Employee.Service.EmployeeService;
@@ -28,18 +27,14 @@ import java.util.Objects;
 
 @Service
 @Validated
+@RequiredArgsConstructor
 public class CalendarServiceImpl implements CalendarService {
     private final CalendarRepository calendarRepository;
     private final EmployeeService employeeService;
-
-    public CalendarServiceImpl(CalendarRepository calendarRepository, EmployeeService employeeService) {
-        this.calendarRepository = calendarRepository;
-        this.employeeService = employeeService;
-    }
-
+    
     @Override
     public InfoCalendarResponse infoCalendar(@Valid InfoCalendarRequest dto) {
-        Employee employee=employeeService.createFavourite_FindEmployee(dto.getLogin());
+        Employee employee=employeeService.FavouritesCreateDeleteInfoAndCalendarInfoDeleteCreate_FindEmployee(dto.getLogin());
         List<Calendar> calendars=calendarRepository.findByEmployee(employee);
         if(calendars.isEmpty()){
             throw new CalendarNotFoundException("", HttpStatus.NOT_FOUND);
@@ -77,11 +72,11 @@ public class CalendarServiceImpl implements CalendarService {
         return infoCalendarResponse;
     }
     @Override
-    public CreateCalendarResponse createCalendar(CreateCalendarRequest dto,String login) {
+    public DeleteAndCreateCalendarResponse createCalendar(@Valid DeleteAndCreateCalendarRequest dto) {
         DayOfWeek day=DayOfWeek.valueOf(dto.getName());
         LocalDate date=LocalDate.now().with(day);
         LocalDateTime dateTime=date.atTime(dto.getTime());
-        Employee employee=employeeService.createFavourite_FindEmployee(login);
+        Employee employee=employeeService.FavouritesCreateDeleteInfoAndCalendarInfoDeleteCreate_FindEmployee(dto.getLogin());
         List<Calendar> calendars=calendarRepository.findByEmployee(employee);
         boolean calendars1=  calendars.stream().anyMatch(c->c.getDate().equals(dateTime));
         if(calendars1){
@@ -89,15 +84,15 @@ public class CalendarServiceImpl implements CalendarService {
         }
         Calendar calendar=new Calendar(dateTime,employee);
         calendarRepository.save(calendar);
-        return new CreateCalendarResponse("Calendar created");
+        return new DeleteAndCreateCalendarResponse("Calendar created");
     }
     @Override
     @Transactional
-    public DeleteCalendarResponse deleteCalendar(DeleteCalendarRequest dto, String login) {
+    public DeleteAndCreateCalendarResponse deleteCalendar(@Valid DeleteAndCreateCalendarRequest dto) {
         DayOfWeek day=DayOfWeek.valueOf(dto.getName());
         LocalDate date=LocalDate.now().with(day);
         LocalDateTime dateTime=date.atTime(dto.getTime());
-        Employee employee=employeeService.createFavourite_FindEmployee(login);
+        Employee employee=employeeService.FavouritesCreateDeleteInfoAndCalendarInfoDeleteCreate_FindEmployee(dto.getLogin());
         List<Calendar> calendars=calendarRepository.findByEmployee(employee);
         Calendar calendar1 = null;
         for(Calendar calendar:calendars){
@@ -112,6 +107,6 @@ public class CalendarServiceImpl implements CalendarService {
             throw new CalendarNotFoundException("",HttpStatus.NOT_FOUND);
         }
         calendarRepository.delete(calendar1);
-        return new DeleteCalendarResponse("Calendar"+dateTime+"deleted");
+        return new DeleteAndCreateCalendarResponse("Calendar"+dateTime+"deleted");
     }
 }

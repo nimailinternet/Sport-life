@@ -9,5 +9,5 @@ import java.util.Set;
 @Service
 public interface InventoryService {
     List<Inventory> infoExercise_FindInventory(List<String> names);
-    List<String> infoExercise_findInventoryName(Set<Inventory> inventories);
+    List<String> infoExerciseAndInfoFavourites_findInventoryName(Set<Inventory> inventories);
 }

@@ -1,15 +1,17 @@
 package org.example.Males;
 
 import jakarta.persistence.*;
-import lombok.Builder;
+import lombok.AllArgsConstructor;
 import lombok.Data;
+import lombok.NoArgsConstructor;
 import org.example.Exercise.Exercise;
 import org.example.Male.Male;
 
 @Entity
 @Data
 @Table(name = "Males")
-@Builder
+@AllArgsConstructor
+@NoArgsConstructor
 public class Males {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -21,22 +23,4 @@ public class Males {
     @ManyToOne(fetch = FetchType.LAZY,cascade = CascadeType.ALL)
     @JoinColumn(name = "Exercise_id")
     private Exercise exercise;
-
-    public Long getId() {
-        return id;
-
-    }
-    public Exercise getExercise() {
-        return exercise;
-
-    }
-    public Male getMale() {
-        return male;
-
-    }
-
-    public void setExercise(Exercise exercise) {
-        this.exercise = exercise;
-    }
-
 }

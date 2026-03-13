@@ -6,6 +6,6 @@ import org.springframework.stereotype.Service;
 @Service
 public interface AvatarService {
      Avatar CreateEmployee_FindAvatar(String name);
-     String InfoEmployee_FindAvatarName(Avatar avatar);
+     String InfoEmployeeAndUpdateEmployee_FindAvatarName(Avatar avatar);
 
 }

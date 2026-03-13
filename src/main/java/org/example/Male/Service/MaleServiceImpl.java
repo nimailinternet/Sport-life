@@ -1,5 +1,6 @@
 package org.example.Male.Service;
 
+import lombok.RequiredArgsConstructor;
 import org.example.Exceptions.MaleNotFoundException;
 import org.example.Male.Male;
 import org.example.Male.MaleRepository;
@@ -11,13 +12,9 @@ import java.util.List;
 import java.util.Set;
 
 @Service
+@RequiredArgsConstructor
 public class MaleServiceImpl implements MaleService {
     private final MaleRepository maleRepository;
-
-    public MaleServiceImpl(MaleRepository maleRepository) {
-        this.maleRepository = maleRepository;
-
-    }
 
     @Override
     public List<Male> infoExercise_FindMale(List<String> males) {
@@ -28,7 +25,7 @@ public class MaleServiceImpl implements MaleService {
         return males1;
     }
     @Override
-    public List<String> infoExercise_FindNameMale(Set<Male> males) {
+    public List<String> infoExerciseAndInfoFavourites_FindNameMale(Set<Male> males) {
         List<String> names=new ArrayList<>();
         for(Male male:males){
             names.add(male.getName());

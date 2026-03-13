@@ -1,12 +1,12 @@
-package org.example.Calendar.dto.response;
+package org.example.Favourites.dto.response;
 
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
 @Data
-@NoArgsConstructor
 @AllArgsConstructor
-public class DeleteCalendarResponse {
+@NoArgsConstructor
+public class FavouritesDeleteAndCreateResponse {
     private String delete;
 }

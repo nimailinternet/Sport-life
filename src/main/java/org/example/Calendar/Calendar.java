@@ -1,6 +1,7 @@
 package org.example.Calendar;
 
 import jakarta.persistence.*;
+import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 import org.example.Employee.Employee;
@@ -11,6 +12,7 @@ import java.time.LocalDateTime;
 @Table(name = "Calendar")
 @Data
 @NoArgsConstructor
+@AllArgsConstructor
 public class Calendar {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
