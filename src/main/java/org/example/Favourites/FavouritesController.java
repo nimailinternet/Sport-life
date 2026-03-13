@@ -4,7 +4,8 @@ import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import org.example.Exercise.dto.response.InfoExerciseAndInfoFavouritesResponse;
 import org.example.Favourites.Service.FavouritesService;
-import org.example.Favourites.dto.request.FavouritesCreateAndDeleteAndInfoRequest;
+import org.example.Favourites.dto.request.FavouritesCreateAndDeleteRequest;
+import org.example.Favourites.dto.request.InfoFavouritesRequest;
 import org.example.Favourites.dto.response.FavouritesDeleteAndCreateResponse;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.context.SecurityContextHolder;
@@ -17,16 +18,18 @@ public class FavouritesController {
     private final FavouritesService favouritesService;
 
     @PostMapping("/create")
-    public ResponseEntity<?> createFavourites(@Valid @RequestBody FavouritesCreateAndDeleteAndInfoRequest dto){
+    public ResponseEntity<?> createFavourites(@Valid @RequestBody FavouritesCreateAndDeleteRequest dto){
         String login=SecurityContextHolder.getContext().getAuthentication().getName();
-        CreateFavouritesResponse createFavouritesResponse=favouritesService.createFavourite(dto,login);
+        dto.setLogin(login);
+        FavouritesDeleteAndCreateResponse createFavouritesResponse=favouritesService.createFavourite(dto);
         return ResponseEntity.ok(createFavouritesResponse);
     }
 
     @DeleteMapping("/delete")
-    public ResponseEntity<?> deleteFavourites(@Valid @RequestBody DeleteFavouritesRequest dto){
+    public ResponseEntity<?> deleteFavourites(@Valid @RequestBody FavouritesCreateAndDeleteRequest dto){
         String login=SecurityContextHolder.getContext().getAuthentication().getName();
-        FavouritesDeleteAndCreateResponse favouritesDeleteAndCreateResponse =favouritesService.deleteFavourites(dto,login);
+        dto.setLogin(login);
+        FavouritesDeleteAndCreateResponse favouritesDeleteAndCreateResponse =favouritesService.deleteFavourites(dto);
         return  ResponseEntity.ok(favouritesDeleteAndCreateResponse);
     }
 

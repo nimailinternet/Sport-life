@@ -12,7 +12,8 @@ import org.example.Exercise.Service.ExerciseService;
 import org.example.Exercise.dto.response.InfoExerciseAndInfoFavouritesResponse;
 import org.example.Favourites.Favourites;
 import org.example.Favourites.FavouritesRepository;
-import org.example.Favourites.dto.request.FavouritesCreateAndDeleteAndInfoRequest;
+import org.example.Favourites.dto.request.FavouritesCreateAndDeleteRequest;
+import org.example.Favourites.dto.request.InfoFavouritesRequest;
 import org.example.Favourites.dto.response.FavouritesDeleteAndCreateResponse;
 import org.example.Inventory.Service.InventoryService;
 import org.example.Items.Service.ItemsService;
@@ -37,7 +38,7 @@ public class FavouritesServiceImpl implements FavouritesService {
     private final FavouritesRepository favouritesRepository;
 
     @Override
-    public FavouritesDeleteAndCreateResponse createFavourite(@Valid  FavouritesCreateAndDeleteAndInfoRequest dto) {
+    public FavouritesDeleteAndCreateResponse createFavourite(@Valid FavouritesCreateAndDeleteRequest dto) {
         Employee employee=employeeService.FavouritesCreateDeleteInfoAndCalendarInfoDeleteCreate_FindEmployee(dto.getLogin());
         Exercise exercise=exerciseService.FavouritesCreateDelete_findExercise(dto.getName());
         if(favouritesRepository.findByExercise(exercise).isEmpty()){
@@ -56,7 +57,7 @@ public class FavouritesServiceImpl implements FavouritesService {
     }
     @Override
     @Transactional
-    public FavouritesDeleteAndCreateResponse deleteFavourites(@Valid FavouritesCreateAndDeleteAndInfoRequest dto) {
+    public FavouritesDeleteAndCreateResponse deleteFavourites(@Valid FavouritesCreateAndDeleteRequest dto) {
         Employee employee=employeeService.FavouritesCreateDeleteInfoAndCalendarInfoDeleteCreate_FindEmployee(dto.getLogin());
         Exercise exercise=exerciseService.FavouritesCreateDelete_findExercise(dto.getName());
         Favourites favourites1 = null;
@@ -78,7 +79,7 @@ public class FavouritesServiceImpl implements FavouritesService {
         return new FavouritesDeleteAndCreateResponse("Deleted");
     }
     @Override
-    public InfoExerciseAndInfoFavouritesResponse infoFavourites(@Valid FavouritesCreateAndDeleteAndInfoRequest dto) {
+    public InfoExerciseAndInfoFavouritesResponse infoFavourites(@Valid InfoFavouritesRequest dto) {
         Employee employee=employeeService.FavouritesCreateDeleteInfoAndCalendarInfoDeleteCreate_FindEmployee(dto.getLogin());
         List<Favourites> favourites=favouritesRepository.findByEmployee(employee);
         if(favourites.isEmpty()){
