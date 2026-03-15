@@ -16,423 +16,167 @@ components:
       bearerFormat: JWT
 
   schemas:
-
-    ErrorResponse:
-      type: object
-      properties:
-        error:
-          type: integer
-          example: 401
-        message:
-          type: string
-          example: Unauthorized
-
-    LoginRequest:
-      type: object
-      properties:
-        login:
-          type: string
-        password:
-          type: string
-
-    RegisterRequest:
-      type: object
-      properties:
-        login:
-          type: string
-        password:
-          type: string
-        Avatar:
-          type: string
-          nullable: true
-
-    ExpertsRequest:
-      type: object
-      properties:
-        experts:
-          type: string
-          example: beginner
-
-    ExerciseSearchRequest:
-      type: object
-      properties:
-        Males:
-          type: array
-          items:
-            type: string
-        Items:
-          type: array
-          items:
-            type: string
-
-    FavouriteRequest:
-      type: object
-      properties:
-        name:
-          type: string
-
-    UpdateEmployeeRequest:
-      type: object
-      properties:
-        login:
-          type: string
-        Avatar:
-          type: string
-
-    CalendarCreateRequest:
-      type: object
-      properties:
-        name:
-          type: string
-          example: Monday
-        time:
-          type: string
-          example: "18:00"
-
-    CalendarDeleteRequest:
-      type: object
-      properties:
-        name:
-          type: string
-        time:
-          type: string
-
-    Males:
-      type: object
-      properties:
-        name:
-          type: string
-        photo:
-          type: string
-
-    Item:
-      type: object
-      properties:
-        name:
-          type: string
-        photo:
-          type: string
-
-    Exercise:
-      type: object
-      properties:
-        name:
-          type: string
-        video:
-          type: string
-        description:
-          type: string
-        photo:
-          type: string
-        Males:
-          type: array
-          items:
-            $ref: '#/components/schemas/Muscle'
-        Items:
-          type: array
-          items:
-            $ref: '#/components/schemas/Item'
+    Response:
+      error:
+        ErrorResponse:
+          type: object
+          properties:
+            error:
+              type: integer
+              example: 401
+            message:
+              type: string
+              example: Unauthorized
+      calendar:
+        InfoCalendarResponse:
+          type: Object
+          properties:
+            monday:
+              type: array
+            tuesday:
+              type: array
+            wednesday:
+              type: array
+            thursday:
+              type: array
+            friday:
+              type: array
+            saturday:
+              type: array
+            sunday:
+              type: array
+        DeleteAndCreateCalendarResponse:
+          type: Object
+          properties:
+            response:
+              type: String
+      employee:
+        AuthAndCreateEmployeeResponse:
+          type: Object
+          properties:
+            token:
+              type: String
+        UpdateAndUpdateActivityAndUpdateExpertsEmployeeResponse:
+          type: Object
+          properties:
+            update:
+              type: String
+              example: Update Completed
+        InfoEmployeeResponse:
+          type: Object
+          properties:
+            login:
+              type: String
+            avatar:
+              type: String
+            experts:
+              type: String
+            activity:
+              type: integer
+        EmployeeTop:
+          type: Object
+          properties:
+            login:
+              type: String
+            activity:
+              type: integer
+              format: int64
+            avatar:
+              type: String
+        InfoTopEmployeeResponse:
+          type: Object
+          properties:
+            top:
+              type: Object
+              items:
+                $ref: '#/component/schemas/Response/EmployeeTop'
+      exercise:
+        ExerciseObject:
+          type: Object
+          properties:
+            name:
+              type: String
+            video:
+              type: String
+            description:
+              type: String
+            photo:
+              type: String
+            males:
+              type: array
+            items:
+              type: array
+        InfoExerciseAndInfoFavouritesResponse:
+          type: Object
+          properties:
+            exercises:
+              type: array
+              items:
+                $ref: '#/component/schemas/Response/ExerciseObject'
+      favourites:
+        CreateAndDeleteFavouritesResponse:
+          type: Object
+          properties:
+            response:
+              type: String
+    Request:
+      calendar:
+        DeleteAndCreateCalendarRequest:
+          type: Object
+          properties:
+            name:
+              type: String
+            time:
+              type: String
+              format: time
+      employee:
+        AuthEmployeeRequest:
+          type: object
+          properties:
+            login:
+              type: string
+            password:
+              type: string
+        CreateEmployeeRequest:
+          type: Object
+          properties:
+            login:
+              type: String
+            password:
+              type: String
+            avatar:
+              type: String
+        UpdateExpertsEmployeeRequest:
+          type: Object
+          properties:
+            experts:
+              type: String
+            login:
+              type: String
+        UpdateEmployeeRequest:
+          type: Object
+          properties:
+            login:
+              type: String
+            avatar:
+              type: String
+      exercise:
+        InfoExerciseRequest:
+          type: Object
+          properties:
+            items:
+              type: array
+            males:
+              type: array
+      favourites:
+        CreateAndDeleteFavouritesRequest:
+          type: Object
+          properties:
+            name:
+              type: String
+            login:
+              type: String
 paths:
-
-  /api/Employee/auth:
-    post:
-      summary: Login employee
-      requestBody:
-        required: true
-        content:
-          application/json:
-            example:
-              login: "user1"
-              password: "12345"
-      responses:
-        "200":
-          description: JWT token
-          content:
-            application/json:
-              example:
-                token: "jwt-token-string"
-        "401":
-          description: Unauthorized
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/ErrorResponse'
-        "404":
-          description: Not_Found
-          content:
-            application/json:
-              shema:
-                $ref: '#/components/schemas/ErrorResponse'
-        "500":
-          description: Server error
-          content:
-            application/json:
-              example:
-                error: 500
-                message: Internal server error
-
-  /api/Employee/create:
-    post:
-      summary: Register employee
-      requestBody:
-        required: true
-        content:
-          application/json:
-            example:
-              login: "user1"
-              password: "12345"
-              Avatar: "https://img.com/avatar.png"
-      responses:
-        "200":
-          description: JWT token
-          content:
-            application/json:
-              example:
-                token: "jwt-token"
-        "409":
-          description: Conflict
-          content:
-            application/json:
-              schema:
-                $res: '#/component/schemas/ErrorResponse'
-        "404":
-          description: Conflict
-          content:
-            application/json:
-              schema:
-                $ref: '#/component/schemas/ErrorResponse'
-        "500":
-          description: Server error
-          content:
-            application/json:
-              example:
-                error: 500
-                message: Internal server error
-
-  /api/Employee/experts:
-    patch:
-      summary: Set user experience level
-      security:
-        - BearerAuth: []
-      requestBody:
-        content:
-          application/json:
-            example:
-              experts: "beginner"
-      responses:
-        "200":
-          description: Updated
-        "401":
-          description: Unauthorized
-          content:
-            application/json:
-              schema:
-                $ref: '#/component/schemas/ErrorResponse'
-        "500":
-          description: Server error
-          content:
-            application/json:
-              example:
-                error: 500
-                message: Internal server error
-
-  /api/Exercise/info:
-    post:
-      summary: Search exercises
-      security:
-        - BearerAuth: []
-      requestBody:
-        content:
-          application/json:
-            example:
-              Males:
-                - chest
-                - triceps
-              Items:
-                - dumbbells
-      responses:
-        "200":
-          description: List of exercises
-          content:
-            application/json:
-              example:
-                Exercise:
-                  - name: Push Up
-                    video: https://youtube.com/video
-                    description: Classic push ups
-                    photo: https://img.com/pushup.png
-                    Males:
-                      - name: chest
-                        photo: https://img.com/chest.png
-                    Items:
-                      - name: bodyweight
-                        photo: https://img.com/bodyweight.png
-        "404":
-          description: Not Found
-          content:
-            application/json:
-              schema:
-                $ref: '#/component/schemas/ErrorResponse'
-        "500":
-          description: Server error
-          content:
-            application/json:
-              example:
-                error: 500
-                message: Internal server error
-
-
-
-  /api/Favourites/create:
-    post:
-      summary: Add exercise to favourites
-      security:
-        - BearerAuth: []
-      requestBody:
-        content:
-          application/json:
-            example:
-              name: Push Up
-      responses:
-        "200":
-          description: Created
-        "500":
-          description: Server error
-          content:
-            application/json:
-              example:
-                error: 500
-                message: Internal server error
-
-  /api/Favorites/delete:
-    delete:
-      summary: Remove exercise from favourites
-      security:
-        - BearerAuth: []
-      requestBody:
-        content:
-          application/json:
-            example:
-              name: Push Up
-      responses:
-        "200":
-          description: Deleted
-        "404":
-          description: Not Found
-          content:
-            application/json:
-              schema:
-                $ref: '#/component/schemas/ErrorResponse'
-        "500":
-          description: Server error
-          content:
-            application/json:
-              example:
-                error: 500
-                message: Internal server error
-
-  /api/Employee/info:
-    get:
-      summary: Get employee profile
-      security:
-        - BearerAuth: []
-      responses:
-        "200":
-          description: Employee info
-          content:
-            application/json:
-              example:
-                login: user1
-                Avatar: https://img.com/avatar.png
-                experts: beginner
-                activity: 120
-        "500":
-          description: Server error
-          content:
-            application/json:
-              example:
-                error: 500
-                message: Internal server error
-
-  /api/Employee/update:
-    post:
-      summary: Update profile
-      security:
-        - BearerAuth: []
-      requestBody:
-        content:
-          application/json:
-            example:
-              login: newLogin
-              Avatar: https://img.com/newAvatar.png
-      responses:
-        "200":
-          description: Updated
-        "409":
-          description: Conflict
-          content:
-            application/json:
-              schema:
-                $ref: '#/component/schemas/ErrorResponse'
-        "500":
-          description: Server error
-          content:
-            application/json:
-              example:
-                error: 500
-                message: Internal server error
-
-  /api/Favourites/info:
-    get:
-      summary: Get user exercise history
-      security:
-        - BearerAuth: []
-      responses:
-        "200":
-          description: Exercise history
-          content:
-            application/json:
-              example:
-                Exercise:
-                  - name: Push Up
-                    video: https://youtube.com/video
-                    description: Classic push ups
-                    photo: https://img.com/pushup.png
-                    Males:
-                      - name: chest
-                        photo: https://img.com/chest.png
-                    Items:
-                      - name: bodyweight
-                        photo: https://img.com/bodyweight.png
-        "500":
-          description: Server error
-          content:
-            application/json:
-              example:
-                error: 500
-                message: Internal server error
-
-  /api/Employee/top:
-    get:
-      summary: Get rating leaderboard
-      responses:
-        "200":
-          description: Top users
-          content:
-            application/json:
-              example:
-                top:
-                  - login: user1
-                    result: 120
-                    Avatar: https://img.com/avatar.png
-        "500":
-          description: Server error
-          content:
-            application/json:
-              example:
-                error: 500
-                message: Internal server error
-
   /api/Calendar/info:
     get:
       summary: Get reminders
@@ -443,17 +187,26 @@ paths:
           description: List reminders
           content:
             application/json:
-              example:
-                date:
-                  - "2026-03-01T18:00"
+              schema:
+                $ref: '#/components/schemas/Response/calendar/InfoCalendarResponse'
+        "404":
+          description: Conflict
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Response/error/ErrorResponse'
+        "401":
+          description: Unauthorized
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Response/error/ErrorResponse'
         "500":
           description: Server error
           content:
             application/json:
-              example:
-                error: 500
-                message: Internal server error
-
+              schema:
+                $ref: '#/components/schemas/Response/error/ErrorResponse'
   /api/Calendar/create:
     post:
       summary: Create reminder
@@ -462,27 +215,33 @@ paths:
       requestBody:
         content:
           application/json:
-            example:
-              name: Monday
-              time: "18:00"
+            schema:
+              $ref: '#/components/schemas/Request/calendar/DeleteAndCreateCalendarRequest'
       responses:
         "200":
           description: Created
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Response/calendar/DeleteAndCreateCalendarResponse'
         "409":
           description: Conflict
           content:
             application/json:
               schema:
-                $ref: '#/component/schemas/ErrorResponse'
+                $ref: '#/components/schemas/Response/error/ErrorResponse'
+        "401":
+          description: Unauthorized
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Response/error/ErrorResponse'
         "500":
           description: Server error
           content:
             application/json:
-              example:
-                error: 500
-                message: Internal server error
-
-
+              schema:
+                $ref: '#/components/schemas/Response/error/ErrorResponse'
   /api/Calendar/delete:
     delete:
       summary: Delete reminder
@@ -491,45 +250,376 @@ paths:
       requestBody:
         content:
           application/json:
-            example:
-              name: Monday
-              time: "18:00"
+            schema:
+              $ref: '#/components/schemas/Request/calendar/DeleteAndCreateCalendarRequest'
       responses:
         "200":
           description: Deleted
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Response/calendar/DeleteAndCreateCalendarResponse'
+        "404":
+          description: Not_Found
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Response/error/ErrorResponse'
+        "401":
+          description: Unauthorized
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Response/error/ErrorResponse'
+        "500":
+          description: Server error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Response/error/ErrorResponse'
+
+  /api/Employee/auth:
+    post:
+      summary: Login employee
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/Request/employee/AuthEmployeeRequest'
+      responses:
+        "200":
+          description: JWT token
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Response/employee/AuthAndCreateEmployeeResponse'
+        "401":
+          description: Unauthorized
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Response/error/ErrorResponse'
+        "404":
+          description: Not_Found
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Response/error/ErrorResponse'
+        "500":
+          description: Server error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Response/error/ErrorResponse'
+  /api/Employee/create:
+    post:
+      summary: Register employee
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/Request/employee/CreateEmployeeRequest'
+      responses:
+        "200":
+          description: JWT token
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Response/employee/AuthAndCreateEmployeeResponse'
         "409":
           description: Conflict
           content:
             application/json:
               schema:
-                $ref: '#/component/schemas/ErrorResponse'
+                $ref: '#/components/schemas/Response/error/ErrorResponse'
+        "404":
+          description: Conflict
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Response/error/ErrorResponse'
         "500":
           description: Server error
           content:
             application/json:
-              example:
-                error: 500
-                message: Internal server error
-  /api/Employee/activity:
+              schema:
+                $ref: '#/components/schemas/Response/error/ErrorResponse'
+  /api/Employee/experts:
     patch:
-      summary: Increase employee activity score
-      description: Adds activity points to the authorized employee
+      summary: Set user experience level
       security:
-        - BearerAuth: [ ]
+        - BearerAuth: []
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/Request/employee/UpdateExpertsEmployeeRequest'
       responses:
         "200":
-          description: Activity updated successfully
+          description: Updated
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Response/employee/UpdateAndUpdateActivityAndUpdateExpertsEmployeeResponse'
         "401":
           description: Unauthorized
           content:
             application/json:
-              example:
-                error: 401
-                message: Unauthorized
+              schema:
+                $ref: '#/components/schemas/Response/error/ErrorResponse'
         "500":
           description: Server error
           content:
             application/json:
-              example:
-                error: 500
-                message: Internal server error
+              schema:
+                $ref: '#/components/schemas/Response/error/ErrorResponse'
+  /api/Employee/update:
+    post:
+      summary: Update profile
+      security:
+        - BearerAuth: []
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/Request/employee/UpdateEmployeeRequest'
+      responses:
+        "200":
+          description: Updated
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Response/employee/UpdateAndUpdateActivityAndUpdateExpertsEmployeeResponse'
+        "404":
+          description: Conflict
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Response/error/ErrorResponse'
+        "500":
+          description: Server error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Response/error/ErrorResponse'
+        "401":
+          description: Unauthorized
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Response/error/ErrorResponse'
+  /api/Employee/info:
+    get:
+      summary: Get employee profile
+      security:
+        - BearerAuth: []
+      responses:
+        "200":
+          description: Employee info
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Response/employee/InfoEmployeeResponse'
+        "500":
+          description: Server error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Response/error/ErrorResponse'
+        "404":
+          description: Not_Found
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Response/error/ErrorResponse'
+        "401":
+          description: Unauthorized
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Response/error/ErrorResponse'
+  /api/Employee/top:
+    get:
+      summary: Get rating leaderboard
+      responses:
+        "200":
+          description: Top users
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Response/employee/InfoTopEmployeeResponse'
+        "500":
+          description: Server error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Response/error/ErrorResponse'
+        "401":
+          description: Unauthorized
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Response/error/ErrorResponse'
+  /api/Employee/activity:
+    patch:
+      summary: Increase employee activity score
+      security:
+        - BearerAuth: []
+      responses:
+        "200":
+          description: Activity updated
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Response/employee/UpdateAndUpdateActivityAndUpdateExpertsEmployeeResponse'
+        "401":
+          description: Unauthorized
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Response/error/ErrorResponse'
+        "500":
+          description: Server error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Response/error/ErrorResponse'
+
+  /api/Exercise/info:
+    post:
+      summary: Search exercises
+      security:
+        - BearerAuth: []
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/Request/exercise/InfoExerciseRequest'
+      responses:
+        "200":
+          description: List of exercises
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Response/exercise/InfoExerciseAndInfoFavouritesResponse'
+        "404":
+          description: Not Found
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Response/error/ErrorResponse'
+        "500":
+          description: Server error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Response/error/ErrorResponse'
+        "401":
+          description: Unauthorized
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Response/error/ErrorResponse'
+
+  /api/Favourites/create:
+    post:
+      summary: Add exercise to favourites
+      security:
+        - BearerAuth: []
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/Request/favourites/CreateAndDeleteFavouritesRequest'
+      responses:
+        "200":
+          description: Created
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Response/favourites/CreateAndDeleteFavouritesResponse'
+        "409":
+          description: Conflict
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Response/error/ErrorResponse'
+        "401":
+          description: Unauthorized
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Response/error/ErrorResponse'
+        "500":
+          description: Server error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Response/error/ErrorResponse'
+  /api/Favorites/delete:
+    delete:
+      summary: Remove exercise from favourites
+      security:
+        - BearerAuth: []
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/Request/favourites/CreateAndDeleteFavouritesRequest'
+      responses:
+        "200":
+          description: Deleted
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Response/favourites/CreateAndDeleteFavouritesResponse'
+        "404":
+          description: Not Found
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Response/error/ErrorResponse'
+        "500":
+          description: Server error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Response/error/ErrorResponse'
+        "401":
+          description: Unauthorized
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Response/error/ErrorResponse'
+  /api/Favourites/info:
+    get:
+      summary: Get user exercise history
+      security:
+        - BearerAuth: []
+      responses:
+        "200":
+          description: Exercise history
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Response/exercise/InfoExerciseAndInfoFavouritesResponse'
+        "500":
+          description: Server error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Response/error/ErrorResponse'
+        "404":
+          description: Not Found
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Response/error/ErrorResponse'
+        "401":
+          description: Unauthorized
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Response/error/ErrorResponse'

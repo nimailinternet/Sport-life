@@ -2,7 +2,7 @@ package org.example.Favourites;
 
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
-import org.example.Exercise.dto.response.InfoExerciseAndInfoFavouritesResponse;
+import org.example.Exercise.dto.response.InfoExerciseAndInfoFavouritesAndFindExerciseObjectResponse;
 import org.example.Favourites.Service.FavouritesService;
 import org.example.Favourites.dto.request.FavouritesCreateAndDeleteRequest;
 import org.example.Favourites.dto.request.InfoFavouritesRequest;
@@ -36,7 +36,7 @@ public class FavouritesController {
     @GetMapping("/info")
     public ResponseEntity<?> infoFavourites(){
         InfoFavouritesRequest infoFavouritesRequest=new InfoFavouritesRequest(SecurityContextHolder.getContext().getAuthentication().getName());
-        InfoExerciseAndInfoFavouritesResponse infoExerciseAndInfoFavouritesResponse = favouritesService.infoFavourites(infoFavouritesRequest);
-        return ResponseEntity.ok(infoExerciseAndInfoFavouritesResponse);
+        InfoExerciseAndInfoFavouritesAndFindExerciseObjectResponse infoExerciseAndInfoFavouritesAndFindExerciseObjectResponse = favouritesService.infoFavourites(infoFavouritesRequest);
+        return ResponseEntity.ok(infoExerciseAndInfoFavouritesAndFindExerciseObjectResponse);
     }
 }

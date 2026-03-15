@@ -9,8 +9,8 @@ import java.util.List;
 @Data
 @NoArgsConstructor
 @AllArgsConstructor
-public class InfoExerciseAndInfoFavouritesResponse {
-    private List<ExerciseObject> exercise;
+public class InfoExerciseAndInfoFavouritesAndFindExerciseObjectResponse {
+    private List<ExerciseObject> exercises;
 
     @Data
     @AllArgsConstructor

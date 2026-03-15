@@ -25,7 +25,6 @@ public class CalendarController {
     public ResponseEntity<?> createCalendar(@Valid @RequestBody DeleteAndCreateCalendarRequest dto){
         String login=SecurityContextHolder.getContext().getAuthentication().getName();
         dto.setLogin(login);
-        calendarService.createCalendar(dto);
         return ResponseEntity.ok(calendarService.createCalendar(dto));
     }
 

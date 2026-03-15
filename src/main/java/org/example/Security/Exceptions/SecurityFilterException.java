@@ -1,4 +1,4 @@
-package org.example.Security;
+package org.example.Security.Exceptions;
 
 import jakarta.servlet.ServletException;
 import jakarta.servlet.http.HttpServletRequest;

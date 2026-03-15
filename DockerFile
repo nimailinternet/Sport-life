@@ -1,0 +1,6 @@
+FROM eclipse-temurin:25-jdk
+WORKDIR /app
+ENV SPRING_PROFILES_ACTIVE=docker
+COPY target/Sport-life-1.0-SNAPSHOT.jar Sport-life.jar
+EXPOSE 49182
+ENTRYPOINT ["java","-jar","app.jar"]

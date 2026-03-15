@@ -12,7 +12,6 @@ import java.util.List;
 public class InfoEmployeeTopResponse {
     private List<EmployeeTop> top;
 
-
     @Data
     @NoArgsConstructor
     @AllArgsConstructor

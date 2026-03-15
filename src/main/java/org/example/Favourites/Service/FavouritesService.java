@@ -1,7 +1,7 @@
 package org.example.Favourites.Service;
 
 import jakarta.validation.Valid;
-import org.example.Exercise.dto.response.InfoExerciseAndInfoFavouritesResponse;
+import org.example.Exercise.dto.response.InfoExerciseAndInfoFavouritesAndFindExerciseObjectResponse;
 import org.example.Favourites.dto.request.FavouritesCreateAndDeleteRequest;
 import org.example.Favourites.dto.request.InfoFavouritesRequest;
 import org.example.Favourites.dto.response.FavouritesDeleteAndCreateResponse;
@@ -13,5 +13,5 @@ import org.springframework.validation.annotation.Validated;
 public interface FavouritesService {
     FavouritesDeleteAndCreateResponse createFavourite(@Valid FavouritesCreateAndDeleteRequest dto);
     FavouritesDeleteAndCreateResponse deleteFavourites(@Valid FavouritesCreateAndDeleteRequest dto);
-    InfoExerciseAndInfoFavouritesResponse infoFavourites(@Valid InfoFavouritesRequest dto);
+    InfoExerciseAndInfoFavouritesAndFindExerciseObjectResponse infoFavourites(@Valid InfoFavouritesRequest dto);
 }

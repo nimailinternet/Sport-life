@@ -1,13 +1,12 @@
 package org.example.Males.Service;
 
 import lombok.RequiredArgsConstructor;
-import org.example.Exceptions.MaleNotFoundException;
-import org.example.Exceptions.MalesNotFoundException;
+import org.example.Male.Exceptions.MaleNotFoundException;
+import org.example.Males.Exceptions.MalesNotFoundException;
 import org.example.Exercise.Exercise;
 import org.example.Male.Male;
 import org.example.Males.Males;
 import org.example.Males.MalesRepository;
-import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
 
 import java.util.HashSet;
@@ -25,7 +24,7 @@ public class MalesServiceIMpl implements MalesService {
         List<Males> males1;
         for(Male male:males){
             if(malesRepository.findByMale(male).isEmpty()){
-                throw new MaleNotFoundException("",HttpStatus.NOT_FOUND);
+                throw new MaleNotFoundException("");
             }else {
                 males1 = malesRepository.findByMale(male);
             }
@@ -40,7 +39,7 @@ public class MalesServiceIMpl implements MalesService {
         Set<Male> males=new HashSet<>();
         List<Males> males1;
         if(malesRepository.findByExercise(exercises).isEmpty()){
-            throw new MalesNotFoundException("",HttpStatus.NOT_FOUND);
+            throw new MalesNotFoundException("");
         }else{
             males1=malesRepository.findByExercise(exercises);
         }

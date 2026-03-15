@@ -8,5 +8,5 @@ import lombok.NoArgsConstructor;
 @AllArgsConstructor
 @NoArgsConstructor
 public class FavouritesDeleteAndCreateResponse {
-    private String delete;
+    private String response;
 }

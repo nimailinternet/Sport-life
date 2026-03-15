@@ -1,13 +1,16 @@
 spring:
+  profiles:
+    active:
+    on_profile: local
   datasource:
     url:  jdbc:h2:mem:testdb;DB_CLOSE_DELAY=-1;DB_CLOSE_ON_EXIT=FALSE
     driver-class-name: org.h2.Driver
     username: Dmitry
-    password: 1345678
+    password: Sport-life--h2
 
   jpa:
     hibernate:
-      ddl-auto: none
+      ddl-auto: update
     show-sql: true
 
   liquibase:

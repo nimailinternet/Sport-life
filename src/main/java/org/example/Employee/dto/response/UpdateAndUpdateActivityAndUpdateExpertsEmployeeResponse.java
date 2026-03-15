@@ -7,7 +7,7 @@ import lombok.NoArgsConstructor;
 @AllArgsConstructor
 @NoArgsConstructor
 @Data
-public class UpdateEmployeeResponse {
+public class UpdateAndUpdateActivityAndUpdateExpertsEmployeeResponse {
     private String update;
 
 }

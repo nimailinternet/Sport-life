@@ -11,8 +11,8 @@ import org.example.Calendar.dto.response.DeleteAndCreateCalendarResponse;
 import org.example.Calendar.dto.response.InfoCalendarResponse;
 import org.example.Employee.Employee;
 import org.example.Employee.Service.EmployeeService;
-import org.example.Exceptions.CalendarFoundException;
-import org.example.Exceptions.CalendarNotFoundException;
+import org.example.Calendar.Exceptions.CalendarFoundException;
+import org.example.Calendar.Exceptions.CalendarNotFoundException;
 import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
 import org.springframework.validation.annotation.Validated;
@@ -37,7 +37,7 @@ public class CalendarServiceImpl implements CalendarService {
         Employee employee=employeeService.FavouritesCreateDeleteInfoAndCalendarInfoDeleteCreate_FindEmployee(dto.getLogin());
         List<Calendar> calendars=calendarRepository.findByEmployee(employee);
         if(calendars.isEmpty()){
-            throw new CalendarNotFoundException("", HttpStatus.NOT_FOUND);
+            throw new CalendarNotFoundException("");
         }
         InfoCalendarResponse infoCalendarResponse=new InfoCalendarResponse();
         for (int i = 1; i <8 ; i++) {
@@ -80,7 +80,7 @@ public class CalendarServiceImpl implements CalendarService {
         List<Calendar> calendars=calendarRepository.findByEmployee(employee);
         boolean calendars1=  calendars.stream().anyMatch(c->c.getDate().equals(dateTime));
         if(calendars1){
-            throw new CalendarFoundException("",HttpStatus.CONFLICT);
+            throw new CalendarFoundException("");
         }
         Calendar calendar=new Calendar(dateTime,employee);
         calendarRepository.save(calendar);
@@ -104,7 +104,7 @@ public class CalendarServiceImpl implements CalendarService {
             }
         }
         if(calendar1==null){
-            throw new CalendarNotFoundException("",HttpStatus.NOT_FOUND);
+            throw new CalendarNotFoundException("");
         }
         calendarRepository.delete(calendar1);
         return new DeleteAndCreateCalendarResponse("Calendar"+dateTime+"deleted");

@@ -4,7 +4,7 @@ import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import org.example.Exercise.Service.ExerciseService;
 import org.example.Exercise.dto.request.InfoExerciseRequest;
-import org.example.Exercise.dto.response.InfoExerciseAndInfoFavouritesResponse;
+import org.example.Exercise.dto.response.InfoExerciseAndInfoFavouritesAndFindExerciseObjectResponse;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -21,7 +21,7 @@ public class ExerciseController {
     @PostMapping("/info")
     public ResponseEntity<?> infoExercise(@Valid @RequestBody  InfoExerciseRequest dto){
         String login= SecurityContextHolder.getContext().getAuthentication().getName();
-        InfoExerciseAndInfoFavouritesResponse infoExerciseAndInfoFavouritesResponse =exerciseService.infoExercise(dto);
-        return ResponseEntity.ok(infoExerciseAndInfoFavouritesResponse);
+        InfoExerciseAndInfoFavouritesAndFindExerciseObjectResponse infoExerciseAndInfoFavouritesAndFindExerciseObjectResponse =exerciseService.infoExercise(dto);
+        return ResponseEntity.ok(infoExerciseAndInfoFavouritesAndFindExerciseObjectResponse);
     }
 }

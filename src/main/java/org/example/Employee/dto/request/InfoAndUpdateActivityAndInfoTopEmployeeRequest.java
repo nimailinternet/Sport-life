@@ -8,7 +8,7 @@ import lombok.NoArgsConstructor;
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
-public class InfoAndUpdateActivityEmployeeRequest {
+public class InfoAndUpdateActivityAndInfoTopEmployeeRequest {
     @NotBlank(message = "")
     private String login;
 }

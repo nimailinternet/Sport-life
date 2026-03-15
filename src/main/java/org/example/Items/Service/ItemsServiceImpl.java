@@ -1,13 +1,12 @@
 package org.example.Items.Service;
 
 import lombok.RequiredArgsConstructor;
-import org.example.Exceptions.InventoryNotFoundException;
-import org.example.Exceptions.ItemsNotFoundException;
+import org.example.Inventory.Exceptions.InventoryNotFoundException;
+import org.example.Items.Exceptions.ItemsNotFoundException;
 import org.example.Exercise.Exercise;
 import org.example.Inventory.Inventory;
 import org.example.Items.Items;
 import org.example.Items.ItemsRepository;
-import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
 
 import java.util.HashSet;
@@ -25,7 +24,7 @@ public class ItemsServiceImpl implements ItemsService {
         List<Items> items;
         for(Inventory inventory:inventories) {
             if (itemsRepository.findByInventory(inventory).isEmpty()) {
-                throw new ItemsNotFoundException("", HttpStatus.NOT_FOUND);
+                throw new ItemsNotFoundException("");
             }else{
                 items = itemsRepository.findByInventory(inventory);
             }
@@ -36,10 +35,10 @@ public class ItemsServiceImpl implements ItemsService {
         return exercises;
     }
     @Override
-    public  Set<Inventory> infoExercise_FindInventory(Exercise exercise) {
+    public  Set<Inventory> infoExerciseAndInfoFavourites_FindInventory(Exercise exercise) {
         List<Items> items;
         if(itemsRepository.findByExercise(exercise).isEmpty()){
-            throw new InventoryNotFoundException("",HttpStatus.NOT_FOUND);
+            throw new InventoryNotFoundException("");
         }else {
             items = itemsRepository.findByExercise(exercise);
         }

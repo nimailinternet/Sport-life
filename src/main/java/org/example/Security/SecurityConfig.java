@@ -1,6 +1,9 @@
 package org.example.Security;
 
+
 import lombok.RequiredArgsConstructor;
+import org.example.Security.Exceptions.SecurityEntryPoint;
+import org.example.Security.Exceptions.SecurityFilterException;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
@@ -15,25 +18,32 @@ import org.springframework.security.web.authentication.UsernamePasswordAuthentic
 @EnableWebSecurity
 @RequiredArgsConstructor
 public class SecurityConfig {
+
     private final JwtFilter jwtFilter;
 
     @Bean
-    public SecurityFilterChain SecurityConfig(HttpSecurity http,SecurityEntryPoint securityEntryPoint, SecurityFilterException securityFilterException) throws Exception{
-        http.csrf(csrf->csrf.disable())
-                .sessionManagement(ses->ses.sessionCreationPolicy(SessionCreationPolicy.STATELESS))
-                .authorizeHttpRequests(auth->auth
-                        .requestMatchers("/swagger-ui/index.html")
-                        .permitAll().anyRequest().authenticated())
-                .exceptionHandling(
-                        ex->
-                                ex.authenticationEntryPoint(securityEntryPoint)
-                                        .accessDeniedHandler(securityFilterException))
+    public SecurityFilterChain securityFilterChain(HttpSecurity http,
+                                                   SecurityEntryPoint securityEntryPoint,
+                                                   SecurityFilterException securityFilterException) throws Exception {
+
+        http.csrf(csrf -> csrf.disable())
+                .sessionManagement(sess -> sess.sessionCreationPolicy(SessionCreationPolicy.STATELESS))
+                .authorizeHttpRequests(auth -> auth
+                        // Публичные URL
+                        .requestMatchers("/swagger-ui/**", "/v3/api-docs/**", "/api/Employee/**").permitAll()
+                        .requestMatchers("/api/**").authenticated()
+                )
+                .exceptionHandling(ex -> ex
+                        .authenticationEntryPoint(securityEntryPoint)
+                        .accessDeniedHandler(securityFilterException)
+                )
                 .addFilterBefore(jwtFilter, UsernamePasswordAuthenticationFilter.class);
+
         return http.build();
     }
-    @Bean
-    public PasswordEncoder passwordEncoder(){
-        return new BCryptPasswordEncoder(11);
 
+    @Bean
+    public PasswordEncoder passwordEncoder() {
+        return new BCryptPasswordEncoder(11);
     }
 }

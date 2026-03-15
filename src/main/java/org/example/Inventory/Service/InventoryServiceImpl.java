@@ -1,10 +1,9 @@
 package org.example.Inventory.Service;
 
 import lombok.RequiredArgsConstructor;
-import org.example.Exceptions.InventoryNotFoundException;
+import org.example.Inventory.Exceptions.InventoryNotFoundException;
 import org.example.Inventory.Inventory;
 import org.example.Inventory.InventoryRepository;
-import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
@@ -20,7 +19,7 @@ public class InventoryServiceImpl implements InventoryService {
     public List<Inventory> infoExercise_FindInventory(List<String> names) {
         List<Inventory> inventories=new ArrayList<>();
         for(String item:names){
-            inventories.add(inventoryRepository.findByName(item).orElseThrow(()->new InventoryNotFoundException("", HttpStatus.NOT_FOUND)));
+            inventories.add(inventoryRepository.findByName(item).orElseThrow(()->new InventoryNotFoundException("")));
         }
         return inventories;
     }

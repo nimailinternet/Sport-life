@@ -1,0 +1,27 @@
+version: "3.8"
+service:
+  postgres:
+    image: postgres:16
+    container_name: Sport-life--postgres
+    restart: always
+    environment:
+      POSTGRES_DB: postgres
+      POSTGRES_USER: Dmitry
+      POSTGRES_PASSWORD: Sport-life--postgres
+    port:
+      - "5432:5432"
+    volumes:
+      - postgres_data:/var/lib/postgresql/data
+  app:
+    build:
+      container_name: Sport-life--app
+      port:
+        - "49182:49182"
+      depends_on:
+        -postgres
+      environment:
+        SPRING_DATASOURCE_URL: jdbc:postgresql://postgres:5432/postgres
+        SPRING_DATASOURCE_USER: Dmitry
+        SPRING_DATASOURCE_PASSWORD: Sport-life--app
+volume:
+  postgres_data:
