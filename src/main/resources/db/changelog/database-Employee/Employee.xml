@@ -1,14 +1,13 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
-<databaseChangeLog
-        xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
-        xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-        xsi:schemaLocation="
-        http://www.liquibase.org/xml/ns/dbchangelog
-        http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-latest.xsd">
+<databaseChangeLog xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+                   xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+                   xmlns:ext="http://www.liquibase.org/xml/ns/dbchangelog-ext"
+                   xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-3.0.xsd
+        http://www.liquibase.org/xml/ns/dbchangelog-ext http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-ext.xsd">
     <changeSet id="2026-03-02-Employee.xml" author="Dmitry">
         <createTable tableName="Employee">
-            <column name="id" type="BIGINT">
+            <column name="id" type="BIGINT" autoIncrement="true">
                 <constraints nullable="false" unique="true" primaryKey="true"/>
             </column>
             <column name="login" type="VARCHAR(100)">
@@ -21,9 +20,9 @@
                 <constraints nullable="true" unique="false"/>
             </column>
             <column name="Avatar_id" type="BIGINT" defaultValue="">
-                <constraints nullable="false" unique="false" references="Avatar(id)" foreignKeyName="fk_Employee_Avtar"/>
+                <constraints nullable="false" unique="false" references="Avatar(id)" foreignKeyName="fk_Avatar_Employee"/>
             </column>
-            <column name="activity" type="BIGINT" defaultValueNumeric="0">
+            <column name="activity" type="BIGINT">
                 <constraints nullable="false" unique="false"/>
             </column>
         </createTable>

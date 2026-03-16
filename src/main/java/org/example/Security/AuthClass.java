@@ -10,7 +10,7 @@ import java.util.Date;
 @Component
 @NoArgsConstructor
 public class AuthClass{
-    private final String SECRET="dfdsfsdfdsfsdfsdffdgsffdgsfsgfsdf";
+    private final String SECRET="my-super-long-secret-key-1234567890!";
 
     public String createToken(String login){
         return Jwts
@@ -24,7 +24,7 @@ public class AuthClass{
     }
     public String getLogin(String token){
         return  Jwts.parserBuilder()
-                .setSigningKey(SECRET)
+                .setSigningKey(Keys.hmacShaKeyFor(SECRET.getBytes()))
                 .build()
                 .parseClaimsJws(token)
                 .getBody()
@@ -33,7 +33,7 @@ public class AuthClass{
     public Boolean authJwt(String token){
         try{
             Jwts.parserBuilder()
-                    .setSigningKey(SECRET)
+                    .setSigningKey(Keys.hmacShaKeyFor(SECRET.getBytes()))
                     .build()
                     .parseClaimsJwt(token);
             return true;

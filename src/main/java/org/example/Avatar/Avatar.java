@@ -20,6 +20,6 @@ public class Avatar {
     private Long id;
     private String name;
 
-    @OneToMany(fetch = FetchType.LAZY,cascade = CascadeType.ALL)
+    @OneToMany(mappedBy = "avatar", fetch = FetchType.LAZY,cascade = CascadeType.ALL)
     private List<Employee> employee=new ArrayList<>();
 }

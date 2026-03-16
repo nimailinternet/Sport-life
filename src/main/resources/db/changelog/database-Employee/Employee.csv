@@ -1,4 +1,4 @@
-login;Avatar_id;password;Activity_employment;Activity_Visits;Activity_interest
-Dmitry;1;12345678;0;0;0
-Andrey;2;45363773783;0;0;0
-Alex;3;ertyui;0;0;0
+login;Avatar_id;password;activity;experts
+Dmitry;1;12345678;0;normal
+Andrey;2;45363773783;0;normal
+Alex;3;ertyui;0;hard

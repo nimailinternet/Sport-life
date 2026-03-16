@@ -29,18 +29,20 @@ public class Employee {
     @JoinColumn(name = "Avatar_id")
     private Avatar avatar;
 
-    @OneToMany(fetch = FetchType.LAZY,cascade = CascadeType.ALL)
+    @OneToMany(mappedBy = "employee", fetch = FetchType.LAZY,cascade = CascadeType.ALL)
     private List<Favourites> favourites=new ArrayList<>();
-    @OneToMany(fetch = FetchType.LAZY,cascade = CascadeType.ALL)
-    private List<Calendar> calendars=new ArrayList<>();
+    @OneToMany(mappedBy = "employee", fetch = FetchType.LAZY,cascade = CascadeType.ALL)
+    private List<Calendar> calendar=new ArrayList<>();
 
-    public Employee(String login, Avatar avatar, String password) {
+    public Employee(String login, Avatar avatar, String password,Long activity) {
         this.login=login;
         this.avatar=avatar;
         this.password=password;
+        this.activity=activity;
     }
-    public Employee(String login, String password) {
+    public Employee(String login, String password,Long activity) {
         this.login=login;
         this.password=password;
+        this.activity=activity;
     }
 }

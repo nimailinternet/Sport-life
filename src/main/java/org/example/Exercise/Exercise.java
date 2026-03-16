@@ -26,10 +26,10 @@ public class Exercise {
     private String photo;
     private String experts;
 
-    @OneToMany(fetch = FetchType.LAZY,cascade = CascadeType.ALL)
+    @OneToMany(mappedBy = "exercise", fetch = FetchType.LAZY,cascade = CascadeType.ALL)
     private List<Favourites> favourites=new ArrayList<>();
-    @OneToMany(fetch =FetchType.LAZY,cascade = CascadeType.ALL)
+    @OneToMany(mappedBy = "exercise", fetch =FetchType.LAZY,cascade = CascadeType.ALL)
     private List<Males> males=new ArrayList<>();
-    @OneToMany(fetch = FetchType.LAZY,cascade = CascadeType.ALL)
+    @OneToMany(mappedBy = "exercise", fetch = FetchType.LAZY,cascade = CascadeType.ALL)
     private List<Items> items=new ArrayList<>();
 }

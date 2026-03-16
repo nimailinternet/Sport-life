@@ -63,10 +63,13 @@ public class EmployeeServiceImpl implements EmployeeService {
         if(dto.getAvatar()!=null){
             Avatar avatar=avatarService.CreateAndUpdateEmployee_FindAvatar(dto.getAvatar());
             String password=passwordEncoder.encode(dto.getPassword());
-             employee=new Employee(dto.getLogin(),avatar,password);
+             employee=new Employee(dto.getLogin(),avatar,password,0L);
         }else{
             String password=passwordEncoder.encode(dto.getPassword());
-            employee=new Employee(dto.getLogin(),password);
+            employee=new Employee(dto.getLogin(),password,0L);
+        }
+        if(dto.getActivity()!=null){
+            employee.setActivity(dto.getActivity());
         }
         employeeRepository.save(employee);
         String token=authClass.createToken(dto.getLogin());

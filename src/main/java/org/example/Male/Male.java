@@ -21,7 +21,7 @@ public class Male {
     private String name;
     private String photo;
 
-    @OneToMany(fetch = FetchType.LAZY,cascade = CascadeType.ALL)
+    @OneToMany(mappedBy = "male", fetch = FetchType.LAZY,cascade = CascadeType.ALL)
     private List<Males> males=new ArrayList<>();
 
 }
