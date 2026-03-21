@@ -9,17 +9,13 @@ import org.example.Favourites.Exceptions.FavouritesFoundExceptions;
 import org.example.Favourites.Exceptions.FavouritesNotFoundException;
 import org.example.Exercise.Exercise;
 import org.example.Exercise.Service.ExerciseService;
-import org.example.Exercise.dto.response.InfoExerciseAndInfoFavouritesAndFindExerciseObjectResponse;
 import org.example.Favourites.Favourites;
 import org.example.Favourites.FavouritesRepository;
-import org.example.Favourites.dto.request.FavouritesCreateAndDeleteRequest;
-import org.example.Favourites.dto.request.InfoFavouritesRequest;
-import org.example.Favourites.dto.response.FavouritesDeleteAndCreateResponse;
+import org.example.Favourites.dto.response.CreateFavouritesResponse;
 import org.example.Inventory.Service.InventoryService;
 import org.example.Items.Service.ItemsService;
 import org.example.Male.Service.MaleService;
 import org.example.Males.Service.MalesService;
-import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
 import org.springframework.validation.annotation.Validated;
 
@@ -38,28 +34,25 @@ public class FavouritesServiceImpl implements FavouritesService {
     private final FavouritesRepository favouritesRepository;
 
     @Override
-    public FavouritesDeleteAndCreateResponse createFavourite(@Valid FavouritesCreateAndDeleteRequest dto) {
-        Employee employee=employeeService.FavouritesCreateDeleteInfoAndCalendarInfoDeleteCreate_FindEmployee(dto.getLogin());
-        Exercise exercise=exerciseService.FavouritesCreateDelete_findExercise(dto.getName());
-        if(favouritesRepository.findByExercise(exercise).isEmpty()){
-            Favourites favourites=new Favourites(exercise,employee);
-            favouritesRepository.save(favourites);
-            return new FavouritesDeleteAndCreateResponse("Update");
+    public String createFavourite(Employee employee, Exercise exercise) {
+        List<Favourites> favourites=favouritesRepository.findByExercise(exercise);
+        if(favourites.isEmpty()){
+            Favourites favourite=new Favourites(exercise,employee);
+            favouritesRepository.save(favourite);
+            return "created";
         }
-        for(Favourites favourites:favouritesRepository.findByExercise(exercise)){
-            if(favourites.getEmployee().equals(employee)){
+        for(Favourites favourite:favourites){
+            if(favourite.getEmployee().equals(employee)){
                 throw new FavouritesFoundExceptions("");
             }
         }
-        Favourites favourites=new Favourites(exercise,employee);
-        favouritesRepository.save(favourites);
-        return new FavouritesDeleteAndCreateResponse("Update");
+        Favourites favourite=new Favourites(exercise,employee);
+        favouritesRepository.save(favourite);
+        return "created";
     }
     @Override
     @Transactional
-    public FavouritesDeleteAndCreateResponse deleteFavourites(@Valid FavouritesCreateAndDeleteRequest dto) {
-        Employee employee=employeeService.FavouritesCreateDeleteInfoAndCalendarInfoDeleteCreate_FindEmployee(dto.getLogin());
-        Exercise exercise=exerciseService.FavouritesCreateDelete_findExercise(dto.getName());
+    public String deleteFavourites(Employee employee,Exercise exercise) {
         Favourites favourites1 = null;
         if(favouritesRepository.findByEmployee(employee).isEmpty()){
             throw new FavouritesNotFoundException("");
@@ -76,25 +69,14 @@ public class FavouritesServiceImpl implements FavouritesService {
             throw new FavouritesNotFoundException("");
         }
         favouritesRepository.delete(favourites1);
-        return new FavouritesDeleteAndCreateResponse("Deleted");
+        return "Deleted";
     }
     @Override
-    public InfoExerciseAndInfoFavouritesAndFindExerciseObjectResponse infoFavourites(@Valid InfoFavouritesRequest dto) {
-        Employee employee=employeeService.FavouritesCreateDeleteInfoAndCalendarInfoDeleteCreate_FindEmployee(dto.getLogin());
-        List<Favourites> favourites=favouritesRepository.findByEmployee(employee);
-        if(favourites.isEmpty()){
+    public List<Favourites> infoFavourites(Employee employee) {
+        List<Favourites> favourites = favouritesRepository.findByEmployee(employee);
+        if (favourites.isEmpty()) {
             throw new FavouritesNotFoundException("");
         }
-        InfoExerciseAndInfoFavouritesAndFindExerciseObjectResponse infoExerciseAndInfoFavouritesAndFindExerciseObjectResponse =new InfoExerciseAndInfoFavouritesAndFindExerciseObjectResponse();
-        List<InfoExerciseAndInfoFavouritesAndFindExerciseObjectResponse.ExerciseObject> exerciseObjects= infoExerciseAndInfoFavouritesAndFindExerciseObjectResponse.getExercises();
-        for(Favourites favourite:favourites){
-            Exercise exercise=favourite.getExercise();
-            List<String> males = maleService.infoExerciseAndInfoFavourites_FindNameMale(malesService.infoExerciseAndInfoFavourites_FindMale(exercise));
-            List<String> items=inventoryService.infoExerciseAndInfoFavourites_findInventoryName(itemsService.infoExerciseAndInfoFavourites_FindInventory(exercise));
-            InfoExerciseAndInfoFavouritesAndFindExerciseObjectResponse.ExerciseObject exerciseObject=exerciseService.infoFavourites_FindExerciseObject(exercise,males,items);
-            exerciseObjects.add(new InfoExerciseAndInfoFavouritesAndFindExerciseObjectResponse.ExerciseObject(exerciseObject.getName(),exerciseObject.getPhoto(),exerciseObject.getVideo(),exerciseObject.getDescription(),males,items));
-        }
-        infoExerciseAndInfoFavouritesAndFindExerciseObjectResponse.setExercises(exerciseObjects);
-        return infoExerciseAndInfoFavouritesAndFindExerciseObjectResponse;
+        return favourites;
     }
 }

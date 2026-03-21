@@ -12,6 +12,4 @@ import lombok.NoArgsConstructor;
 public class UpdateExpertsEmployeeRequest {
     @NotBlank(message = "")
     private String experts;
-    @Pattern(regexp = "^(?!\\s*$).+",message = "")
-    private String login;
 }

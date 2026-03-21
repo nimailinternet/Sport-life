@@ -1,28 +1,27 @@
 package org.example.Employee.Service;
 
-import jakarta.validation.Valid;
+import org.example.Avatar.Avatar;
 import org.example.Employee.Employee;
-import org.example.Employee.dto.request.*;
-import org.example.Employee.dto.response.AuthAndCreateEmployeeResponse;
-import org.example.Employee.dto.response.InfoEmployeeResponse;
-import org.example.Employee.dto.response.InfoEmployeeTopResponse;
-import org.example.Employee.dto.response.UpdateAndUpdateActivityAndUpdateExpertsEmployeeResponse;
 import org.springframework.stereotype.Service;
 import org.springframework.validation.annotation.Validated;
+
+import java.util.List;
+import java.util.Map;
 
 @Service
 @Validated
 public interface EmployeeService {
-     String infoExercise_findExpertsEmployee(String login);
-     Employee FavouritesCreateDeleteInfoAndCalendarInfoDeleteCreate_FindEmployee(String login);
+     String infoExercise_findExpertsEmployee(Employee employee);
+     Employee findEmployee(String login);
+     List<Avatar> findAvatars(List<Employee> employees);
 
-     AuthAndCreateEmployeeResponse authEmployee(AuthEmployeeRequest dto);
-     AuthAndCreateEmployeeResponse createEmployee(CreateEmployeeRequest dto);
-     UpdateAndUpdateActivityAndUpdateExpertsEmployeeResponse updateExpertsEmployee(UpdateExpertsEmployeeRequest dto);
-     InfoEmployeeResponse infoEmployee(@Valid  InfoAndUpdateActivityAndInfoTopEmployeeRequest dto);
-     UpdateAndUpdateActivityAndUpdateExpertsEmployeeResponse updateEmployee(UpdateEmployeeRequest dto);
-     UpdateAndUpdateActivityAndUpdateExpertsEmployeeResponse updateActivityEmployee(@Valid  InfoAndUpdateActivityAndInfoTopEmployeeRequest dto);
-     InfoEmployeeTopResponse infoTopEmployee(@Valid  InfoAndUpdateActivityAndInfoTopEmployeeRequest dto);
+     String authEmployee(String login,String password);
+     String createEmployee(String login,String password,String avatar);
+     String updateExpertsEmployee(String login,String experts);
+     String updateEmployee(String login,String login2,Avatar avatar);
+     String updateActivityEmployee(String login);
+     List<Employee> infoTopEmployee();
+     List<Map<String,Object>> infoTopEmployees(List<Employee> employees,List<String> names);
 
 
 }

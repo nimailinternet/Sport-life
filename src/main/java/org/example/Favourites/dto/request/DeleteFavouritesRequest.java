@@ -1,7 +1,6 @@
 package org.example.Favourites.dto.request;
 
 import jakarta.validation.constraints.NotBlank;
-import jakarta.validation.constraints.Pattern;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
@@ -9,9 +8,7 @@ import lombok.NoArgsConstructor;
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
-public class FavouritesCreateAndDeleteRequest {
+public class DeleteFavouritesRequest {
     @NotBlank(message = "")
     private  String name;
-    @Pattern(regexp = "^(?!\\s*$).+",message = "")
-    private String login;
 }

@@ -13,8 +13,8 @@ public class InfoEmployeeTopResponse {
     private List<EmployeeTop> top;
 
     @Data
-    @NoArgsConstructor
     @AllArgsConstructor
+    @NoArgsConstructor
     public static class EmployeeTop{
         private String login;
         private Long activity;

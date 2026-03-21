@@ -1,19 +1,14 @@
 package org.example.Calendar.Service;
 
 import jakarta.transaction.Transactional;
-import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import org.example.Calendar.Calendar;
 import org.example.Calendar.CalendarRepository;
-import org.example.Calendar.dto.request.DeleteAndCreateCalendarRequest;
-import org.example.Calendar.dto.request.InfoCalendarRequest;
-import org.example.Calendar.dto.response.DeleteAndCreateCalendarResponse;
 import org.example.Calendar.dto.response.InfoCalendarResponse;
 import org.example.Employee.Employee;
 import org.example.Employee.Service.EmployeeService;
 import org.example.Calendar.Exceptions.CalendarFoundException;
 import org.example.Calendar.Exceptions.CalendarNotFoundException;
-import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
 import org.springframework.validation.annotation.Validated;
 
@@ -33,8 +28,7 @@ public class CalendarServiceImpl implements CalendarService {
     private final EmployeeService employeeService;
     
     @Override
-    public InfoCalendarResponse infoCalendar(@Valid InfoCalendarRequest dto) {
-        Employee employee=employeeService.FavouritesCreateDeleteInfoAndCalendarInfoDeleteCreate_FindEmployee(dto.getLogin());
+    public InfoCalendarResponse infoCalendar(Employee employee) {
         List<Calendar> calendars=calendarRepository.findByEmployee(employee);
         if(calendars.isEmpty()){
             throw new CalendarNotFoundException("");
@@ -72,11 +66,10 @@ public class CalendarServiceImpl implements CalendarService {
         return infoCalendarResponse;
     }
     @Override
-    public DeleteAndCreateCalendarResponse createCalendar(@Valid DeleteAndCreateCalendarRequest dto) {
-        DayOfWeek day=DayOfWeek.valueOf(dto.getName());
+    public String createCalendar(LocalTime time, String name, Employee employee) {
+        DayOfWeek day=DayOfWeek.valueOf(name);
         LocalDate date=LocalDate.now().with(day);
-        LocalDateTime dateTime=date.atTime(dto.getTime());
-        Employee employee=employeeService.FavouritesCreateDeleteInfoAndCalendarInfoDeleteCreate_FindEmployee(dto.getLogin());
+        LocalDateTime dateTime=date.atTime(time);
         List<Calendar> calendars=calendarRepository.findByEmployee(employee);
         boolean calendars1=  calendars.stream().anyMatch(c->c.getDate().equals(dateTime));
         if(calendars1){
@@ -84,15 +77,14 @@ public class CalendarServiceImpl implements CalendarService {
         }
         Calendar calendar=new Calendar(dateTime,employee);
         calendarRepository.save(calendar);
-        return new DeleteAndCreateCalendarResponse("Calendar created");
+        return "Calendar created";
     }
     @Override
     @Transactional
-    public DeleteAndCreateCalendarResponse deleteCalendar(@Valid DeleteAndCreateCalendarRequest dto) {
-        DayOfWeek day=DayOfWeek.valueOf(dto.getName());
+    public String deleteCalendar(LocalTime time, String name, Employee employee) {
+        DayOfWeek day=DayOfWeek.valueOf(name);
         LocalDate date=LocalDate.now().with(day);
-        LocalDateTime dateTime=date.atTime(dto.getTime());
-        Employee employee=employeeService.FavouritesCreateDeleteInfoAndCalendarInfoDeleteCreate_FindEmployee(dto.getLogin());
+        LocalDateTime dateTime=date.atTime(time);
         List<Calendar> calendars=calendarRepository.findByEmployee(employee);
         Calendar calendar1 = null;
         for(Calendar calendar:calendars){
@@ -107,6 +99,6 @@ public class CalendarServiceImpl implements CalendarService {
             throw new CalendarNotFoundException("");
         }
         calendarRepository.delete(calendar1);
-        return new DeleteAndCreateCalendarResponse("Calendar"+dateTime+"deleted");
+        return "Calendar "+dateTime+" deleted";
     }
 }

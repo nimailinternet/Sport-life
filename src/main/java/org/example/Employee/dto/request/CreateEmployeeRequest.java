@@ -19,5 +19,4 @@ public class CreateEmployeeRequest {
     private String password;
     @Pattern(regexp = "^(?!\\s*$).+",message = "")
     private String avatar;
-    private Long activity;
 }

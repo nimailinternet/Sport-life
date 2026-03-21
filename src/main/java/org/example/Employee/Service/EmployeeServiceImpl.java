@@ -1,27 +1,22 @@
 package org.example.Employee.Service;
 
-import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import org.example.Avatar.Avatar;
 import org.example.Avatar.Service.AvatarService;
 import org.example.Employee.Employee;
 import org.example.Employee.EmployeeRepository;
-import org.example.Employee.dto.request.*;
-import org.example.Employee.dto.response.AuthAndCreateEmployeeResponse;
-import org.example.Employee.dto.response.InfoEmployeeResponse;
-import org.example.Employee.dto.response.InfoEmployeeTopResponse;
-import org.example.Employee.dto.response.UpdateAndUpdateActivityAndUpdateExpertsEmployeeResponse;
 import org.example.Employee.Exceptions.EmployeeFoundException;
 import org.example.Employee.Exceptions.EmployeeNotFoundException;
 import org.example.Employee.Exceptions.UnauthorizedEmployeeException;
 import org.example.Security.AuthClass;
-import org.springframework.http.HttpStatus;
-import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.validation.annotation.Validated;
 
+import java.util.ArrayList;
+import java.util.LinkedHashMap;
 import java.util.List;
+import java.util.Map;
 
 @Service
 @Validated
@@ -33,107 +28,109 @@ public class EmployeeServiceImpl implements EmployeeService {
     private final AvatarService avatarService;
 
     @Override
-    public String infoExercise_findExpertsEmployee(String login) {
-        Employee employee=employeeRepository.findByLogin(login).orElseThrow(()->new EmployeeNotFoundException(""));
+    public String infoExercise_findExpertsEmployee(Employee employee) {
         return employee.getExperts();
     }
     @Override
-    public Employee FavouritesCreateDeleteInfoAndCalendarInfoDeleteCreate_FindEmployee(String login) {
-        return employeeRepository.findByLogin(login).orElseThrow(()->new EmployeeNotFoundException(""));
+    public Employee findEmployee(String login) {
+        return employeeRepository.findByLogin(login).orElseThrow(()->new EmployeeNotFoundException("dfdfdf"));
+    }
+
+    @Override
+    public List<Avatar> findAvatars(List<Employee> employees) {
+        List<Avatar> avatars=new ArrayList<>();
+        for(Employee employee:employees){
+            avatars.add(employee.getAvatar());
+        };
+        return avatars;
     }
 
 
     @Override
-    public AuthAndCreateEmployeeResponse authEmployee(AuthEmployeeRequest dto) {
+    public String authEmployee(String login, String password) {
         Employee employee=employeeRepository
-                .findByLogin(dto.getLogin())
+                .findByLogin(login)
                 .orElseThrow(()->new EmployeeNotFoundException(""));
-        if(!passwordEncoder.matches(dto.getPassword(),employee.getPassword())){
+        if(!passwordEncoder.matches(password,employee.getPassword())){
             throw new UnauthorizedEmployeeException("");
         }
-        String token=authClass.createToken(dto.getLogin());
-        return new AuthAndCreateEmployeeResponse(token);
+        return authClass.createToken(login);
     }
     @Override
-    public AuthAndCreateEmployeeResponse createEmployee(CreateEmployeeRequest dto) {
-        if(employeeRepository.findByLogin(dto.getLogin()).isPresent()){
+    public String createEmployee(String login, String password, String avatar) {
+        if(employeeRepository.findByLogin(login).isPresent()){
             throw new EmployeeFoundException("");
         }
         Employee employee;
-        if(dto.getAvatar()!=null){
-            Avatar avatar=avatarService.CreateAndUpdateEmployee_FindAvatar(dto.getAvatar());
-            String password=passwordEncoder.encode(dto.getPassword());
-             employee=new Employee(dto.getLogin(),avatar,password,0L);
+        if(avatar!=null){
+            Avatar avatar1=avatarService.findAvatar(avatar);
+            String password1=passwordEncoder.encode(password);
+             employee=new Employee(login,avatar1,password1,0L);
         }else{
-            String password=passwordEncoder.encode(dto.getPassword());
-            employee=new Employee(dto.getLogin(),password,0L);
-        }
-        if(dto.getActivity()!=null){
-            employee.setActivity(dto.getActivity());
+            String password1=passwordEncoder.encode(password);
+            employee=new Employee(login,password1,0L);
         }
         employeeRepository.save(employee);
-        String token=authClass.createToken(dto.getLogin());
-        return new AuthAndCreateEmployeeResponse(token);
+        String token=authClass.createToken(login);
+        return token;
     }
     @Override
-    public UpdateAndUpdateActivityAndUpdateExpertsEmployeeResponse updateExpertsEmployee(UpdateExpertsEmployeeRequest dto) {
-        Employee employee=employeeRepository.findByLogin(dto.getLogin()).orElseThrow(()->new EmployeeNotFoundException(""));
-        employee.setExperts(dto.getExperts());
-        return new UpdateAndUpdateActivityAndUpdateExpertsEmployeeResponse("Update");
-    }
-    @Override
-    public InfoEmployeeResponse infoEmployee(@Valid InfoAndUpdateActivityAndInfoTopEmployeeRequest dto) {
-        Employee employee=employeeRepository.findByLogin(dto.getLogin()).orElseThrow(()->new EmployeeNotFoundException(""));
-        return new InfoEmployeeResponse(dto.getLogin(),
-                avatarService.InfoEmployee_FindAvatarName(employee.getAvatar()),
-                employee.getExperts(),
-                employee.getActivity());
-    }
-    @Override
-    public UpdateAndUpdateActivityAndUpdateExpertsEmployeeResponse updateEmployee(UpdateEmployeeRequest dto) {
-        String login=SecurityContextHolder.getContext().getAuthentication().getName();
+    public String updateExpertsEmployee(String login, String experts) {
         Employee employee=employeeRepository.findByLogin(login).orElseThrow(()->new EmployeeNotFoundException(""));
-        UpdateAndUpdateActivityAndUpdateExpertsEmployeeResponse updateAndUpdateActivityAndUpdateExpertsEmployeeResponse = null;
-        if(!dto.getLogin().isEmpty()){
-            employee.setLogin(dto.getLogin());
-             updateAndUpdateActivityAndUpdateExpertsEmployeeResponse =new UpdateAndUpdateActivityAndUpdateExpertsEmployeeResponse("Update login complete");
-        }
-        if(!dto.getAvatar().isEmpty()){
-            Avatar avatar=avatarService.CreateAndUpdateEmployee_FindAvatar(dto.getAvatar());
-            employee.setAvatar(avatar);
-            updateAndUpdateActivityAndUpdateExpertsEmployeeResponse =new UpdateAndUpdateActivityAndUpdateExpertsEmployeeResponse("Update avatar complete");
-        }
-        if(!dto.getLogin().isEmpty() & !dto.getLogin().isEmpty()){
-             updateAndUpdateActivityAndUpdateExpertsEmployeeResponse =new UpdateAndUpdateActivityAndUpdateExpertsEmployeeResponse("Update login nd avatar complete");
-        }
+        employee.setExperts(experts);
         employeeRepository.save(employee);
-        return updateAndUpdateActivityAndUpdateExpertsEmployeeResponse;
+        return "Update";
     }
     @Override
-    public UpdateAndUpdateActivityAndUpdateExpertsEmployeeResponse updateActivityEmployee(@Valid InfoAndUpdateActivityAndInfoTopEmployeeRequest dto) {
-        Employee employee=employeeRepository.findByLogin(dto.getLogin()).orElseThrow(()->new EmployeeNotFoundException(""));
+    public String updateEmployee(String login, String login2, Avatar avatar) {
+        String s="";
+        Employee employee=employeeRepository.findByLogin(login2).orElseThrow(()->new EmployeeNotFoundException("вававава"));
+        if(login!=null){
+            employee.setLogin(login);
+            String token=authClass.createToken(login);
+            s="login,token="+token;
+        }
+        if(avatar!=null){
+            employee.setAvatar(avatar);
+            s="avatar";
+        }
+        if(login!=null & avatar!=null){
+            employee.setAvatar(avatar);
+            employee.setLogin(login);
+            String token=authClass.createToken(login);
+            s="login and avatar, token="+token;
+        }
+        employeeRepository.save(employee);
+        return "Update "+s+" complete";
+    }
+    @Override
+    public String updateActivityEmployee(String login) {
+        Employee employee=employeeRepository.findByLogin(login).orElseThrow(()->new EmployeeNotFoundException(""));
         Long activity=employee.getActivity()+1;
         employee.setActivity(activity);
         employeeRepository.save(employee);
-        return new UpdateAndUpdateActivityAndUpdateExpertsEmployeeResponse("Update activity complete");
+        return "Update activity complete";
     }
     @Override
-    public InfoEmployeeTopResponse infoTopEmployee(@Valid InfoAndUpdateActivityAndInfoTopEmployeeRequest dto) {
-        Employee employee=employeeRepository.findByLogin(dto.getLogin()).orElseThrow(()->new EmployeeNotFoundException(""));
-        List<Employee> employees=employeeRepository.findAllByOrderByActivityDesc();
-        InfoEmployeeTopResponse infoEmployeeTopResponse=new InfoEmployeeTopResponse();
-        List<InfoEmployeeTopResponse.EmployeeTop> top=infoEmployeeTopResponse.getTop();
-        for (int i = 0; i <10; i++) {
-            if(i>=employees.toArray().length){
-                break;
-            }
-            InfoEmployeeTopResponse.EmployeeTop employeeTop=new InfoEmployeeTopResponse.EmployeeTop();
-            employeeTop.setLogin(employees.get(i).getLogin());
-            employeeTop.setAvatar(employees.get(i).getAvatar().getName());
-            employeeTop.setActivity(employees.get(i).getActivity());
-            top.add(employeeTop);
+    public List<Employee> infoTopEmployee(){
+       return employeeRepository.findAllByOrderByActivityDesc();
+    }
+
+    @Override
+    public List<Map<String, Object>> infoTopEmployees(List<Employee> employees, List<String> names) {
+        List<Map<String,Object>> response=new ArrayList<>();
+        int i=0;
+        for (Employee employee:employees) {
+            Map<String,Object> result=new LinkedHashMap<>();
+            String avatar=names.get(i);
+            System.out.println(avatar);
+            i+=1;
+            result.put("login",employee.getLogin());
+            result.put("activity",employee.getActivity());
+            result.put("avatar",employee.getAvatar().getName());
+            response.add(result);
         }
-        infoEmployeeTopResponse.setTop(top);
-        return infoEmployeeTopResponse;
+        System.out.println(response);
+        return response;
     }
 }

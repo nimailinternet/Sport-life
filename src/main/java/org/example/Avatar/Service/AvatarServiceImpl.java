@@ -4,8 +4,6 @@ import lombok.RequiredArgsConstructor;
 import org.example.Avatar.Avatar;
 import org.example.Avatar.AvatarRepository;
 import org.example.Avatar.Exceptions.AvatarNotFoundException;
-import org.example.Avatar.dto.response.InfoAvatar;
-import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
@@ -17,23 +15,32 @@ public class AvatarServiceImpl implements AvatarService {
     private final AvatarRepository avatarRepository;
 
     @Override
-    public Avatar CreateAndUpdateEmployee_FindAvatar(String name) {
+    public Avatar findAvatar(String name) {
         return avatarRepository.findByName(name)
                 .orElseThrow(()->new AvatarNotFoundException("dfdfdfdfd"));
     }
     @Override
-    public String InfoEmployee_FindAvatarName(Avatar avatar) {
+    public String findAvatarName(Avatar avatar) {
         return avatar.getName();
 
     }
 
     @Override
-    public InfoAvatar infoAvatar() {
+    public List<String> infoAvatar() {
         List<Avatar> avatars=avatarRepository.findAll();
         List<String> names=new ArrayList<>();
         for(Avatar avatar:avatars){
             names.add(avatar.getName());
         }
-        return new InfoAvatar(names);
+        return names;
+    }
+
+    @Override
+    public List<String> findAvatarsNames(List<Avatar> avatars) {
+        List<String> names=new ArrayList<>();
+        for(Avatar avatar:avatars){
+            names.add(avatar.getName());
+        }
+        return names;
     }
 }

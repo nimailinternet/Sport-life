@@ -417,7 +417,7 @@ paths:
         - BearerAuth: []
       responses:
         "200":
-          description: Employee info
+          description: Employee infoFavourites
           content:
             application/json:
               schema:

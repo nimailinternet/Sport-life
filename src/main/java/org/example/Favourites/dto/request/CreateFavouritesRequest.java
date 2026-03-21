@@ -1,16 +1,14 @@
-package org.example.Calendar.dto.request;
+package org.example.Favourites.dto.request;
 
 import jakarta.validation.constraints.NotBlank;
 import lombok.AllArgsConstructor;
-import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
-@Builder
-public class InfoCalendarRequest {
+public class CreateFavouritesRequest {
     @NotBlank(message = "")
-    private String login;
+    private  String name;
 }

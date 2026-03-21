@@ -19,10 +19,12 @@ public class Calendar {
     private Long id;
     private LocalDateTime date;
 
-    @ManyToOne(fetch = FetchType.LAZY,cascade = CascadeType.ALL)
+    @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "Employee_id")
     private Employee employee;
 
-    public Calendar(LocalDateTime dateTime, Employee employee) {
+    public Calendar(LocalDateTime date, Employee employee) {
+        this.date=date;
+        this.employee=employee;
     }
 }

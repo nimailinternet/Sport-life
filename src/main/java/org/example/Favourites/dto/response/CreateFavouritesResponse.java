@@ -7,6 +7,6 @@ import lombok.NoArgsConstructor;
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
-public class FavouritesDeleteAndCreateResponse {
+public class CreateFavouritesResponse {
     private String response;
 }

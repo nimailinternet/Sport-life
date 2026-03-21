@@ -18,12 +18,14 @@ public class Favourites {
     private Long id;
 
     @JoinColumn(name = "Exercise_id")
-    @ManyToOne(fetch = FetchType.LAZY,cascade = CascadeType.ALL)
+    @ManyToOne(fetch = FetchType.LAZY)
     private Exercise exercise;
     @JoinColumn(name = "Employee_id")
-    @ManyToOne(fetch = FetchType.LAZY,cascade = CascadeType.ALL)
+    @ManyToOne(fetch = FetchType.LAZY)
     private Employee employee;
 
     public Favourites(Exercise exercise, Employee employee) {
+        this.exercise=exercise;
+        this.employee=employee;
     }
 }

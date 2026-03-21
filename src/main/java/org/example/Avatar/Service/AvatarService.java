@@ -1,13 +1,16 @@
 package org.example.Avatar.Service;
 
 import org.example.Avatar.Avatar;
-import org.example.Avatar.dto.response.InfoAvatar;
+import org.example.Employee.Employee;
 import org.springframework.stereotype.Service;
+
+import java.util.List;
 
 @Service
 public interface AvatarService {
-     Avatar CreateAndUpdateEmployee_FindAvatar(String name);
-     String InfoEmployee_FindAvatarName(Avatar avatar);
-     InfoAvatar infoAvatar();
+     Avatar findAvatar(String name);
+     String findAvatarName(Avatar avatar);
+     List<String> infoAvatar();
+     List<String> findAvatarsNames(List<Avatar> avatars);
 
 }

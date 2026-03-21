@@ -24,7 +24,7 @@ public class MalesServiceIMpl implements MalesService {
         List<Males> males1;
         for(Male male:males){
             if(malesRepository.findByMale(male).isEmpty()){
-                throw new MaleNotFoundException("");
+                throw new MaleNotFoundException("ererer");
             }else {
                 males1 = malesRepository.findByMale(male);
             }

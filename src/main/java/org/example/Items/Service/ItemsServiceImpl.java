@@ -24,7 +24,7 @@ public class ItemsServiceImpl implements ItemsService {
         List<Items> items;
         for(Inventory inventory:inventories) {
             if (itemsRepository.findByInventory(inventory).isEmpty()) {
-                throw new ItemsNotFoundException("");
+                throw new ItemsNotFoundException("qwqwqwqw");
             }else{
                 items = itemsRepository.findByInventory(inventory);
             }
@@ -35,7 +35,7 @@ public class ItemsServiceImpl implements ItemsService {
         return exercises;
     }
     @Override
-    public  Set<Inventory> infoExerciseAndInfoFavourites_FindInventory(Exercise exercise) {
+    public  Set<Inventory> FindInventory(Exercise exercise) {
         List<Items> items;
         if(itemsRepository.findByExercise(exercise).isEmpty()){
             throw new InventoryNotFoundException("");
