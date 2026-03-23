@@ -79,26 +79,25 @@ public class EmployeeServiceImpl implements EmployeeService {
         Employee employee=employeeRepository.findByLogin(login).orElseThrow(()->new EmployeeNotFoundException(""));
         employee.setExperts(experts);
         employeeRepository.save(employee);
-        return "Update";
+        return "Update experts complete";
     }
     @Override
     public String updateEmployee(String login, String login2, Avatar avatar) {
         String s="";
         Employee employee=employeeRepository.findByLogin(login2).orElseThrow(()->new EmployeeNotFoundException("вававава"));
         if(login!=null){
+            if(employeeRepository.findByLogin(login).isPresent()){
+                throw new EmployeeFoundException("");
+            }
             employee.setLogin(login);
-            String token=authClass.createToken(login);
-            s="login,token="+token;
+            s="login";
         }
         if(avatar!=null){
             employee.setAvatar(avatar);
             s="avatar";
         }
         if(login!=null & avatar!=null){
-            employee.setAvatar(avatar);
-            employee.setLogin(login);
-            String token=authClass.createToken(login);
-            s="login and avatar, token="+token;
+            s="login and avatar";
         }
         employeeRepository.save(employee);
         return "Update "+s+" complete";
@@ -114,8 +113,8 @@ public class EmployeeServiceImpl implements EmployeeService {
     @Override
     public List<Employee> infoTopEmployee(){
        return employeeRepository.findAllByOrderByActivityDesc();
-    }
 
+    }
     @Override
     public List<Map<String, Object>> infoTopEmployees(List<Employee> employees, List<String> names) {
         List<Map<String,Object>> response=new ArrayList<>();

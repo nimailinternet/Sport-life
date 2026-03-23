@@ -7,4 +7,5 @@ import lombok.Data;
 @Data
 public class UpdateEmployeeResponse {
     private String update;
+    private String token;
 }

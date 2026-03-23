@@ -4,11 +4,11 @@ import io.jsonwebtoken.Jwts;
 import io.jsonwebtoken.security.Keys;
 import lombok.NoArgsConstructor;
 import org.springframework.stereotype.Component;
+import org.springframework.stereotype.Service;
 
 import java.util.Date;
 
-@Component
-@NoArgsConstructor
+@Service
 public class AuthClass{
     private final String SECRET="my-super-long-secret-key-1234567890!";
 
