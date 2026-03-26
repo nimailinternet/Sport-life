@@ -19,7 +19,7 @@ public class ItemsServiceImpl implements ItemsService {
     private  final ItemsRepository itemsRepository;
 
     @Override
-    public Set<Exercise> infoExercise_FindExercise(List<Inventory> inventories) {
+    public Set<Exercise> FindExercises(List<Inventory> inventories) {
         Set<Exercise> exercises=new HashSet<>();
         List<Items> items;
         for(Inventory inventory:inventories) {
@@ -35,7 +35,7 @@ public class ItemsServiceImpl implements ItemsService {
         return exercises;
     }
     @Override
-    public  Set<Inventory> FindInventory(Exercise exercise) {
+    public  Set<Inventory> FindInventorys(Exercise exercise) {
         List<Items> items;
         if(itemsRepository.findByExercise(exercise).isEmpty()){
             throw new InventoryNotFoundException("");

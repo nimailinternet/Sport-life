@@ -8,9 +8,9 @@
     <include file="db/changelog/database-Employee/Employee.xml"/>
     <include file="db/changelog/database-Calendar/Calendar.xml"/>
     <include file="db/changelog/database-Exercise/Exercise.xml"/>
-    <include file="db/changelog/database-Male/Male.xml"/>
+    <include file="db/changelog/database-Muscle/Muscle.xml"/>
     <include file="db/changelog/database-Inventory/Inventory.xml"/>
-    <include file="db/changelog/database-Males/Males.xml"/>
+    <include file="db/changelog/database-Agonists/Agonists.xml"/>
     <include file="db/changelog/database-Items/Items.xml"/>
     <include file="db/changelog/database-Favourites/Favourites.xml"/>
     <include file="db/changelog/database-Avatar/data-Avatar.xml"/>
@@ -20,6 +20,6 @@
     <include file="db/changelog/database-Favourites/data-Favourites.xml"/>
     <include file="db/changelog/database-Inventory/data-Inventory.xml"/>
     <include file="db/changelog/database-Items/data-Items.xml"/>
-    <include file="db/changelog/database-Male/data-Male.xml"/>
-    <include file="db/changelog/database-Males/data-Males.xml"/>
+    <include file="db/changelog/database-Muscle/data-Muscle.xml"/>
+    <include file="db/changelog/database-Agonists/data-Agonists.xml"/>
 </databaseChangeLog>

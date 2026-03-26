@@ -19,7 +19,7 @@ public class InventoryServiceImpl implements InventoryService {
     private final InventoryRepository inventoryRepository;
 
     @Override
-    public List<Inventory> FindInventory(List<String> names) {
+    public List<Inventory> findInventorys(List<String> names) {
         List<Inventory> inventories=new ArrayList<>();
         for(String item:names){
             inventories.add(inventoryRepository.findByName(item).orElseThrow(()->new InventoryNotFoundException("xcxcxc")));
@@ -28,7 +28,7 @@ public class InventoryServiceImpl implements InventoryService {
     }
 
     @Override
-    public List<String> findInventoryName(Set<Inventory> inventories) {
+    public List<String> findInventorysNames(Set<Inventory> inventories) {
         List<String> names=new ArrayList<>();
         for(Inventory inventory:inventories){
             names.add(inventory.getName());

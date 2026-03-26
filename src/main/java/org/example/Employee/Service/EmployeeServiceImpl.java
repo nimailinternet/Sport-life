@@ -28,7 +28,7 @@ public class EmployeeServiceImpl implements EmployeeService {
     private final AvatarService avatarService;
 
     @Override
-    public String infoExercise_findExpertsEmployee(Employee employee) {
+    public String findEmployeeExpert(Employee employee) {
         return employee.getExperts();
     }
     @Override
@@ -57,15 +57,14 @@ public class EmployeeServiceImpl implements EmployeeService {
         return authClass.createToken(login);
     }
     @Override
-    public String createEmployee(String login, String password, String avatar) {
+    public String createEmployee(String login, String password, Avatar avatar) {
         if(employeeRepository.findByLogin(login).isPresent()){
             throw new EmployeeFoundException("");
         }
         Employee employee;
         if(avatar!=null){
-            Avatar avatar1=avatarService.findAvatar(avatar);
             String password1=passwordEncoder.encode(password);
-             employee=new Employee(login,avatar1,password1,0L);
+             employee=new Employee(login,avatar,password1,0L);
         }else{
             String password1=passwordEncoder.encode(password);
             employee=new Employee(login,password1,0L);
@@ -75,7 +74,7 @@ public class EmployeeServiceImpl implements EmployeeService {
         return token;
     }
     @Override
-    public String updateExpertsEmployee(String login, String experts) {
+    public String updateEmployeeExpert(String login, String experts) {
         Employee employee=employeeRepository.findByLogin(login).orElseThrow(()->new EmployeeNotFoundException(""));
         employee.setExperts(experts);
         employeeRepository.save(employee);
@@ -103,7 +102,7 @@ public class EmployeeServiceImpl implements EmployeeService {
         return "Update "+s+" complete";
     }
     @Override
-    public String updateActivityEmployee(String login) {
+    public String updateEmployeeActivity(String login) {
         Employee employee=employeeRepository.findByLogin(login).orElseThrow(()->new EmployeeNotFoundException(""));
         Long activity=employee.getActivity()+1;
         employee.setActivity(activity);
@@ -111,25 +110,23 @@ public class EmployeeServiceImpl implements EmployeeService {
         return "Update activity complete";
     }
     @Override
-    public List<Employee> infoTopEmployee(){
+    public List<Employee> infoEmployeeTop(){
        return employeeRepository.findAllByOrderByActivityDesc();
 
     }
     @Override
-    public List<Map<String, Object>> infoTopEmployees(List<Employee> employees, List<String> names) {
+    public List<Map<String, Object>> findEmployees(List<Employee> employees, List<String> names) {
         List<Map<String,Object>> response=new ArrayList<>();
         int i=0;
         for (Employee employee:employees) {
             Map<String,Object> result=new LinkedHashMap<>();
             String avatar=names.get(i);
-            System.out.println(avatar);
             i+=1;
             result.put("login",employee.getLogin());
             result.put("activity",employee.getActivity());
             result.put("avatar",employee.getAvatar().getName());
             response.add(result);
         }
-        System.out.println(response);
         return response;
     }
 }

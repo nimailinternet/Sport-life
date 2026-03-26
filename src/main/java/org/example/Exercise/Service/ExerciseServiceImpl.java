@@ -1,16 +1,10 @@
 package org.example.Exercise.Service;
 
 import lombok.RequiredArgsConstructor;
-import org.example.Employee.Service.EmployeeService;
 import org.example.Exercise.Exceptions.ExerciseNotFoundException;
 import org.example.Exercise.Exercise;
 import org.example.Exercise.ExerciseRepository;
-import org.example.Exercise.dto.response.InfoExerciseResponse;
 import org.example.Favourites.dto.response.InfoFavouritesResponse;
-import org.example.Inventory.Service.InventoryService;
-import org.example.Items.Service.ItemsService;
-import org.example.Male.Service.MaleService;
-import org.example.Males.Service.MalesService;
 import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
@@ -20,11 +14,6 @@ import java.util.Set;
 @Service
 @RequiredArgsConstructor
 public class ExerciseServiceImpl implements ExerciseService {
-    private final MaleService maleService;
-    private final MalesService malesService;
-    private  final InventoryService inventoryService;
-    private final ItemsService itemsService;
-    private  final EmployeeService employeeService;
     private final ExerciseRepository exerciseRepository;
 
     @Override

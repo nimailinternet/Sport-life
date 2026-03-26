@@ -6,7 +6,7 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 import org.example.Favourites.Favourites;
 import org.example.Items.Items;
-import org.example.Males.Males;
+import org.example.Agonists.Agonists;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -29,7 +29,7 @@ public class Exercise {
     @OneToMany(mappedBy = "exercise", fetch = FetchType.LAZY,cascade = CascadeType.ALL)
     private List<Favourites> favourites=new ArrayList<>();
     @OneToMany(mappedBy = "exercise", fetch =FetchType.LAZY,cascade = CascadeType.ALL)
-    private List<Males> males=new ArrayList<>();
+    private List<Agonists> agonists=new ArrayList<>();
     @OneToMany(mappedBy = "exercise", fetch = FetchType.LAZY,cascade = CascadeType.ALL)
     private List<Items> items=new ArrayList<>();
 }

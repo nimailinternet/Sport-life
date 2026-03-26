@@ -5,9 +5,9 @@ import lombok.RequiredArgsConstructor;
 import org.example.Employee.UseCase.*;
 import org.example.Employee.dto.request.*;
 import org.example.Employee.dto.response.AuthEmployeeResponse;
-import org.example.Employee.dto.response.UpdateExpertsEmployeeResponse;
+import org.example.Employee.dto.response.UpdateEmployeeExpertResponse;
 import org.springframework.http.ResponseEntity;
-import org.springframework.security.core.context.SecurityContextHolder;
+import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.web.bind.annotation.*;
 
 @RestController
@@ -17,10 +17,10 @@ public class EmployeeController {
     private final AuthEmployee authEmployee;
     private final CreateEmployee createEmployee;
     private final InfoEmploee infoEmploee;
-    private final InfoTopEmployee infoTopEmployee;
+    private final InfoEmployeeTop infoEmployeeTop;
     private final UpdateEmployee updateEmployee;
-    private final ActivityEmployee activityEmployee;
-    private final ExpertsEmployee expertsEmployee;
+    private final UpdateEmployeeActivity updateEmployeeActivity;
+    private final UpdateEmployeeExpert updateEmployeeExpert;
 
     @PostMapping("/auth")
     public ResponseEntity<?> authEmployee(@Valid @RequestBody  AuthEmployeeRequest dto){
@@ -33,29 +33,26 @@ public class EmployeeController {
     }
 
     @GetMapping("/info")
-    public ResponseEntity<?> infoEmployee(){
-        String login=SecurityContextHolder.getContext().getAuthentication().getName();
-        return ResponseEntity.ok(infoEmploee.infoEmployee(login));
+    public ResponseEntity<?> infoEmployee(@AuthenticationPrincipal EmployeePrincipal principal){
+        return ResponseEntity.ok(infoEmploee.infoEmployee(principal.getLogin()));
     }
     @GetMapping("/top")
     public  ResponseEntity<?> infoEmployeeTop(){
-        return ResponseEntity.ok(infoTopEmployee.infoTopEmployee());
+        return ResponseEntity.ok(infoEmployeeTop.infoEmployeeTop());
+
     }
 
     @PatchMapping("/update")
-    public ResponseEntity<?> updateEmployee(@Valid @RequestBody UpdateEmployeeRequest dto){
-        String login=SecurityContextHolder.getContext().getAuthentication().getName();
-        return ResponseEntity.ok(updateEmployee.updateEmployee(dto,login));
+    public ResponseEntity<?> updateEmployee(@Valid @RequestBody UpdateEmployeeRequest dto, @AuthenticationPrincipal EmployeePrincipal principal){
+        return ResponseEntity.ok(updateEmployee.updateEmployee(dto,principal.getLogin()));
     }
     @PatchMapping("/activity")
-    public ResponseEntity<?> updateEmployeeActivity(){
-        String login=SecurityContextHolder.getContext().getAuthentication().getName();
-        return ResponseEntity.ok(activityEmployee.updateActivity(login));
+    public ResponseEntity<?> updateEmployeeActivity(@AuthenticationPrincipal EmployeePrincipal principal){
+        return ResponseEntity.ok(updateEmployeeActivity.updateActivity(principal.getLogin()));
     }
     @PatchMapping("/experts")
-    public ResponseEntity<?> updateExpertsEmployee(@Valid @RequestBody UpdateExpertsEmployeeRequest dto){
-        String login=SecurityContextHolder.getContext().getAuthentication().getName();
-        UpdateExpertsEmployeeResponse response= expertsEmployee.updateExperts(dto,login);
+    public ResponseEntity<?> updateExpertsEmployee(@Valid @RequestBody UpdateEmployeeExpertRequest dto, @AuthenticationPrincipal EmployeePrincipal principal){
+        UpdateEmployeeExpertResponse response= updateEmployeeExpert.updateExperts(dto, principal.getLogin());
         return ResponseEntity.ok(response);
     }
 }

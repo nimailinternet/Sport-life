@@ -11,8 +11,8 @@ import java.util.Set;
 @Service
 @Validated
 public interface InventoryService {
-    List<Inventory> FindInventory(List<String> names);
-    List<String> findInventoryName(Set<Inventory> inventories);
+    List<Inventory> findInventorys(List<String> names);
+    List<String> findInventorysNames(Set<Inventory> inventories);
 
     List<InfoInventoryResponse.InventoryObject> infoInventory();
 }

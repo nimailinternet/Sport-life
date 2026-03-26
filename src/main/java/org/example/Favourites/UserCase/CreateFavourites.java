@@ -21,7 +21,7 @@ public class CreateFavourites {
     public CreateFavouritesResponse createFavourites(CreateFavouritesRequest dto,String login){
         Employee employee=employeeService.findEmployee(login);
         Exercise exercise=exerciseService.findExercise(dto.getName());
-        String response=favouritesService.createFavourite(employee,exercise);
+        String response=favouritesService.createFavourites(employee,exercise);
         return new CreateFavouritesResponse(response);
     }
 }

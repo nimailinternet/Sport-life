@@ -1,7 +1,6 @@
 package org.example.Favourites.Service;
 
 import jakarta.transaction.Transactional;
-import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import org.example.Employee.Employee;
 import org.example.Employee.Service.EmployeeService;
@@ -11,11 +10,10 @@ import org.example.Exercise.Exercise;
 import org.example.Exercise.Service.ExerciseService;
 import org.example.Favourites.Favourites;
 import org.example.Favourites.FavouritesRepository;
-import org.example.Favourites.dto.response.CreateFavouritesResponse;
 import org.example.Inventory.Service.InventoryService;
 import org.example.Items.Service.ItemsService;
-import org.example.Male.Service.MaleService;
-import org.example.Males.Service.MalesService;
+import org.example.Muscle.Service.MuscleService;
+import org.example.Agonists.Service.AgonistsService;
 import org.springframework.stereotype.Service;
 import org.springframework.validation.annotation.Validated;
 
@@ -27,14 +25,14 @@ import java.util.List;
 public class FavouritesServiceImpl implements FavouritesService {
     private final EmployeeService employeeService;
     private final ExerciseService exerciseService;
-    private final MaleService maleService;
-    private final MalesService malesService;
+    private final MuscleService muscleService;
+    private final AgonistsService agonistsService;
     private final InventoryService inventoryService;
     private final ItemsService itemsService;
     private final FavouritesRepository favouritesRepository;
 
     @Override
-    public String createFavourite(Employee employee, Exercise exercise) {
+    public String createFavourites(Employee employee, Exercise exercise) {
         List<Favourites> favourites=favouritesRepository.findByExercise(exercise);
         if(favourites.isEmpty()){
             Favourites favourite=new Favourites(exercise,employee);

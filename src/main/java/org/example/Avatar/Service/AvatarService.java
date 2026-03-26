@@ -1,7 +1,6 @@
 package org.example.Avatar.Service;
 
 import org.example.Avatar.Avatar;
-import org.example.Employee.Employee;
 import org.springframework.stereotype.Service;
 
 import java.util.List;

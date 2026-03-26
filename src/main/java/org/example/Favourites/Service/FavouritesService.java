@@ -11,7 +11,7 @@ import java.util.List;
 @Service
 @Validated
 public interface FavouritesService {
-    String createFavourite(Employee employee, Exercise exercise);
+    String createFavourites(Employee employee, Exercise exercise);
     String deleteFavourites(Employee employee,Exercise exercise);
     List<Favourites> infoFavourites(Employee employee);
 }
