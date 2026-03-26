@@ -18,4 +18,5 @@ public class DeleteCalendarRequest {
     @JsonFormat(pattern = "HH:mm:ss")
     @NotNull(message = "")
     private LocalTime time;
+    private String login;
 }

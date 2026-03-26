@@ -14,4 +14,5 @@ public class UpdateEmployeeRequest {
     private String login;
     @Pattern(regexp = "^(?!\\s*$).+",message = "")
     private String avatar;
+    private String principalLogin;
 }

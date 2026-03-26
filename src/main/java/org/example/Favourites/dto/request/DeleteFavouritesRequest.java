@@ -11,4 +11,5 @@ import lombok.NoArgsConstructor;
 public class DeleteFavouritesRequest {
     @NotBlank(message = "")
     private  String name;
+    private String login;
 }

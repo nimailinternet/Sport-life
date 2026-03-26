@@ -15,8 +15,8 @@ public class DeleteCalendar {
     private final EmployeeService employeeService;
     private final CalendarService calendarService;
     @Transactional
-    public DeleteCalendarResponse deleteCalendar(DeleteCalendarRequest dto, String login){
-        Employee employee=employeeService.findEmployee(login);
+    public DeleteCalendarResponse deleteCalendar(DeleteCalendarRequest dto){
+        Employee employee=employeeService.findEmployee(dto.getLogin());
         String response=calendarService.deleteCalendar(dto.getTime(), dto.getName(),employee);
         return new DeleteCalendarResponse(response);
     }

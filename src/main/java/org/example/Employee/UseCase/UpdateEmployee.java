@@ -18,13 +18,13 @@ public class UpdateEmployee {
     private final AvatarService avatarService;
     private final AuthClass authClass;
     @Transactional
-    public UpdateEmployeeResponse updateEmployee(UpdateEmployeeRequest dto,String login){
+    public UpdateEmployeeResponse updateEmployee(UpdateEmployeeRequest dto){
         Avatar avatar=null;
         if(!dto.getAvatar().isEmpty()) {
             avatar = avatarService.findAvatar(dto.getAvatar());
         }
-        Employee employee=employeeService.findEmployee(login);
-        String response= employeeService.updateEmployee(dto.getLogin(),login,avatar);
+        Employee employee=employeeService.findEmployee(dto.getPrincipalLogin());
+        String response= employeeService.updateEmployee(dto.getLogin(),dto.getLogin(),avatar);
         String token = authClass.createToken(employee.getLogin());
         return new UpdateEmployeeResponse(response,token);
     }

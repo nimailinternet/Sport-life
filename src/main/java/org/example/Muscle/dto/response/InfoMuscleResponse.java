@@ -13,6 +13,7 @@ public class InfoMuscleResponse {
     private List<MaleObject> response;
     @NoArgsConstructor
     @Data
+    @AllArgsConstructor
     public static class MaleObject{
         private String name;
         private String photo;

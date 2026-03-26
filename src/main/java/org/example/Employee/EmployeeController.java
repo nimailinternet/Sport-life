@@ -44,7 +44,8 @@ public class EmployeeController {
 
     @PatchMapping("/update")
     public ResponseEntity<?> updateEmployee(@Valid @RequestBody UpdateEmployeeRequest dto, @AuthenticationPrincipal EmployeePrincipal principal){
-        return ResponseEntity.ok(updateEmployee.updateEmployee(dto,principal.getLogin()));
+        dto.setPrincipalLogin(principal.getLogin());
+        return ResponseEntity.ok(updateEmployee.updateEmployee(dto));
     }
     @PatchMapping("/activity")
     public ResponseEntity<?> updateEmployeeActivity(@AuthenticationPrincipal EmployeePrincipal principal){
@@ -52,7 +53,9 @@ public class EmployeeController {
     }
     @PatchMapping("/experts")
     public ResponseEntity<?> updateExpertsEmployee(@Valid @RequestBody UpdateEmployeeExpertRequest dto, @AuthenticationPrincipal EmployeePrincipal principal){
-        UpdateEmployeeExpertResponse response= updateEmployeeExpert.updateExperts(dto, principal.getLogin());
+
+        dto.setLogin(principal.getLogin());
+        UpdateEmployeeExpertResponse response= updateEmployeeExpert.updateExperts(dto);
         return ResponseEntity.ok(response);
     }
 }

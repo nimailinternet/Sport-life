@@ -1,4 +1,4 @@
-package org.example.Favourites.UserCase;
+package org.example.Favourites.UseCase;
 
 import jakarta.transaction.Transactional;
 import lombok.RequiredArgsConstructor;

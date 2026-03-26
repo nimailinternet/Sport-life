@@ -1,9 +1,7 @@
 package org.example.Exercise.dto.request;
 
-import jakarta.validation.Valid;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotEmpty;
-import jakarta.validation.constraints.Pattern;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
@@ -18,4 +16,5 @@ public class InfoExerciseRequest {
     private List<@NotBlank(message = "") String> males;
     @NotEmpty(message = "")
     private List<@NotBlank(message = "") String> items;
+    private String login;
 }

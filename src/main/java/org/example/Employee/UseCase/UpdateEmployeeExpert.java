@@ -12,8 +12,8 @@ import org.springframework.stereotype.Service;
 public class UpdateEmployeeExpert {
     private final EmployeeService employeeService;
     @Transactional
-    public UpdateEmployeeExpertResponse updateExperts(UpdateEmployeeExpertRequest dto, String login){
-        String response=employeeService.updateEmployeeExpert(login,dto.getExperts());
+    public UpdateEmployeeExpertResponse updateExperts(UpdateEmployeeExpertRequest dto){
+        String response=employeeService.updateEmployeeExpert(dto.getLogin(),dto.getExperts());
         return new UpdateEmployeeExpertResponse(response);
     }
 }

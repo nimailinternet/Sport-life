@@ -22,7 +22,8 @@ public class ExerciseController {
 
     @PostMapping("/info")
     public ResponseEntity<?> infoExercise(@Valid @RequestBody  InfoExerciseRequest dto, @AuthenticationPrincipal EmployeePrincipal principal){
-        InfoExerciseResponse response= infoExercise.infoExercise(dto, principal.getLogin());
+        dto.setLogin(principal.getLogin());
+        InfoExerciseResponse response= infoExercise.infoExercise(dto);
         return ResponseEntity.ok(response);
     }
 }

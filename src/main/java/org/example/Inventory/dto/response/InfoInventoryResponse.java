@@ -13,6 +13,7 @@ public class InfoInventoryResponse {
     private List<InventoryObject> response;
     @NoArgsConstructor
     @Data
+    @AllArgsConstructor
     public static class InventoryObject{
         private String name;
         private String photo;

@@ -9,14 +9,15 @@ import org.example.Employee.Employee;
 import org.example.Employee.Service.EmployeeService;
 import org.springframework.stereotype.Service;
 
+
 @Service
 @RequiredArgsConstructor
 public class CreateCalendar {
     private final CalendarService calendarService;
     private final EmployeeService employeeService;
     @Transactional
-    public CreateCalendarResponse createCalendar(CreateCalendarRequest dto,String login){
-        Employee  employee=employeeService.findEmployee(login);
+    public CreateCalendarResponse createCalendar(CreateCalendarRequest dto){
+        Employee  employee=employeeService.findEmployee(dto.getLogin());
         String response= calendarService.createCalendar(dto.getTime(),dto.getName(), employee);
         return new CreateCalendarResponse(response);
     }

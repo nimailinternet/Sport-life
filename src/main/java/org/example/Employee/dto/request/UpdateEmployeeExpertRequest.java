@@ -11,4 +11,5 @@ import lombok.NoArgsConstructor;
 public class UpdateEmployeeExpertRequest {
     @NotBlank(message = "")
     private String experts;
+    private String login;
 }

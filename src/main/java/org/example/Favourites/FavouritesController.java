@@ -3,9 +3,9 @@ package org.example.Favourites;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import org.example.Employee.EmployeePrincipal;
-import org.example.Favourites.UserCase.CreateFavourites;
-import org.example.Favourites.UserCase.DeleteFavourites;
-import org.example.Favourites.UserCase.InfoFavourites;
+import org.example.Favourites.UseCase.CreateFavourites;
+import org.example.Favourites.UseCase.DeleteFavourites;
+import org.example.Favourites.UseCase.InfoFavourites;
 import org.example.Favourites.dto.request.CreateFavouritesRequest;
 import org.example.Favourites.dto.request.DeleteFavouritesRequest;
 import org.example.Favourites.dto.response.CreateFavouritesResponse;
@@ -25,13 +25,15 @@ public class FavouritesController {
 
     @PostMapping("/create")
     public ResponseEntity<?> createFavourites(@Valid @RequestBody CreateFavouritesRequest dto, @AuthenticationPrincipal EmployeePrincipal principal){
-        CreateFavouritesResponse createFavouritesResponse= createFavourites.createFavourites(dto, principal.getLogin());
+        dto.setLogin(principal.getLogin());
+        CreateFavouritesResponse createFavouritesResponse= createFavourites.createFavourites(dto);
         return ResponseEntity.ok(createFavouritesResponse);
     }
 
     @DeleteMapping("/delete")
     public ResponseEntity<?> deleteFavourites(@Valid @RequestBody DeleteFavouritesRequest dto,@AuthenticationPrincipal EmployeePrincipal principal){
-        DeleteFavouritesResponse DeleteFavouritesResponse = deleteFavourites.deleteFavourites(dto, principal.getLogin());
+        dto.setLogin(principal.getLogin());
+        DeleteFavouritesResponse DeleteFavouritesResponse = deleteFavourites.deleteFavourites(dto);
         return  ResponseEntity.ok(DeleteFavouritesResponse);
     }
 

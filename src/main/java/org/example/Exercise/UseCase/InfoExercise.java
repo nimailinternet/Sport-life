@@ -28,10 +28,10 @@ public class InfoExercise {
     private final MuscleService muscleService;
     private final ExerciseService exerciseService;
     @Transactional
-    public InfoExerciseResponse infoExercise(InfoExerciseRequest dto,String login){
+    public InfoExerciseResponse infoExercise(InfoExerciseRequest dto){
         Set<Exercise> males= agonistsService.infoExercise_FindExercise(muscleService.FindMuscles(dto.getMales()));
         Set<Exercise> items=itemsService.FindExercises(inventoryService.findInventorys(dto.getItems()));
-        Employee employee=employeeService.findEmployee(login);
+        Employee employee=employeeService.findEmployee(dto.getLogin());
         String experts=employeeService.findEmployeeExpert(employee);
         List<Exercise> exercises=exerciseService.infoExercise(males,items,experts);
         InfoExerciseResponse infoExerciseResponse=new InfoExerciseResponse();

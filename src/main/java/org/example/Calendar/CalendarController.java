@@ -29,10 +29,12 @@ public class CalendarController {
 
     @PostMapping("/create")
     public ResponseEntity<?> createCalendar(@Valid @RequestBody CreateCalendarRequest dto,@AuthenticationPrincipal EmployeePrincipal principal){
-        return ResponseEntity.ok(createCalendar.createCalendar(dto, principal.getLogin()));
+        dto.setLogin(principal.getLogin());
+        return ResponseEntity.ok(createCalendar.createCalendar(dto));
     }
     @DeleteMapping("/delete")
     public ResponseEntity<?> deleteCalendar(@Valid @RequestBody DeleteCalendarRequest dto,@AuthenticationPrincipal EmployeePrincipal principal){
-        return ResponseEntity.ok(deleteCalendar.deleteCalendar(dto, principal.getLogin()));
+        dto.setLogin(principal.getLogin());
+        return ResponseEntity.ok(deleteCalendar.deleteCalendar(dto));
     }
 }
