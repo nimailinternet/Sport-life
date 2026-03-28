@@ -26,13 +26,9 @@ public class AvatarServiceImpl implements AvatarService {
     }
 
     @Override
-    public List<String> infoAvatar() {
+    public List<Avatar> infoAvatar() {
         List<Avatar> avatars=avatarRepository.findAll();
-        List<String> names=new ArrayList<>();
-        for(Avatar avatar:avatars){
-            names.add(avatar.getName());
-        }
-        return names;
+        return avatars;
     }
 
     @Override

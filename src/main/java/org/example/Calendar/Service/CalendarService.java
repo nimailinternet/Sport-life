@@ -1,16 +1,16 @@
 package org.example.Calendar.Service;
 
-import org.example.Calendar.dto.response.InfoCalendarResponse;
+import org.example.Calendar.dto.CalendarMapper;
 import org.example.Employee.Employee;
 import org.springframework.stereotype.Service;
-import org.springframework.validation.annotation.Validated;
 
 import java.time.LocalTime;
+import java.util.List;
+import java.util.Map;
 
 @Service
-@Validated
 public interface CalendarService {
-    InfoCalendarResponse infoCalendar( Employee employee);
-    String createCalendar(LocalTime time,String name, Employee employee);
+    Map<Integer, List<LocalTime>> infoCalendar(Employee employee);
+    String createCalendar(CalendarMapper.Mapper mapper);
     String deleteCalendar(LocalTime time,String name, Employee employee);
 }

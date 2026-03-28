@@ -4,7 +4,7 @@ import jakarta.transaction.Transactional;
 import lombok.RequiredArgsConstructor;
 import org.example.Calendar.Calendar;
 import org.example.Calendar.CalendarRepository;
-import org.example.Calendar.dto.response.InfoCalendarResponse;
+import org.example.Calendar.dto.CalendarMapper;
 import org.example.Employee.Employee;
 import org.example.Employee.Service.EmployeeService;
 import org.example.Calendar.Exceptions.CalendarFoundException;
@@ -16,9 +16,7 @@ import java.time.DayOfWeek;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.time.LocalTime;
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Objects;
+import java.util.*;
 
 @Service
 @Validated
@@ -28,12 +26,12 @@ public class CalendarServiceImpl implements CalendarService {
     private final EmployeeService employeeService;
     
     @Override
-    public InfoCalendarResponse infoCalendar(Employee employee) {
+    public Map<Integer, List<LocalTime>> infoCalendar(Employee employee) {
         List<Calendar> calendars=calendarRepository.findByEmployee(employee);
         if(calendars.isEmpty()){
             throw new CalendarNotFoundException("");
         }
-        InfoCalendarResponse infoCalendarResponse=new InfoCalendarResponse();
+        Map<Integer,List<LocalTime>> response=new HashMap<>();
         for (int i = 1; i <8 ; i++) {
             DayOfWeek day=DayOfWeek.of(i);
             List<Calendar> calendarTimes=calendars.stream().filter(c->c.getDate().toLocalDate().equals(LocalDate.now().with(day))).toList();
@@ -41,41 +39,21 @@ public class CalendarServiceImpl implements CalendarService {
             for(Calendar calendar:calendarTimes){
                 times.add(calendar.getDate().toLocalTime());
             }
-            if(i==1){
-                infoCalendarResponse.setMonday(times);
-            }
-            if(i==2){
-                infoCalendarResponse.setTuesday(times);
-            }
-            if(i==3){
-                infoCalendarResponse.setWednesday(times);
-            }
-            if(i==4){
-                infoCalendarResponse.setThursday(times);
-            }
-            if(i==5){
-                infoCalendarResponse.setFriday(times);
-            }
-            if(i==6){
-                infoCalendarResponse.setSaturday(times);
-            }
-            if(i==7){
-                infoCalendarResponse.setSunday(times);
-            }
+            response.put(i,times);
         }
-        return infoCalendarResponse;
+        return response;
     }
     @Override
-    public String createCalendar(LocalTime time, String name, Employee employee) {
-        DayOfWeek day=DayOfWeek.valueOf(name);
+    public String createCalendar(CalendarMapper.Mapper mapper) {
+        DayOfWeek day=DayOfWeek.valueOf(mapper.getName());
         LocalDate date=LocalDate.now().with(day);
-        LocalDateTime dateTime=date.atTime(time);
-        List<Calendar> calendars=calendarRepository.findByEmployee(employee);
+        LocalDateTime dateTime=date.atTime(mapper.getTime());
+        List<Calendar> calendars=calendarRepository.findByEmployee(mapper.getEmployee());
         boolean calendars1=  calendars.stream().anyMatch(c->c.getDate().equals(dateTime));
         if(calendars1){
             throw new CalendarFoundException("");
         }
-        Calendar calendar=new Calendar(dateTime,employee);
+        Calendar calendar=new Calendar(dateTime,mapper.getEmployee());
         calendarRepository.save(calendar);
         return "Calendar created";
     }

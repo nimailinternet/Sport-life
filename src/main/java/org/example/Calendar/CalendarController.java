@@ -23,8 +23,7 @@ public class CalendarController {
 
     @GetMapping("/info")
     public ResponseEntity<?> infoCalendar(@AuthenticationPrincipal EmployeePrincipal principal){
-        InfoCalendarResponse response=infoCase.infoCalendar(principal.getLogin());
-        return ResponseEntity.ok(response);
+        return ResponseEntity.ok(infoCase.infoCalendar(principal.getLogin()));
     }
 
     @PostMapping("/create")

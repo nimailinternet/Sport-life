@@ -9,7 +9,7 @@ import java.util.List;
 public interface AvatarService {
      Avatar findAvatar(String name);
      String findAvatarName(Avatar avatar);
-     List<String> infoAvatar();
+     List<Avatar> infoAvatar();
      List<String> findAvatarsNames(List<Avatar> avatars);
 
 }
