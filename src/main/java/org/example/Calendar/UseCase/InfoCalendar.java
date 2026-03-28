@@ -18,6 +18,6 @@ import org.springframework.stereotype.Service;
     @Transactional
     public InfoCalendarResponse infoCalendar(String login){
         Employee employee=employeeService.findEmployee(login);
-        return calendarMapper.toDto(calendarService.infoCalendar(employee));
+        return calendarMapper.toInfoDto(calendarService.infoCalendar(employee));
     }
 }

@@ -1,6 +1,6 @@
 package org.example.Calendar.Service;
 
-import org.example.Calendar.dto.CalendarMapper;
+import org.example.Calendar.Calendar;
 import org.example.Employee.Employee;
 import org.springframework.stereotype.Service;
 
@@ -11,6 +11,6 @@ import java.util.Map;
 @Service
 public interface CalendarService {
     Map<Integer, List<LocalTime>> infoCalendar(Employee employee);
-    String createCalendar(CalendarMapper.Mapper mapper);
-    String deleteCalendar(LocalTime time,String name, Employee employee);
+    String createCalendar(Calendar calendar);
+    String deleteCalendar(Calendar calendar);
 }

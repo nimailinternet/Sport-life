@@ -3,6 +3,7 @@ package org.example.Calendar.UseCase;
 import jakarta.transaction.Transactional;
 import lombok.RequiredArgsConstructor;
 import org.example.Calendar.Service.CalendarService;
+import org.example.Calendar.dto.CalendarMapper;
 import org.example.Calendar.dto.request.DeleteCalendarRequest;
 import org.example.Calendar.dto.response.DeleteCalendarResponse;
 import org.example.Employee.Employee;
@@ -14,10 +15,10 @@ import org.springframework.stereotype.Service;
 public class DeleteCalendar {
     private final EmployeeService employeeService;
     private final CalendarService calendarService;
+    private final CalendarMapper calendarMapper;
     @Transactional
     public DeleteCalendarResponse deleteCalendar(DeleteCalendarRequest dto){
         Employee employee=employeeService.findEmployee(dto.getLogin());
-        String response=calendarService.deleteCalendar(dto.getTime(), dto.getName(),employee);
-        return new DeleteCalendarResponse(response);
+        return calendarMapper.toDeleteDto(calendarService.deleteCalendar(calendarMapper.toDeleteEntity(dto,employee)));
     }
 }

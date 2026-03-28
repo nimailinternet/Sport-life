@@ -18,6 +18,6 @@ public class CreateCalendar {
     private final CalendarMapper calendarMapper;
     @Transactional
     public CreateCalendarResponse createCalendar(CreateCalendarRequest dto){
-        return calendarMapper.toDto2(calendarService.createCalendar(calendarMapper.toEntity(dto,employeeService.findEmployee(dto.getLogin()))));
+        return calendarMapper.toCreateDto(calendarService.createCalendar(calendarMapper.toCreateEntity(dto,employeeService.findEmployee(dto.getLogin()))));
     }
 }
