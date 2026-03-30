@@ -21,7 +21,4 @@ public interface EmployeeService {
      String updateEmployee(String login,String login2,Avatar avatar);
      String updateEmployeeActivity(String login);
      List<Employee> infoEmployeeTop();
-     List<Map<String,Object>> findEmployees(List<Employee> employees, List<String> names);
-
-
 }

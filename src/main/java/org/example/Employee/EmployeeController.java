@@ -34,7 +34,7 @@ public class EmployeeController {
 
     @GetMapping("/info")
     public ResponseEntity<?> infoEmployee(@AuthenticationPrincipal EmployeePrincipal principal){
-        return ResponseEntity.ok(infoEmploee.infoEmployee(principal.getLogin()));
+        return ResponseEntity.ok(infoEmploee.infoEmployee(principal));
     }
     @GetMapping("/top")
     public  ResponseEntity<?> infoEmployeeTop(){

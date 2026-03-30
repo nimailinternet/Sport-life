@@ -5,6 +5,7 @@ import lombok.RequiredArgsConstructor;
 import org.example.Calendar.UseCase.CreateCalendar;
 import org.example.Calendar.UseCase.DeleteCalendar;
 import org.example.Calendar.UseCase.InfoCalendar;
+import org.example.Calendar.dto.CalendarMapper;
 import org.example.Calendar.dto.request.CreateCalendarRequest;
 import org.example.Calendar.dto.request.DeleteCalendarRequest;
 import org.example.Calendar.dto.response.InfoCalendarResponse;
@@ -20,6 +21,7 @@ public class CalendarController {
     private  final InfoCalendar infoCase;
     private final CreateCalendar createCalendar;
     private final DeleteCalendar deleteCalendar;
+    private final CalendarMapper calendarMapper;
 
     @GetMapping("/info")
     public ResponseEntity<?> infoCalendar(@AuthenticationPrincipal EmployeePrincipal principal){

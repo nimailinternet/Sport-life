@@ -6,6 +6,7 @@ import org.example.Calendar.Service.CalendarService;
 import org.example.Calendar.dto.CalendarMapper;
 import org.example.Calendar.dto.request.CreateCalendarRequest;
 import org.example.Calendar.dto.response.CreateCalendarResponse;
+import org.example.Employee.Employee;
 import org.example.Employee.Service.EmployeeService;
 import org.springframework.stereotype.Service;
 
@@ -18,6 +19,7 @@ public class CreateCalendar {
     private final CalendarMapper calendarMapper;
     @Transactional
     public CreateCalendarResponse createCalendar(CreateCalendarRequest dto){
-        return calendarMapper.toCreateDto(calendarService.createCalendar(calendarMapper.toCreateEntity(dto,employeeService.findEmployee(dto.getLogin()))));
+        Employee employee=employeeService.findEmployee(dto.getLogin());
+        return new CreateCalendarResponse(calendarService.createCalendar(calendarMapper.toCreateEntity(dto,employee)));
     }
 }

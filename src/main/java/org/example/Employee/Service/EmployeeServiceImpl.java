@@ -25,7 +25,6 @@ public class EmployeeServiceImpl implements EmployeeService {
     private final EmployeeRepository employeeRepository;
     private final PasswordEncoder passwordEncoder;
     private  final AuthClass authClass;
-    private final AvatarService avatarService;
 
     @Override
     public String findEmployeeExpert(Employee employee) {
@@ -113,20 +112,5 @@ public class EmployeeServiceImpl implements EmployeeService {
     public List<Employee> infoEmployeeTop(){
        return employeeRepository.findAllByOrderByActivityDesc();
 
-    }
-    @Override
-    public List<Map<String, Object>> findEmployees(List<Employee> employees, List<String> names) {
-        List<Map<String,Object>> response=new ArrayList<>();
-        int i=0;
-        for (Employee employee:employees) {
-            Map<String,Object> result=new LinkedHashMap<>();
-            String avatar=names.get(i);
-            i+=1;
-            result.put("login",employee.getLogin());
-            result.put("activity",employee.getActivity());
-            result.put("avatar",employee.getAvatar().getName());
-            response.add(result);
-        }
-        return response;
     }
 }

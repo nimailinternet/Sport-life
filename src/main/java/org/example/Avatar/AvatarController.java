@@ -1,6 +1,7 @@
 package org.example.Avatar;
 
 import lombok.RequiredArgsConstructor;
+import org.example.Avatar.Service.AvatarService;
 import org.example.Avatar.UseCase.InfoAvatar;
 import org.example.Avatar.dto.response.InfoAvatarResponse;
 import org.springframework.http.ResponseEntity;

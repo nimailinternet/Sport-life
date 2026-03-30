@@ -19,6 +19,6 @@ public class DeleteCalendar {
     @Transactional
     public DeleteCalendarResponse deleteCalendar(DeleteCalendarRequest dto){
         Employee employee=employeeService.findEmployee(dto.getLogin());
-        return calendarMapper.toDeleteDto(calendarService.deleteCalendar(calendarMapper.toDeleteEntity(dto,employee)));
+        return new DeleteCalendarResponse(calendarService.deleteCalendar(calendarMapper.toDeleteEntity(dto,employee)));
     }
 }

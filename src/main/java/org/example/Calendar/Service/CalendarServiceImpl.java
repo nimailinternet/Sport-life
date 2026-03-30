@@ -25,20 +25,16 @@ public class CalendarServiceImpl implements CalendarService {
     private final EmployeeService employeeService;
     
     @Override
-    public Map<Integer, List<LocalTime>> infoCalendar(Employee employee) {
+    public Map<DayOfWeek, List<Calendar>> infoCalendar(Employee employee) {
         List<Calendar> calendars=calendarRepository.findByEmployee(employee);
         if(calendars.isEmpty()){
             throw new CalendarNotFoundException("");
         }
-        Map<Integer,List<LocalTime>> response=new HashMap<>();
+        Map<DayOfWeek, List<Calendar>> response=new HashMap<>();
         for (int i = 1; i <8 ; i++) {
             DayOfWeek day=DayOfWeek.of(i);
             List<Calendar> calendarTimes=calendars.stream().filter(c->c.getDate().toLocalDate().equals(LocalDate.now().with(day))).toList();
-            List<LocalTime> times=new ArrayList<>();
-            for(Calendar calendar:calendarTimes){
-                times.add(calendar.getDate().toLocalTime());
-            }
-            response.put(i,times);
+            response.put(day,calendarTimes);
         }
         return response;
     }
