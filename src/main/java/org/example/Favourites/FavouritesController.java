@@ -5,12 +5,10 @@ import lombok.RequiredArgsConstructor;
 import org.example.Employee.EmployeePrincipal;
 import org.example.Favourites.UseCase.CreateFavourites;
 import org.example.Favourites.UseCase.DeleteFavourites;
-import org.example.Favourites.UseCase.InfoFavourites;
-import org.example.Favourites.dto.request.CreateFavouritesRequest;
-import org.example.Favourites.dto.request.DeleteFavouritesRequest;
-import org.example.Favourites.dto.response.CreateFavouritesResponse;
-import org.example.Favourites.dto.response.DeleteFavouritesResponse;
-import org.example.Favourites.dto.response.InfoFavouritesResponse;
+import org.example.Favourites.UseCase.FindFavourites;
+import org.example.Favourites.dto.request.FavouritesDetailsRequest;
+import org.example.Favourites.dto.response.FavouritesDetailsResponse;
+import org.example.Favourites.dto.response.FindFavouritesResponse;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.web.bind.annotation.*;
@@ -19,27 +17,25 @@ import org.springframework.web.bind.annotation.*;
 @RequestMapping("/Favourites")
 @RequiredArgsConstructor
 public class FavouritesController {
-    private final InfoFavourites infoFavourites;
+    private final FindFavourites findFavourites;
     private final CreateFavourites createFavourites;
     private final DeleteFavourites deleteFavourites;
 
     @PostMapping("/create")
-    public ResponseEntity<?> createFavourites(@Valid @RequestBody CreateFavouritesRequest dto, @AuthenticationPrincipal EmployeePrincipal principal){
-        dto.setLogin(principal.getLogin());
-        CreateFavouritesResponse createFavouritesResponse= createFavourites.createFavourites(dto);
+    public ResponseEntity<?> createFavourites(@Valid @RequestBody FavouritesDetailsRequest.CreateFavouritesRequest dto, @AuthenticationPrincipal EmployeePrincipal principal){
+        FavouritesDetailsResponse.CreateFavouritesResponse createFavouritesResponse= createFavourites.createFavourites(dto,principal);
         return ResponseEntity.ok(createFavouritesResponse);
     }
 
     @DeleteMapping("/delete")
-    public ResponseEntity<?> deleteFavourites(@Valid @RequestBody DeleteFavouritesRequest dto,@AuthenticationPrincipal EmployeePrincipal principal){
-        dto.setLogin(principal.getLogin());
-        DeleteFavouritesResponse DeleteFavouritesResponse = deleteFavourites.deleteFavourites(dto);
+    public ResponseEntity<?> deleteFavourites(@Valid @RequestBody FavouritesDetailsRequest.DeleteFavouritesRequest dto, @AuthenticationPrincipal EmployeePrincipal principal){
+        FavouritesDetailsResponse.DeleteFavouritesResponse DeleteFavouritesResponse = deleteFavourites.deleteFavourites(dto,principal);
         return  ResponseEntity.ok(DeleteFavouritesResponse);
     }
 
     @GetMapping("/info")
-    public ResponseEntity<?> infoFavourites(@AuthenticationPrincipal EmployeePrincipal principal){
-        InfoFavouritesResponse infoFavouritesResponse= infoFavourites.infoFavourites(principal.getLogin());
-        return ResponseEntity.ok(infoFavouritesResponse);
+    public ResponseEntity<?> findFavourites(@AuthenticationPrincipal EmployeePrincipal principal){
+        FindFavouritesResponse findFavouritesResponse = findFavourites.findFavourites(principal);
+        return ResponseEntity.ok(findFavouritesResponse);
     }
 }

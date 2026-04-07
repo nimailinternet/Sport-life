@@ -1,15 +1,17 @@
 package org.example.Muscle.Service;
 
 import lombok.RequiredArgsConstructor;
+import org.example.Exercise.Exercise;
 import org.example.Muscle.Exceptions.MuscleNotFoundException;
 import org.example.Muscle.Muscle;
 import org.example.Muscle.MuscleRepository;
-import org.example.Muscle.dto.response.InfoMuscleResponse;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Set;
+import java.util.*;
+import java.util.stream.Collectors;
 
 @Service
 @RequiredArgsConstructor
@@ -17,32 +19,22 @@ public class MuscleServiceImpl implements MuscleService {
     private final MuscleRepository muscleRepository;
 
     @Override
-    public List<Muscle> FindMuscles(List<String> males) {
-        List<Muscle> males1=new ArrayList<>();
-        for(String male:males){
-            males1.add(muscleRepository.findByName(male).orElseThrow(()->new MuscleNotFoundException("dfdfdf")));
+    @Transactional(readOnly = true)
+    public List<Muscle> findMusclesByNames(List<String> names) {
+        List<Muscle> muscles = muscleRepository.findByNameIn(names);
+        if(muscles.isEmpty()){
+            throw new MuscleNotFoundException("");
         }
-        return males1;
+        return muscles;
     }
     @Override
-    public List<String> FindMusclesNames(Set<Muscle> muscles) {
-        List<String> names=new ArrayList<>();
-        for(Muscle muscle : muscles){
-            names.add(muscle.getName());
-        }
-        return names;
+    public Map<Exercise, List<String>> getMusclesNames(Map<Exercise,Set<Muscle>> muscles) {
+        return muscles.entrySet().stream().collect(Collectors.toMap(Map.Entry::getKey, m->m.getValue().stream().map(Muscle::getName).toList()));
     }
 
     @Override
-    public List<InfoMuscleResponse.MaleObject> infoMuscle() {
-        List<InfoMuscleResponse.MaleObject> response=new ArrayList<>();
-        List<Muscle> muscles = muscleRepository.findAll();
-        for(Muscle muscle : muscles){
-            InfoMuscleResponse.MaleObject maleObject=new InfoMuscleResponse.MaleObject();
-            maleObject.setName(muscle.getName());
-            maleObject.setPhoto(muscle.getPhoto());
-            response.add(maleObject);
-        }
-        return response;
+    @Transactional(readOnly = true)
+    public List<Muscle> findAllMuscle() {
+        return muscleRepository.findAll();
     }
 }

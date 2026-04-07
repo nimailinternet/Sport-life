@@ -1,16 +1,15 @@
 package org.example.Calendar.Service;
 
-import org.example.Calendar.dto.response.InfoCalendarResponse;
+import org.example.Calendar.Calendar;
+import org.example.Calendar.dto.response.FindCalendarsResponse;
 import org.example.Employee.Employee;
 import org.springframework.stereotype.Service;
-import org.springframework.validation.annotation.Validated;
 
-import java.time.LocalTime;
+import java.util.List;
 
 @Service
-@Validated
 public interface CalendarService {
-    InfoCalendarResponse infoCalendar( Employee employee);
-    String createCalendar(LocalTime time,String name, Employee employee);
-    String deleteCalendar(LocalTime time,String name, Employee employee);
+    List<Calendar> findCalendarsByEmployee(Employee employee);
+    void createCalendar(Calendar calendar);
+    void deleteCalendar(Calendar calendar);
 }

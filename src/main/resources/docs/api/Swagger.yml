@@ -112,7 +112,7 @@ components:
             exercises:
               type: array
               items:
-                $ref: '#/component/schemas/Response/ExerciseObject'
+                $ref: '#/component/schemas/Response/FavouriteObject'
       favourites:
         CreateAndDeleteFavouritesResponse:
           type: Object
@@ -417,7 +417,7 @@ paths:
         - BearerAuth: []
       responses:
         "200":
-          description: Employee infoFavourites
+          description: Employee findFavouritesByEmployees
           content:
             application/json:
               schema:

@@ -5,10 +5,11 @@ import org.example.Muscle.Muscle;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
+import java.util.Map;
 import java.util.Set;
 
 @Service
 public interface AgonistsService {
-    Set<Exercise> infoExercise_FindExercise(List<Muscle> muscles);
-    Set<Muscle> infoExerciseAndInfoFavourites_FindMuscle(Exercise exercises);
+    Set<Exercise> getExercises(List<Muscle> muscles);
+    Map<Exercise,Set<Muscle>> findMuscleByExercise(List<Exercise> exercises);
 }

@@ -1,16 +1,17 @@
 package org.example.Muscle.Service;
 
+import org.example.Exercise.Exercise;
 import org.example.Muscle.Muscle;
-import org.example.Muscle.dto.response.InfoMuscleResponse;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
+import java.util.Map;
 import java.util.Set;
 
 @Service
 public interface MuscleService {
-    List<Muscle> FindMuscles(List<String> males);
-    List<String> FindMusclesNames(Set<Muscle> muscles);
+    Map<Exercise,List<String>> getMusclesNames(Map<Exercise,Set<Muscle>> muscles);
 
-    List<InfoMuscleResponse.MaleObject> infoMuscle();
+    List<Muscle> findMusclesByNames(List<String> names);
+    List<Muscle> findAllMuscle();
 }
