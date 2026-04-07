@@ -89,7 +89,7 @@ components:
             top:
               type: Object
               items:
-                $ref: '#/component/schemas/Response/EmployeeTop'
+                $ref: '#/components/schemas/Response/employee/EmployeeTop'
       exercise:
         ExerciseObject:
           type: Object
@@ -112,7 +112,7 @@ components:
             exercises:
               type: array
               items:
-                $ref: '#/component/schemas/Response/FavouriteObject'
+                $ref: '#/components/schemas/Response/exercise/ExerciseObject'
       favourites:
         CreateAndDeleteFavouritesResponse:
           type: Object
