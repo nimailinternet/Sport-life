@@ -89,7 +89,7 @@ components:
             top:
               type: Object
               items:
-                $ref: '#/component/schemas/Response/EmployeeTop'
+                $ref: '#/components/schemas/Response/employee/EmployeeTop'
       exercise:
         ExerciseObject:
           type: Object
@@ -112,7 +112,7 @@ components:
             exercises:
               type: array
               items:
-                $ref: '#/component/schemas/Response/ExerciseObject'
+                $ref: '#/components/schemas/Response/exercise/ExerciseObject'
       favourites:
         CreateAndDeleteFavouritesResponse:
           type: Object
@@ -417,7 +417,7 @@ paths:
         - BearerAuth: []
       responses:
         "200":
-          description: Employee infoFavourites
+          description: Employee findFavouritesByEmployees
           content:
             application/json:
               schema:

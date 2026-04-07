@@ -4,10 +4,9 @@ import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import org.example.Employee.UseCase.*;
 import org.example.Employee.dto.request.*;
-import org.example.Employee.dto.response.AuthEmployeeResponse;
-import org.example.Employee.dto.response.UpdateExpertsEmployeeResponse;
+import org.example.Employee.dto.response.EmployeeDetailsResponse;
 import org.springframework.http.ResponseEntity;
-import org.springframework.security.core.context.SecurityContextHolder;
+import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.web.bind.annotation.*;
 
 @RestController
@@ -16,16 +15,15 @@ import org.springframework.web.bind.annotation.*;
 public class EmployeeController {
     private final AuthEmployee authEmployee;
     private final CreateEmployee createEmployee;
-    private final InfoEmploee infoEmploee;
-    private final InfoTopEmployee infoTopEmployee;
+    private final FindEmployee findEmployee;
+    private final FindTopEmployees findTopEmployees;
     private final UpdateEmployee updateEmployee;
-    private final ActivityEmployee activityEmployee;
-    private final ExpertsEmployee expertsEmployee;
+    private final UpdateEmployeeActivity updateEmployeeActivity;
+    private final UpdateEmployeeExperts updateEmployeeExperts;
 
     @PostMapping("/auth")
     public ResponseEntity<?> authEmployee(@Valid @RequestBody  AuthEmployeeRequest dto){
-        AuthEmployeeResponse response= authEmployee.authEmployee(dto);
-        return ResponseEntity.ok(response);
+        return ResponseEntity.ok(authEmployee.authEmployee(dto));
     }
     @PostMapping("/create")
     public ResponseEntity<?> createEmployee(@Valid  @RequestBody CreateEmployeeRequest dto){
@@ -33,29 +31,25 @@ public class EmployeeController {
     }
 
     @GetMapping("/info")
-    public ResponseEntity<?> infoEmployee(){
-        String login=SecurityContextHolder.getContext().getAuthentication().getName();
-        return ResponseEntity.ok(infoEmploee.infoEmployee(login));
+    public ResponseEntity<?> findEmployee(@AuthenticationPrincipal EmployeePrincipal principal){
+        return ResponseEntity.ok(findEmployee.findEmployee(principal));
     }
     @GetMapping("/top")
-    public  ResponseEntity<?> infoEmployeeTop(){
-        return ResponseEntity.ok(infoTopEmployee.infoTopEmployee());
+    public  ResponseEntity<?> findTopEmployees(){
+        return ResponseEntity.ok(findTopEmployees.findTopEmployees());
+
     }
 
     @PatchMapping("/update")
-    public ResponseEntity<?> updateEmployee(@Valid @RequestBody UpdateEmployeeRequest dto){
-        String login=SecurityContextHolder.getContext().getAuthentication().getName();
-        return ResponseEntity.ok(updateEmployee.updateEmployee(dto,login));
+    public ResponseEntity<?> updateEmployee(@Valid @RequestBody UpdateEmployeeRequest dto, @AuthenticationPrincipal EmployeePrincipal principal){
+        return ResponseEntity.ok(updateEmployee.updateEmployee(dto,principal));
     }
     @PatchMapping("/activity")
-    public ResponseEntity<?> updateEmployeeActivity(){
-        String login=SecurityContextHolder.getContext().getAuthentication().getName();
-        return ResponseEntity.ok(activityEmployee.updateActivity(login));
+    public ResponseEntity<?> updateEmployeeActivity(@AuthenticationPrincipal EmployeePrincipal principal){
+        return ResponseEntity.ok(updateEmployeeActivity.updateActivity(principal));
     }
     @PatchMapping("/experts")
-    public ResponseEntity<?> updateExpertsEmployee(@Valid @RequestBody UpdateExpertsEmployeeRequest dto){
-        String login=SecurityContextHolder.getContext().getAuthentication().getName();
-        UpdateExpertsEmployeeResponse response= expertsEmployee.updateExperts(dto,login);
-        return ResponseEntity.ok(response);
+    public ResponseEntity<?> updateEmployeeExperts(@Valid @RequestBody UpdateEmployeeExpertsRequest dto, @AuthenticationPrincipal EmployeePrincipal principal){
+        return ResponseEntity.ok(updateEmployeeExperts.updateExperts(dto,principal));
     }
 }

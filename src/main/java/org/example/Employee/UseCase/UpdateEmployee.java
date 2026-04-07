@@ -5,6 +5,7 @@ import lombok.RequiredArgsConstructor;
 import org.example.Avatar.Avatar;
 import org.example.Avatar.Service.AvatarService;
 import org.example.Employee.Employee;
+import org.example.Employee.EmployeePrincipal;
 import org.example.Employee.Service.EmployeeService;
 import org.example.Employee.dto.request.UpdateEmployeeRequest;
 import org.example.Employee.dto.response.UpdateEmployeeResponse;
@@ -17,15 +18,23 @@ public class UpdateEmployee {
     private final EmployeeService employeeService;
     private final AvatarService avatarService;
     private final AuthClass authClass;
-    @Transactional
-    public UpdateEmployeeResponse updateEmployee(UpdateEmployeeRequest dto,String login){
+
+    public UpdateEmployeeResponse updateEmployee(UpdateEmployeeRequest dto, EmployeePrincipal principal){
         Avatar avatar=null;
-        if(!dto.getAvatar().isEmpty()) {
-            avatar = avatarService.findAvatar(dto.getAvatar());
+        String message="";
+        if(!dto.getAvatar().isBlank()) {
+            avatar = avatarService.findAvatarByName(dto.getAvatar());
+            message="avatar";
         }
-        Employee employee=employeeService.findEmployee(login);
-        String response= employeeService.updateEmployee(dto.getLogin(),login,avatar);
+        if(!dto.getLogin().isBlank()){
+            message="login";
+        }
+        if(!dto.getAvatar().isBlank()&&!dto.getLogin().isBlank()){
+            message="login and avatar";
+        }
+        Employee employee=employeeService.findEmployeeByLogin(principal.getLogin());
+        employeeService.updateEmployee(dto.getLogin(),employee,avatar);
         String token = authClass.createToken(employee.getLogin());
-        return new UpdateEmployeeResponse(response,token);
+        return new UpdateEmployeeResponse("Update "+message+" complete",token);
     }
 }

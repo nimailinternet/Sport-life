@@ -4,10 +4,15 @@ import lombok.RequiredArgsConstructor;
 import org.example.Avatar.Avatar;
 import org.example.Avatar.AvatarRepository;
 import org.example.Avatar.Exceptions.AvatarNotFoundException;
+import org.example.Employee.Employee;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
-import java.util.ArrayList;
 import java.util.List;
+import java.util.Map;
+import java.util.stream.Collectors;
 
 @Service
 @RequiredArgsConstructor
@@ -15,32 +20,20 @@ public class AvatarServiceImpl implements AvatarService {
     private final AvatarRepository avatarRepository;
 
     @Override
-    public Avatar findAvatar(String name) {
+    @Transactional(readOnly = true)
+    public Avatar findAvatarByName(String name) {
         return avatarRepository.findByName(name)
-                .orElseThrow(()->new AvatarNotFoundException("dfdfdfdfd"));
-    }
-    @Override
-    public String findAvatarName(Avatar avatar) {
-        return avatar.getName();
-
+                .orElseThrow(()->new AvatarNotFoundException(""));
     }
 
     @Override
-    public List<String> infoAvatar() {
-        List<Avatar> avatars=avatarRepository.findAll();
-        List<String> names=new ArrayList<>();
-        for(Avatar avatar:avatars){
-            names.add(avatar.getName());
-        }
-        return names;
+    @Transactional(readOnly = true)
+    public List<Avatar> findAllAvatars() {
+        return avatarRepository.findAll();
     }
 
     @Override
-    public List<String> findAvatarsNames(List<Avatar> avatars) {
-        List<String> names=new ArrayList<>();
-        for(Avatar avatar:avatars){
-            names.add(avatar.getName());
-        }
-        return names;
+    public Map<Employee, String> getAvatarsNames( Map<Employee, Avatar> avatars) {
+        return avatars.entrySet().stream().collect(Collectors.toMap(Map.Entry::getKey,a->a.getValue().getName()));
     }
 }

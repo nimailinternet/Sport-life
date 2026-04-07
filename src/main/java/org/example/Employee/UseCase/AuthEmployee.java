@@ -1,19 +1,22 @@
 package org.example.Employee.UseCase;
 
-import jakarta.transaction.Transactional;
 import lombok.RequiredArgsConstructor;
+import org.example.Employee.Employee;
 import org.example.Employee.Service.EmployeeService;
 import org.example.Employee.dto.request.AuthEmployeeRequest;
-import org.example.Employee.dto.response.AuthEmployeeResponse;
+import org.example.Employee.dto.response.EmployeeDetailsResponse;
+import org.example.Security.AuthClass;
 import org.springframework.stereotype.Service;
 
 @Service
 @RequiredArgsConstructor
 public class AuthEmployee {
     private final EmployeeService employeeService;
-    @Transactional
-    public AuthEmployeeResponse authEmployee(AuthEmployeeRequest dto){
-        String token= employeeService.authEmployee(dto.getLogin(), dto.getPassword());
-        return new AuthEmployeeResponse(token);
+    private final AuthClass authClass;
+
+    public EmployeeDetailsResponse.AuthEmployeeResponse authEmployee(AuthEmployeeRequest dto){
+        Employee employee=employeeService.authEmployee(dto.getLogin(),dto.getPassword());
+        String token=authClass.createToken(employee.getLogin());
+        return new EmployeeDetailsResponse.AuthEmployeeResponse(token);
     }
 }
