@@ -11,5 +11,5 @@ import java.util.List;
 public interface FavouritesService {
     void createFavourites(Employee employee, Exercise exercise);
     void deleteFavourites(Employee employee,Exercise exercise);
-    List<Exercise> findExerciseByEmployees(Employee employee);
+    Page<Exercise> findExerciseByEmployees(Employee employee,int page,int size);
 }

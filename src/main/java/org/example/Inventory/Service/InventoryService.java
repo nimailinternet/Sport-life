@@ -2,6 +2,7 @@ package org.example.Inventory.Service;
 
 import org.example.Exercise.Exercise;
 import org.example.Inventory.Inventory;
+import org.springframework.data.domain.Page;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -13,5 +14,5 @@ public interface InventoryService {
     List<Inventory> findInventoriesByNames(List<String> names);
     Map<Exercise,List<String>> getInventoriesNames(Map<Exercise,Set<Inventory>> inventories);
 
-    List<Inventory> findAllInventories();
+    Page<Inventory> findAllInventories(int page ,int size);
 }

@@ -10,8 +10,11 @@ import java.util.List;
 
 @Component
 public class InventoryMapper {
-    public FindInventoriesResponse toDto(List<Inventory> inventories){
+    public FindInventoriesResponse toDto(Page<Inventory> inventories){
         FindInventoriesResponse findInventoriesResponse=new FindInventoriesResponse();
+        findInventoriesResponse.setSize(inventories.getSize());
+        findInventoriesResponse.setTotalPage(inventories.getTotalPages());
+        findInventoriesResponse.setPage(inventories.getNumber());
         List<FindInventoriesResponse.InventoryObject> response=inventories.stream().map(i->{
             return new FindInventoriesResponse.InventoryObject(i.getName(),i.getPhoto());
         }).toList();

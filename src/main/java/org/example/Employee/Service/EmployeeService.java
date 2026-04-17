@@ -12,7 +12,7 @@ public interface EmployeeService {
 
      Employee findEmployeeByLogin(String login);
      Employee authEmployee(String login,String password);
-     Employee createEmployee(String login,String password,Avatar avatar);
+     Employee createEmployee(String login,String password);
      void updateEmployeeExpert(String login, String experts);
      void updateEmployee(String login,Employee employee,Avatar avatar);
      void updateEmployeeActivity(String login);

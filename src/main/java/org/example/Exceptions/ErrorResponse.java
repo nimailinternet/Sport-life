@@ -4,9 +4,11 @@ import lombok.AllArgsConstructor;
 import lombok.Data;
 import org.springframework.http.HttpStatus;
 
+import java.util.Map;
+
 @Data
 @AllArgsConstructor
 public class ErrorResponse {
-    private HttpStatus error;
-    private String message;
+    private String status;
+    private Map<String,Object> errors ;
 }

@@ -17,6 +17,4 @@ public class CreateEmployeeRequest {
     @NotBlank(message = "")
     @Size(min = 8,max = 20,message = "")
     private String password;
-    @Pattern(regexp = "^(?!\\s*$).+",message = "")
-    private String avatar;
 }

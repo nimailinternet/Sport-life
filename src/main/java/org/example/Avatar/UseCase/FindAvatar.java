@@ -16,8 +16,8 @@ public class FindAvatar {
     private final AvatarService avatarService;
     private final AvatarMapper avatarMapper;
 
-    public FindAvatarResponse findAvatar(){
-        List<Avatar> avatars=avatarService.findAllAvatars();
+    public FindAvatarResponse findAvatar(int page,int size){
+        Page<Avatar> avatars=avatarService.findAllAvatars(page,size);
         return avatarMapper.toDtoFind(avatars);
     }
 }

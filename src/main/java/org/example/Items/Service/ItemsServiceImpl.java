@@ -22,7 +22,7 @@ public class ItemsServiceImpl implements ItemsService {
     public Set<Exercise> findExercisesByInventory(List<Inventory> inventories) {
         List<Items> items=itemsRepository.findByInventoryIn(inventories);
         if(items.isEmpty()){
-            throw new ItemsNotFoundException("");
+            throw new ItemsNotFoundException("","");
         }
         return items.stream().map(Items::getExercise).collect(Collectors.toSet());
     }

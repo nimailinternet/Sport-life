@@ -30,7 +30,7 @@ public class EmployeeServiceImpl implements EmployeeService {
     @Override
     @Transactional(readOnly = true)
     public Employee findEmployeeByLogin(String login) {
-        return employeeRepository.findByLoginWithAvatar(login).orElseThrow(()->new UnauthorizedEmployeeException(""));
+        return employeeRepository.findWithAvatarByLogin(login).orElseThrow(()->new UnauthorizedEmployeeException("","login"));
     }
 
 
@@ -39,32 +39,28 @@ public class EmployeeServiceImpl implements EmployeeService {
     public Employee authEmployee(String login, String password) {
         Employee employee=employeeRepository
                 .findByLogin(login)
-                .orElseThrow(()->new UnauthorizedEmployeeException(""));
+                .orElseThrow(()->new UnauthorizedEmployeeException("","login"));
         if(!passwordEncoder.matches(password,employee.getPassword())){
-            throw new UnauthorizedEmployeeException("");
+            throw new UnauthorizedEmployeeException("","login");
         }
         return employee;
     }
     @Override
     @Transactional
-    public Employee createEmployee(String login, String password, Avatar avatar) {
+    public Employee createEmployee(String login, String password) {
         String password1=passwordEncoder.encode(password);
         if(employeeRepository.findByLogin(login).isPresent()){
-            throw new EmployeeFoundException("");
+            throw new EmployeeFoundException("","login");
         }
-        Employee employee;
-        if(avatar!=null){
-             employee=new Employee(login,avatar,password1,0L);
-        }else{
-             employee=new Employee(login,password1,0L);
-        }
+        Employee employee=new Employee(login,password1,0L);
+
         employeeRepository.save(employee);
         return employee;
     }
     @Override
     @Transactional
     public void updateEmployeeExpert(String login, String experts) {
-        Employee employee=employeeRepository.findByLogin(login).orElseThrow(()->new UnauthorizedEmployeeException(""));
+        Employee employee=employeeRepository.findByLogin(login).orElseThrow(()->new UnauthorizedEmployeeException("","login"));
         employee.setExperts(experts);
     }
     @Override
@@ -73,10 +69,10 @@ public class EmployeeServiceImpl implements EmployeeService {
         if(login!=null){
             Employee employee1=employeeRepository.findByLogin(login).orElse(null);
             if(Objects.equals(employee1,employee)){
-                throw new EmployeeFoundException("");
+                throw new EmployeeFoundException("","login");
             }
             if(employee1!=null) {
-                throw new EmployeeFoundException("");
+                throw new EmployeeFoundException("","login");
             }
             employee.setLogin(login);
         }
@@ -87,7 +83,7 @@ public class EmployeeServiceImpl implements EmployeeService {
     @Override
     @Transactional
     public void updateEmployeeActivity(String login) {
-        Employee employee=employeeRepository.findByLogin(login).orElseThrow(()->new UnauthorizedEmployeeException(""));
+        Employee employee=employeeRepository.findByLogin(login).orElseThrow(()->new UnauthorizedEmployeeException("","login"));
         employee.setActivity(employee.getActivity()+1);;
     }
     @Override

@@ -13,8 +13,6 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-import java.util.List;
-
 @Service
 @RequiredArgsConstructor
 public class FavouritesServiceImpl implements FavouritesService {
@@ -23,23 +21,24 @@ public class FavouritesServiceImpl implements FavouritesService {
     @Transactional
     public void createFavourites(Employee employee, Exercise exercise) {
         boolean presenceFavourites =favouritesRepository.existsByEmployeeAndExercise(employee,exercise);
-        if(presenceFavourites) throw new FavouritesFoundExceptions("");
+        if(presenceFavourites) throw new FavouritesFoundExceptions("","favourite");
         Favourites favourite=new Favourites(exercise,employee);
         favouritesRepository.save(favourite);
     }
     @Override
     @Transactional
     public void deleteFavourites(Employee employee,Exercise exercise) {
-        Favourites favourite = favouritesRepository.findByEmployeeAndExercise(employee,exercise).orElseThrow(()->new FavouritesNotFoundException(""));
+        Favourites favourite = favouritesRepository.findByEmployeeAndExercise(employee,exercise).orElseThrow(()->new FavouritesNotFoundException("","favourite"));
         favouritesRepository.delete(favourite);
     }
     @Override
     @Transactional(readOnly = true)
-    public List<Exercise> findExerciseByEmployees(Employee employee) {
-        List<Favourites> favourites = favouritesRepository.findByEmployee(employee);
+    public Page<Exercise> findExerciseByEmployees(Employee employee,int page,int size) {
+        Pageable pageable=PageRequest.of(page,size);
+        Page<Favourites> favourites = favouritesRepository.findByEmployee(employee,pageable);
         if (favourites.isEmpty()) {
-            throw new FavouritesNotFoundException("");
+            throw new FavouritesNotFoundException("","result");
         }
-        return favourites.stream().map(Favourites::getExercise).toList();
+        return favourites.map(Favourites::getExercise);
     }
 }

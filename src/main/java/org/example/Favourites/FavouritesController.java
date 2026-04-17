@@ -34,8 +34,8 @@ public class FavouritesController {
     }
 
     @GetMapping("/info")
-    public ResponseEntity<?> findFavourites(@AuthenticationPrincipal EmployeePrincipal principal){
-        FindFavouritesResponse findFavouritesResponse = findFavourites.findFavourites(principal);
+    public ResponseEntity<?> findFavourites(@AuthenticationPrincipal EmployeePrincipal principal,@RequestParam(defaultValue = "0")int page,@RequestParam(defaultValue = "10")int size){
+        FindFavouritesResponse findFavouritesResponse = findFavourites.findFavourites(principal,page,size);
         return ResponseEntity.ok(findFavouritesResponse);
     }
 }

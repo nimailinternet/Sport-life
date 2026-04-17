@@ -16,7 +16,9 @@ import java.util.stream.Collectors;
 public class ExceptionController {
     @ExceptionHandler(BusinessException.class)
     public ResponseEntity<?> BusinessError(BusinessException e){
-        ErrorResponse errorResponse=new ErrorResponse(e.getStatus(),e.getMessage());
+        Map<String,Object> error=new LinkedHashMap<>();
+        error.put(e.getName(),e.getMessage());
+        ErrorResponse errorResponse=new ErrorResponse(e.getStatus().toString(),error);
         return ResponseEntity.status(e.getStatus()).body(errorResponse);
     }
     @ResponseStatus(HttpStatus.BAD_REQUEST)
@@ -29,7 +31,9 @@ public class ExceptionController {
     @ExceptionHandler(Exception.class)
     @ResponseStatus(HttpStatus.INTERNAL_SERVER_ERROR)
     public ErrorResponse ExceptionError(Exception e){
-        ErrorResponse errorResponse=new ErrorResponse(HttpStatus.INTERNAL_SERVER_ERROR,e.getMessage());
+        Map<String,Object> error=new LinkedHashMap<>();
+        error.put("Service",e.getMessage());
+        ErrorResponse errorResponse=new ErrorResponse(HttpStatus.INTERNAL_SERVER_ERROR.toString(),error);
         return errorResponse;
     }
 }

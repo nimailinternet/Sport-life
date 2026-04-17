@@ -8,16 +8,13 @@ import org.example.Inventory.dto.response.FindInventoriesResponse;
 import org.springframework.data.domain.Page;
 import org.springframework.stereotype.Service;
 
-import java.util.List;
-
 @Service
 @RequiredArgsConstructor
 public class FindInventories {
     private final InventoryService inventoryService;
     private final InventoryMapper inventoryMapper;
-
-    public FindInventoriesResponse findInventories(){
-        List<Inventory> inventories=inventoryService.findAllInventories();
+    public FindInventoriesResponse findInventories(int page,int size){
+        Page<Inventory> inventories=inventoryService.findAllInventories(page,size);
          return inventoryMapper.toDto(inventories);
     }
 }

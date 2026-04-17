@@ -12,7 +12,7 @@ import org.springframework.web.bind.annotation.*;
 public class AvatarController {
     private final FindAvatar findAvatar;
     @GetMapping("/info")
-    public ResponseEntity<FindAvatarResponse> findAvatar(){
-        return ResponseEntity.ok(findAvatar.findAvatar());
+    public ResponseEntity<FindAvatarResponse> findAvatar(@RequestParam(defaultValue = "0") int page,@RequestParam(defaultValue = "10") int size){
+        return ResponseEntity.ok(findAvatar.findAvatar(page,size));
     }
 }

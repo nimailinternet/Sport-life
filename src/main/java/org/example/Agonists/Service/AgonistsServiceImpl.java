@@ -20,11 +20,11 @@ public class AgonistsServiceImpl implements AgonistsService {
     @Override
     @Transactional(readOnly = true)
     public Set<Exercise> getExercises(List<Muscle> muscles) {
-        List<Exercise> exercises =agonistsRepository.findByMuscleIn(muscles);
+        Set<Exercise> exercises =agonistsRepository.findByMuscleIn(muscles);
         if(exercises.isEmpty()){
-            throw new ExerciseNotFoundException("");
+            throw new ExerciseNotFoundException("","muscle");
         }
-        return new HashSet<>(exercises);
+        return exercises;
     }
     @Override
     @Transactional(readOnly = true)

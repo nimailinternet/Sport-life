@@ -18,8 +18,9 @@ public class ExerciseController {
 
     @PostMapping("/info")
     public ResponseEntity<?> findExercises(@Valid @RequestBody FindExercisesRequest dto,
-                                           @AuthenticationPrincipal EmployeePrincipal principal){
-        FindExercisesResponse findExercisesResponse = findExercises.findExercises(dto,principal);
+                                           @AuthenticationPrincipal EmployeePrincipal principal,
+                                           @RequestParam(defaultValue = "0")int page,@RequestParam(defaultValue = "10") int size){
+        FindExercisesResponse findExercisesResponse = findExercises.findExercises(dto,principal,page,size);
         return ResponseEntity.ok(findExercisesResponse);
     }
 }

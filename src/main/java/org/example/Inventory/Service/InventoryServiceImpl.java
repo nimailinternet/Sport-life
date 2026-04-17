@@ -5,6 +5,7 @@ import org.example.Exercise.Exercise;
 import org.example.Inventory.Exceptions.InventoryNotFoundException;
 import org.example.Inventory.Inventory;
 import org.example.Inventory.InventoryRepository;
+import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
@@ -25,7 +26,7 @@ public class InventoryServiceImpl implements InventoryService {
     public List<Inventory> findInventoriesByNames(List<String> names) {
         List<Inventory> inventories=inventoryRepository.findByNameIn(names);
         if(inventories.isEmpty()){
-            throw new InventoryNotFoundException("");
+            throw new InventoryNotFoundException("","");
         }
         return inventories;
     }
@@ -37,7 +38,8 @@ public class InventoryServiceImpl implements InventoryService {
 
     @Override
     @Transactional(readOnly = true)
-    public List<Inventory> findAllInventories() {
-        return inventoryRepository.findAll();
+    public Page<Inventory> findAllInventories(int page,int size) {
+        Pageable pageable=PageRequest.of(page,size);
+        return inventoryRepository.findAll(pageable);
     }
 }

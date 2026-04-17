@@ -11,7 +11,9 @@ import java.util.List;
 @NoArgsConstructor
 public class FindFavouritesResponse {
     private List<FavouriteObject> favourites;
-
+    private int page;
+    private int size;
+    private long totalPage;
     @Data
     @AllArgsConstructor
     @NoArgsConstructor

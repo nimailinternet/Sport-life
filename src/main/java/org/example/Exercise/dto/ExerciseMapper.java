@@ -10,8 +10,8 @@ import java.util.Map;
 
 @Component
 public class ExerciseMapper {
-    public FindExercisesResponse toDto(List<Exercise> exercises, Map<Exercise,List<String>> agonistsMap, Map<Exercise,List<String>> itemsMap){
-        return new FindExercisesResponse(
+    public FindExercisesResponse toDto(Page<Exercise> exercises, Map<Exercise,List<String>> agonistsMap, Map<Exercise,List<String>> itemsMap){
+        List<FindExercisesResponse.ExerciseObject> exerciseObjects=
                 exercises.stream()
                         .map(exercise -> new FindExercisesResponse.ExerciseObject(
                                 exercise.getName(),
@@ -21,7 +21,7 @@ public class ExerciseMapper {
                                 agonistsMap.get(exercise),
                                 itemsMap.get(exercise)
                         ))
-                        .toList());
-
+                        .toList();
+        return new FindExercisesResponse(exerciseObjects,exercises.getSize(),exercises.getNumber(),exercises.getTotalPages());
     }
 }

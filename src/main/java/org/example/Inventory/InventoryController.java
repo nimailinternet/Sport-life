@@ -14,8 +14,8 @@ import org.springframework.web.bind.annotation.RestController;
 public class InventoryController {
     private final FindInventories findInventories;
     @GetMapping("/info")
-    public ResponseEntity<?> findInventories(){
-        return ResponseEntity.ok(findInventories.findInventories());
+    public ResponseEntity<?> findInventories(@RequestParam(defaultValue = "0")int page,@RequestParam(defaultValue = "10")int size){
+        return ResponseEntity.ok(findInventories.findInventories(page, size));
 
     }
 }

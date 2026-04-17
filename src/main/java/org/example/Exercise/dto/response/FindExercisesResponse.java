@@ -11,7 +11,9 @@ import java.util.List;
 @AllArgsConstructor
 public class FindExercisesResponse {
     private List<ExerciseObject> exercises;
-
+    private int size;
+    private int page;
+    private int totalPage;
     @Data
     @AllArgsConstructor
     @NoArgsConstructor

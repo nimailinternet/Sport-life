@@ -9,4 +9,7 @@ import java.util.List;
 @Data
 public class FindAvatarResponse {
     private List<String> names;
+    private int page;
+    private int size;
+    private long totalPage;
 }

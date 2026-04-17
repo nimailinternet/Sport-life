@@ -10,7 +10,6 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-import java.util.List;
 import java.util.Set;
 
 @Service
@@ -21,14 +20,15 @@ public class ExerciseServiceImpl implements ExerciseService {
     @Override
     @Transactional(readOnly = true)
     public Exercise findExercisesByName(String name) {
-        return exerciseRepository.findByName(name).orElseThrow(()->new ExerciseNotFoundException(""));
+        return exerciseRepository.findByName(name).orElseThrow(()->new ExerciseNotFoundException("",""));
     }
 
     @Override
-    public List<Exercise> filterExerciseByExperts(String experts, Set<Exercise> agonists, Set<Exercise> items) {
-        List<Exercise> exercises=exerciseRepository.findFiltered(agonists,items,experts);
+    public Page<Exercise> filterExerciseByExperts(String experts, Set<Exercise> agonists, Set<Exercise> items, int page, int size) {
+        Pageable pageable= PageRequest.of(page,size);
+        Page<Exercise> exercises=exerciseRepository.findByFiltered(agonists,items,experts,pageable);
         if(exercises.isEmpty()){
-            throw new ExerciseNotFoundException("");
+            throw new ExerciseNotFoundException("","result");
         }
         return exercises;
     }

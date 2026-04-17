@@ -31,14 +31,15 @@ public class FindExercises {
     private final ExerciseMapper exerciseMapper;
     private final ExerciseService exerciseService;
 
-    public FindExercisesResponse findExercises(FindExercisesRequest dto, EmployeePrincipal principal){
+    public FindExercisesResponse findExercises(FindExercisesRequest dto, EmployeePrincipal principal,int size,int page){
         Set<Exercise> agonists = agonistsService.getExercises(muscleService.findMusclesByNames(dto.getMuscles()));
         Set<Exercise> items=itemsService.findExercisesByInventory(inventoryService.findInventoriesByNames(dto.getItems()));
         Employee employee=employeeService.findEmployeeByLogin(principal.getLogin());
         String experts=employeeService.getEmployeeExpert(employee);
-        List<Exercise> exercises=exerciseService.filterExerciseByExperts(experts,items,agonists);
-        Map<Exercise,List<String>> agonistsMap=muscleService.getMusclesNames(agonistsService.findMuscleByExercise(exercises));
-        Map<Exercise,List<String>> itemsMap=inventoryService.getInventoriesNames(itemsService.findInventoryByExercise(exercises));
+        Page<Exercise> exercises=exerciseService.filterExerciseByExperts(experts,items,agonists,size,page);
+        List<Exercise> exercisesList=exercises.getContent();
+        Map<Exercise,List<String>> agonistsMap=muscleService.getMusclesNames(agonistsService.findMuscleByExercise(exercisesList));
+        Map<Exercise,List<String>> itemsMap=inventoryService.getInventoriesNames(itemsService.findInventoryByExercise(exercisesList));
         return exerciseMapper.toDto(exercises,agonistsMap,itemsMap);
     }
 }

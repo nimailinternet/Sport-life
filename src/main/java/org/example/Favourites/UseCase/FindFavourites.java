@@ -29,11 +29,12 @@ public class FindFavourites {
     private final FavouritesService favouritesService;
     private final FavouriteMapper favouriteMapper;
 
-    public FindFavouritesResponse findFavourites(EmployeePrincipal principal){
+    public FindFavouritesResponse findFavourites(EmployeePrincipal principal,int page,int size){
         Employee employee=employeeService.findEmployeeByLogin(principal.getLogin());
-        List<Exercise> exercises=favouritesService.findExerciseByEmployees(employee);
-        Map<Exercise,List<String>> agonistsMap=muscleService.getMusclesNames(agonistsService.findMuscleByExercise(exercises));
-        Map<Exercise,List<String>> itemsMap=inventoryService.getInventoriesNames(itemsService.findInventoryByExercise(exercises));
+        Page<Exercise> exercises=favouritesService.findExerciseByEmployees(employee,page,size);
+        List<Exercise> exercisesList=exercises.getContent();
+        Map<Exercise,List<String>> agonistsMap=muscleService.getMusclesNames(agonistsService.findMuscleByExercise(exercisesList));
+        Map<Exercise,List<String>> itemsMap=inventoryService.getInventoriesNames(itemsService.findInventoryByExercise(exercisesList));
         return favouriteMapper.toDto(exercises,agonistsMap,itemsMap);
     }
 }

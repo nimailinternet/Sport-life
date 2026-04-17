@@ -10,8 +10,11 @@ import java.util.Map;
 
 @Component
 public class FavouriteMapper {
-    public FindFavouritesResponse toDto(List<Exercise> exercises, Map<Exercise,List<String>> agonistsMap, Map<Exercise,List<String>> itemsMap){
+    public FindFavouritesResponse toDto(Page<Exercise> exercises, Map<Exercise,List<String>> agonistsMap, Map<Exercise,List<String>> itemsMap){
         FindFavouritesResponse findFavouritesResponse=new FindFavouritesResponse();
+        findFavouritesResponse.setSize(exercises.getSize());
+        findFavouritesResponse.setPage(exercises.getNumber());
+        findFavouritesResponse.setTotalPage(exercises.getTotalPages());
         List<FindFavouritesResponse.FavouriteObject> favouritesObjects=exercises.stream().map(e->new FindFavouritesResponse.FavouriteObject(
                 e.getName(),
                 e.getVideo(),

@@ -1,15 +1,12 @@
 package org.example.Security;
 
 
-import io.jsonwebtoken.Jwts;
-import io.jsonwebtoken.security.Keys;
 import jakarta.servlet.FilterChain;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import lombok.RequiredArgsConstructor;
 import org.example.Employee.EmployeePrincipal;
-import org.slf4j.LoggerFactory;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
@@ -18,9 +15,7 @@ import org.springframework.stereotype.Component;
 import org.springframework.web.filter.OncePerRequestFilter;
 
 import java.io.IOException;
-import java.util.HashSet;
 import java.util.List;
-import java.util.Set;
 
 @Component
 @RequiredArgsConstructor
@@ -39,7 +34,7 @@ public class JwtFilter extends OncePerRequestFilter {
             return;
         }
         String token = header.substring(7);
-            String login = authClass.getLogin(token);
+            String login = authClass.getLoginAccess(token);
             if(login.startsWith("Admin")){
                 role="ADMIN";
             }else{

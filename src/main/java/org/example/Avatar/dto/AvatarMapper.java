@@ -9,8 +9,8 @@ import java.util.List;
 
 @Component
 public class AvatarMapper {
-    public FindAvatarResponse toDtoFind(List<Avatar> avatars){
+    public FindAvatarResponse toDtoFind(Page<Avatar> avatars){
         List<String> names=avatars.stream().map(Avatar::getName).toList();
-        return new FindAvatarResponse(names);
+        return new FindAvatarResponse(names,avatars.getNumber(),avatars.getSize(),avatars.getTotalPages());
     }
 }

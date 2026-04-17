@@ -10,11 +10,12 @@ import org.springframework.data.repository.query.Param;
 import org.springframework.stereotype.Repository;
 
 import java.util.List;
+import java.util.Set;
 
 @Repository
 public interface AgonistsRepository extends JpaRepository<Agonists,Long> {
     @Query("select a from Agonists a join fetch a.muscle join fetch a.exercise where a.exercise in :exercises")
     List<Agonists> findByExerciseIn(@Param("exercises") List<Exercise> exercises);
-    @Query("select a.exercise from Agonists a  where a.muscle in :muscles")
-    List<Exercise> findByMuscleIn(@Param("muscles") List<Muscle> muscles);
+    @Query("select  distinct a.exercise from Agonists a  where a.muscle in :muscles")
+    Set<Exercise> findByMuscleIn(@Param("muscles") List<Muscle> muscles);
 }

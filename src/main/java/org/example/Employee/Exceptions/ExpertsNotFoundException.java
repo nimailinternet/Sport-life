@@ -5,6 +5,6 @@ import org.springframework.http.HttpStatus;
 
 public class ExpertsNotFoundException extends BusinessException {
     public ExpertsNotFoundException(String message) {
-        super(message, HttpStatus.NOT_FOUND);
+        super(message, HttpStatus.NOT_FOUND,"");
     }
 }

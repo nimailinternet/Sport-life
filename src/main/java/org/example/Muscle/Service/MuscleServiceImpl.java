@@ -23,7 +23,7 @@ public class MuscleServiceImpl implements MuscleService {
     public List<Muscle> findMusclesByNames(List<String> names) {
         List<Muscle> muscles = muscleRepository.findByNameIn(names);
         if(muscles.isEmpty()){
-            throw new MuscleNotFoundException("");
+            throw new MuscleNotFoundException("","");
         }
         return muscles;
     }
