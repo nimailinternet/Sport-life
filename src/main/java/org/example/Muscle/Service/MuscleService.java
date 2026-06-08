@@ -1,6 +1,5 @@
 package org.example.Muscle.Service;
 
-import org.example.Exercise.Exercise;
 import org.example.Muscle.Muscle;
 import org.springframework.stereotype.Service;
 
@@ -10,8 +9,7 @@ import java.util.Set;
 
 @Service
 public interface MuscleService {
-    Map<Exercise,List<String>> getMusclesNames(Map<Exercise,Set<Muscle>> muscles);
+    Map<Long,List<String>> getMusclesIs(Map<Long,Set<Muscle>> muscles);
 
-    List<Muscle> findMusclesByNames(List<String> names);
-    List<Muscle> findAllMuscle();
+    List<Muscle> findMusclesByNames(List<Long> names);
 }

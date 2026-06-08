@@ -47,14 +47,14 @@ public class FavouritesServiceImpl implements FavouritesService {
     }
 
     @Override
-    public Map<Exercise, Boolean> getFavouritesByExercise(List<Exercise> exercises, Employee employee) {
-        List<Exercise> favourites= favouritesRepository.findFavouritesByEmployeeAndExerciseIn(exercises,employee).stream().map(Favourites::getExercise).toList();
-        Map<Exercise,Boolean> favouritesMaps=new LinkedHashMap<>();
-        for(Exercise exercise:exercises){
-            if(favourites.contains(exercise)){
-                favouritesMaps.put(exercise,true);
+    public Map<Long, Boolean> getFavouritesByExerciseId(List<Long> exercises, Employee employee) {
+        List<Long> favourites= favouritesRepository.findFavouritesByEmployeeAndExerciseIdIn(exercises,employee).stream().map(f->f.getExercise().getId()).toList();
+        Map<Long,Boolean> favouritesMaps=new LinkedHashMap<>();
+        for(Long exerciseId :exercises){
+            if(favourites.contains(exerciseId)){
+                favouritesMaps.put(exerciseId,true);
             }else{
-                favouritesMaps.put(exercise,false);
+                favouritesMaps.put(exerciseId,false);
             }
         }
         return favouritesMaps;

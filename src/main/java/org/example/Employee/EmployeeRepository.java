@@ -16,4 +16,5 @@ public interface EmployeeRepository extends JpaRepository<Employee,Long> {
     @EntityGraph(attributePaths = {"avatar"})
     List<Employee> findAllByOrderByActivityDesc();
     Optional<Employee> findByLogin(String login);
+    boolean existsByLogin(String login);
 }

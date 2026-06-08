@@ -16,7 +16,7 @@ public class InventoryMapper {
         findInventoriesResponse.setTotalPage(inventories.getTotalPages());
         findInventoriesResponse.setPage(inventories.getNumber());
         List<FindInventoriesResponse.InventoryObject> response=inventories.stream().map(i->{
-            return new FindInventoriesResponse.InventoryObject(i.getName(),i.getPhoto());
+            return new FindInventoriesResponse.InventoryObject(i.getId().toString(),i.getPhoto());
         }).toList();
         findInventoriesResponse.setInventories(response);
         return findInventoriesResponse;

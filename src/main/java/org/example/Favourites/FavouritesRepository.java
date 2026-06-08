@@ -10,6 +10,7 @@ import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
 import org.springframework.stereotype.Repository;
 
+import java.util.Collection;
 import java.util.List;
 import java.util.Optional;
 
@@ -20,6 +21,6 @@ public interface FavouritesRepository extends JpaRepository<Favourites,Long> {
     Optional<Favourites> findByEmployeeAndExercise(Employee employee, Exercise exercise);
 
     boolean existsByEmployeeAndExercise(Employee employee, Exercise exercise);
-    @Query("select f from Favourites f where f.employee=:employee and f.exercise in:exercises ")
-    List<Favourites> findFavouritesByEmployeeAndExerciseIn(@Param("exercises") List<Exercise> exercises,@Param("employee") Employee employee);
+    @Query("select f from Favourites f where f.employee=:employee and f.exercise.id in:exercises ")
+    List<Favourites> findFavouritesByEmployeeAndExerciseIdIn(@Param("exercises") List<Long> exercises,@Param("employee") Employee employee);
 }

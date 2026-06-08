@@ -11,5 +11,5 @@ import java.util.Set;
 @Service
 public interface AgonistsService {
     Set<Exercise> getExercises(List<Muscle> muscles);
-    Map<Exercise,Set<Muscle>> findMuscleByExercise(List<Exercise> exercises);
+    Map<Long,Set<Muscle>> findMuscleByExercise(List<Long> exercises);
 }

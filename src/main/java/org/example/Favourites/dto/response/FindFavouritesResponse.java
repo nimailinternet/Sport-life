@@ -18,6 +18,7 @@ public class FindFavouritesResponse {
     @AllArgsConstructor
     @NoArgsConstructor
     public static class FavouriteObject {
+        private String id;
         private String name;
         private String video;
         private String description;

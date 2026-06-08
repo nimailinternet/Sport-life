@@ -8,5 +8,5 @@ import java.util.Optional;
 
 @Repository
 public interface MuscleRepository extends JpaRepository<Muscle,Long> {
-    List<Muscle> findByNameIn(List<String> names);
+    List<Muscle> findByIdIn(List<Long> names);
 }

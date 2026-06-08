@@ -13,21 +13,22 @@ import java.util.Map;
 @NoArgsConstructor
 public class FavouriteMapper {
 
-    public FindFavouritesResponse toDto(Page<Exercise> exercises, Map<Exercise,List<String>> agonistsMap, Map<Exercise,List<String>> itemsMap){
+    public FindFavouritesResponse toDto(Page<Exercise> exercises, Map<Long,List<String>> agonistsMap, Map<Long,List<String>> itemsMap){
         FindFavouritesResponse findFavouritesResponse=new FindFavouritesResponse();
         findFavouritesResponse.setSize(exercises.getSize());
         findFavouritesResponse.setPage(exercises.getNumber());
         findFavouritesResponse.setTotalPage(exercises.getTotalPages());
-        List<FindFavouritesResponse.FavouriteObject> favouritesObjects=exercises.stream().map(e->new FindFavouritesResponse.FavouriteObject(
+        List<FindFavouritesResponse.FavouriteObject> favouritesObjects=exercises.stream().map(e->{
+            return new FindFavouritesResponse.FavouriteObject(e.getId().toString(),
                 e.getName(),
                 e.getVideo(),
                 e.getDescription(),
                 e.getPhoto(),
-                agonistsMap.get(e),
-                itemsMap.get(e),
+                agonistsMap.get(e.getId()),
+                itemsMap.get(e.getId()),
                 e.getExperts(),
                 true
-        )).toList();
+        );}).toList();
         findFavouritesResponse.setExercises(favouritesObjects);
         return findFavouritesResponse;
     }

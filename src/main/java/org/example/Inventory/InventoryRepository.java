@@ -7,6 +7,6 @@ import java.util.List;
 import java.util.Optional;
 
 @Repository
-public interface InventoryRepository extends JpaRepository<Inventory,Long> { ;
-    List<Inventory> findByNameIn(List<String> names);
+public interface InventoryRepository extends JpaRepository<Inventory,Long> {
+    List<Inventory> findByIdIn(List<Long> ids);
 }

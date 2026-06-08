@@ -13,5 +13,5 @@ public interface FavouritesService {
     void createFavourites(Employee employee, Exercise exercise);
     void deleteFavourites(Employee employee,Exercise exercise);
     Page<Exercise> findExerciseByEmployees(Employee employee,int page,int size);
-    Map<Exercise, Boolean> getFavouritesByExercise(List<Exercise> exercises, Employee employee);
+    Map<Long, Boolean> getFavouritesByExerciseId(List<Long> exercises, Employee employee);
 }

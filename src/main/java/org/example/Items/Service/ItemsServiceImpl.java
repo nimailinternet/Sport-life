@@ -28,10 +28,9 @@ public class ItemsServiceImpl implements ItemsService {
     }
     @Override
     @Transactional(readOnly = true)
-    public Map<Exercise, Set<Inventory>> findInventoryByExercise(List<Exercise> exercises) {
-        List<Items> items=itemsRepository.findByExerciseIn(exercises);
-        return items.stream().collect(Collectors.groupingBy(
-                Items::getExercise,
+    public Map<Long, Set<Inventory>> findInventoryByExercise(List<Long> exercises) {
+        List<Items> items=itemsRepository.findByExerciseIdIn(exercises);
+        return items.stream().collect(Collectors.groupingBy(i->i.getExercise().getId(),
                 Collectors.mapping(Items::getInventory, Collectors.toSet())
         ));
     }

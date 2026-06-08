@@ -14,8 +14,8 @@ import java.util.Set;
 
 @Repository
 public interface AgonistsRepository extends JpaRepository<Agonists,Long> {
-    @Query("select a from Agonists a join fetch a.muscle join fetch a.exercise where a.exercise in :exercises")
-    List<Agonists> findByExerciseIn(@Param("exercises") List<Exercise> exercises);
     @Query("select  distinct a.exercise from Agonists a  where a.muscle in :muscles")
     Set<Exercise> findByMuscleIn(@Param("muscles") List<Muscle> muscles);
+    @Query("select a from Agonists a join fetch a.muscle join fetch a.exercise where a.exercise.id in :exercises ")
+    List<Agonists> findByExerciseIdIn(@Param("exercises") List<Long> exercises);
 }
