@@ -23,14 +23,14 @@ public class EmployeeServiceImpl implements EmployeeService {
     @Override
     public String getEmployeeExpert(Employee employee) {
         if(employee.getExperts()==null){
-            throw new ExpertsNotFoundException("пользователь не выбрал свой уровень","result");
+            throw new ExpertsNotFoundException("10","result");
         }
         return employee.getExperts();
     }
     @Override
     @Transactional(readOnly = true)
     public Employee findEmployeeByLogin(String login) {
-        return employeeRepository.findWithAvatarByLogin(login).orElseThrow(()->new UnauthorizedEmployeeException("пользователь не найден","login"));
+        return employeeRepository.findWithAvatarByLogin(login).orElseThrow(()->new UnauthorizedEmployeeException("11","login"));
     }
 
 
@@ -39,9 +39,9 @@ public class EmployeeServiceImpl implements EmployeeService {
     public Employee authEmployee(String login, String password) {
         Employee employee=employeeRepository
                 .findByLogin(login)
-                .orElseThrow(()->new UnauthorizedEmployeeException("такого пользователя нет","login"));
+                .orElseThrow(()->new UnauthorizedEmployeeException("12","login"));
         if(!passwordEncoder.matches(password,employee.getPassword())){
-            throw new UnauthorizedEmployeeException("не верный пароль","password");
+            throw new UnauthorizedEmployeeException("13","password");
         }
         return employee;
     }
@@ -50,7 +50,7 @@ public class EmployeeServiceImpl implements EmployeeService {
     public Employee createEmployee(String login, String password,Avatar avatar) {
         String password1=passwordEncoder.encode(password);
         if(employeeRepository.findByLogin(login).isPresent()){
-            throw new EmployeeFoundException("пользователь уже существует","login");
+            throw new EmployeeFoundException("14","login");
         }
         Employee employee=new Employee(login,avatar,password1,0L);
         employeeRepository.save(employee);
@@ -59,7 +59,7 @@ public class EmployeeServiceImpl implements EmployeeService {
     @Override
     @Transactional
     public void updateEmployeeExpert(String login, String experts) {
-        Employee employee=employeeRepository.findByLogin(login).orElseThrow(()->new UnauthorizedEmployeeException("пользователь не авторизован","experts"));
+        Employee employee=employeeRepository.findByLogin(login).orElseThrow(()->new UnauthorizedEmployeeException("15","experts"));
         employee.setExperts(experts);
     }
     @Override
@@ -68,10 +68,10 @@ public class EmployeeServiceImpl implements EmployeeService {
         if(login!=null){
             Employee employee1=employeeRepository.findByLogin(login).orElse(null);
             if(Objects.equals(employee1,employee)){
-                throw new EmployeeFoundException("это имя уже принадлежит вам","login");
+                throw new EmployeeFoundException("16","login");
             }
             if(employee1!=null) {
-                throw new EmployeeFoundException("пользователь с таким именем уже существует","login");
+                throw new EmployeeFoundException("17","login");
             }
             employee.setLogin(login);
         }

@@ -17,10 +17,10 @@ public class MuscleServiceImpl implements MuscleService {
 
     @Override
     @Transactional(readOnly = true)
-    public List<Muscle> findMusclesByNames(List<Long> names) {
+    public List<Muscle> findMusclesByIds(List<Long> names) {
         List<Muscle> muscles = muscleRepository.findByIdIn(names);
         if(muscles.isEmpty()){
-            throw new MuscleNotFoundException("такие мышцы не найдены","result");
+            throw new MuscleNotFoundException("","result");
         }
         return muscles;
     }

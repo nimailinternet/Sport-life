@@ -9,7 +9,7 @@ import lombok.NoArgsConstructor;
 @AllArgsConstructor
 @NoArgsConstructor
 public class FavouritesDetailsRequest {
-    @NotBlank(message = "")
+    @NotBlank()
     private  String name;
 
     public static class DeleteFavouritesRequest extends FavouritesDetailsRequest{

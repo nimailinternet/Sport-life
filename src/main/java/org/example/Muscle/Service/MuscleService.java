@@ -11,5 +11,5 @@ import java.util.Set;
 public interface MuscleService {
     Map<Long,List<String>> getMusclesIs(Map<Long,Set<Muscle>> muscles);
 
-    List<Muscle> findMusclesByNames(List<Long> names);
+    List<Muscle> findMusclesByIds(List<Long> names);
 }

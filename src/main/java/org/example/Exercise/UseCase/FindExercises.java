@@ -36,7 +36,7 @@ public class FindExercises {
     public FindExercisesResponse findExercises(FindExercisesRequest dto, EmployeePrincipal principal, int size, int page){
         List<Long> musclesId=dto.getMuscles().stream().map(Long::parseLong).toList();
         List<Long> itemsId =dto.getItems().stream().map(Long::parseLong).toList();
-        Set<Exercise> agonists = agonistsService.getExercises(muscleService.findMusclesByNames(musclesId));
+        Set<Exercise> agonists = agonistsService.getExercises(muscleService.findMusclesByIds(musclesId));
         Set<Exercise> items=itemsService.findExercisesByInventory(inventoryService.findInventoriesByIds(itemsId));
         Employee employee=employeeService.findEmployeeByLogin(principal.getLogin());
         String experts=employeeService.getEmployeeExpert(employee);

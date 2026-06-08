@@ -46,7 +46,7 @@ public class EmployeeController {
     }
     @GetMapping("/splash")
     public ResponseEntity<?> splash(){
-        return ResponseEntity.ok(new SplashResponse("welcome"));
+        return ResponseEntity.ok(new SplashResponse("29"));
     }
 
     @PatchMapping("/update")

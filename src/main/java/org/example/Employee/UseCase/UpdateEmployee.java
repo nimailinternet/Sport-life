@@ -23,18 +23,15 @@ public class UpdateEmployee {
         String message="";
         if(dto.getAvatar()!=null) {
             avatar = avatarService.findAvatarByName(dto.getAvatar());
-            message="avatar";
+            message="19";
         }
         if(dto.getLogin()!=null){
-            message="login";
-        }
-        if(dto.getAvatar()!=null&&dto.getLogin()==null){
-            message="login and avatar";
+            message="18";
         }
         Employee employee=employeeService.findEmployeeByLogin(principal.getLogin());
         employeeService.updateEmployee(dto.getLogin(),employee,avatar);
         String AccessToken = authClass.createToken(employee.getLogin());
         String RefreshToken=authClass.createRefresh(employee.getLogin());
-        return new UpdateEmployeeResponse("Update "+message+" complete", AccessToken, RefreshToken);
+        return new UpdateEmployeeResponse(message, AccessToken, RefreshToken);
     }
 }

@@ -21,7 +21,7 @@ public class AvatarServiceImpl implements AvatarService {
     @Transactional(readOnly = true)
     public Avatar findAvatarByName(String name) {
         return avatarRepository.findByName(name)
-                .orElseThrow(()->new AvatarNotFoundException("аватар не найден","name"));
+                .orElseThrow(()->new AvatarNotFoundException("","name"));
     }
 
     @Override

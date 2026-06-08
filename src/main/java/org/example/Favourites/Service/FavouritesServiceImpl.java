@@ -25,14 +25,14 @@ public class FavouritesServiceImpl implements FavouritesService {
     @Transactional
     public void createFavourites(Employee employee, Exercise exercise) {
         boolean presenceFavourites =favouritesRepository.existsByEmployeeAndExercise(employee,exercise);
-        if(presenceFavourites) throw new FavouritesFoundExceptions("","favourite");
+        if(presenceFavourites) throw new FavouritesFoundExceptions("24","favourite");
         Favourites favourite=new Favourites(exercise,employee);
         favouritesRepository.save(favourite);
     }
     @Override
     @Transactional
     public void deleteFavourites(Employee employee,Exercise exercise) {
-        Favourites favourite = favouritesRepository.findByEmployeeAndExercise(employee,exercise).orElseThrow(()->new FavouritesNotFoundException("Упражнение уже удаленно из списка избранного","favourite"));
+        Favourites favourite = favouritesRepository.findByEmployeeAndExercise(employee,exercise).orElseThrow(()->new FavouritesNotFoundException("25","favourite"));
         favouritesRepository.delete(favourite);
     }
     @Override
@@ -41,7 +41,7 @@ public class FavouritesServiceImpl implements FavouritesService {
         Pageable pageable=PageRequest.of(page,size);
         Page<Favourites> favourites = favouritesRepository.findByEmployee(employee,pageable);
         if (favourites.isEmpty()) {
-            throw new FavouritesNotFoundException("ничего не найдено","favourites");
+            throw new FavouritesNotFoundException("26","favourites");
         }
         return favourites.map(Favourites::getExercise);
     }
