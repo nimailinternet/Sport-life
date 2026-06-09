@@ -20,6 +20,7 @@ public class ExceptionController {
     public ResponseEntity<?> BusinessError(BusinessException e){
         Map<String,Object> response=new LinkedHashMap<>();
         response.put(e.getName(),e.getMessage());
+        System.out.println(response.toString());
         return ResponseEntity.status(e.getStatus()).body(new ErrorResponse(e.getStatus().toString(),response));
     }
     @ResponseStatus(HttpStatus.BAD_REQUEST)
@@ -43,6 +44,7 @@ public class ExceptionController {
     public ResponseEntity<?> ExceptionError(Exception e){
         Map<String,Object> response=new LinkedHashMap<>();
         response.put("500",e.getMessage());
+        System.out.println(response.toString());
         return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(new ErrorResponse("500",response));
     }
 }

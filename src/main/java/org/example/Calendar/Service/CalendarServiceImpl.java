@@ -30,7 +30,7 @@ public class CalendarServiceImpl implements CalendarService {
     public void createCalendar(Calendar calendar) {
         Calendar calendars=calendarRepository.findByEmployeeAndDate(calendar.getEmployee(),calendar.getDate()).orElse(null);
         if(calendars!=null){
-            throw new CalendarFoundException("37","Schedule");
+                throw new CalendarFoundException("37","Schedule");
         }
         calendarRepository.save(calendar);
     }
