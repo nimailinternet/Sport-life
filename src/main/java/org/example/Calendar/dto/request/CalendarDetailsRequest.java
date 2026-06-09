@@ -13,10 +13,10 @@ import java.time.LocalTime;
 @AllArgsConstructor
 @NoArgsConstructor
 public class CalendarDetailsRequest {
-    @NotBlank(message="")
+    @NotBlank()
     private String name;
     @JsonFormat(pattern="HH:mm")
-    @NotNull(message ="")
+    @NotNull()
     private LocalTime time;
 
     public static class CreateCalendarRequest extends CalendarDetailsRequest {

@@ -23,6 +23,6 @@ public class DeleteCalendar {
         Employee employee=employeeService.findEmployeeByLogin(principal.getLogin());
         Calendar calendar=calendarMapper.toEntity(dto,employee);
         calendarService.deleteCalendar(calendar);
-        return new CalendarDetailsResponse.DeleteCalendarResponse("Calendar delete");
+        return new CalendarDetailsResponse.DeleteCalendarResponse("40");
     }
 }
