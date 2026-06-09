@@ -1,7 +1,6 @@
 package org.example.Inventory.Service;
 
 import lombok.RequiredArgsConstructor;
-import org.example.Exercise.Exercise;
 import org.example.Inventory.Exceptions.InventoryNotFoundException;
 import org.example.Inventory.Inventory;
 import org.example.Inventory.InventoryRepository;
@@ -23,17 +22,19 @@ public class InventoryServiceImpl implements InventoryService {
 
     @Override
     @Transactional(readOnly = true)
-    public List<Inventory> findInventoriesByNames(List<String> names) {
-        List<Inventory> inventories=inventoryRepository.findByNameIn(names);
+    public List<Inventory> findInventoriesByIds(List<Long> ids) {
+        List<Inventory> inventories=inventoryRepository.findByIdIn(ids);
         if(inventories.isEmpty()){
-            throw new InventoryNotFoundException("такой инвентарь не найден","result");
+            throw new InventoryNotFoundException("","result");
         }
         return inventories;
     }
 
     @Override
-    public Map<Exercise, List<String>> getInventoriesNames( Map<Exercise, Set<Inventory>> inventories) {
-        return inventories.entrySet().stream().collect(Collectors.toMap(Map.Entry::getKey,m->m.getValue().stream().map(Inventory::getName).toList()));
+    public Map<Long, List<String>> getInventoriesIds(Map<Long, Set<Inventory>> inventories) {
+        return inventories.entrySet().stream().collect(Collectors.toMap(Map.Entry::getKey,m->m.getValue().stream().map(i->{
+            return i.getId().toString();
+        }).toList()));
     }
 
     @Override

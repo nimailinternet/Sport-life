@@ -24,6 +24,6 @@ public class CreateCalendar {
         Employee  employee=employeeService.findEmployeeByLogin(principal.getLogin());
         Calendar calendar=calendarMapper.toEntity(dto,employee);
         calendarService.createCalendar(calendar);
-        return new CalendarDetailsResponse.CreateCalendarResponse("Calendar created");
+        return new CalendarDetailsResponse.CreateCalendarResponse("39");
     }
 }

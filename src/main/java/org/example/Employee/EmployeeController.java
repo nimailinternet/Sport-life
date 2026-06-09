@@ -5,6 +5,7 @@ import lombok.RequiredArgsConstructor;
 import org.example.Employee.UseCase.*;
 import org.example.Employee.dto.request.*;
 import org.example.Employee.dto.response.SplashResponse;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.web.bind.annotation.*;
@@ -28,7 +29,7 @@ public class EmployeeController {
     }
     @PostMapping("/create")
     public ResponseEntity<?> createEmployee(@Valid  @RequestBody CreateEmployeeRequest dto){
-        return ResponseEntity.ok(createEmployee.createEmployee(dto));
+        return ResponseEntity.status(HttpStatus.CREATED).body(createEmployee.createEmployee(dto));
     }
     @PostMapping("/refresh")
     public ResponseEntity<?> refreshToken(@Valid @RequestBody RefreshEmployeeTokenRequest dto){
@@ -45,7 +46,7 @@ public class EmployeeController {
     }
     @GetMapping("/splash")
     public ResponseEntity<?> splash(){
-        return ResponseEntity.ok(new SplashResponse("message"));
+        return ResponseEntity.ok(new SplashResponse("29"));
     }
 
     @PatchMapping("/update")

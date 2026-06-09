@@ -23,6 +23,6 @@ public class DeleteFavourites {
         Employee  employee=employeeService.findEmployeeByLogin(principal.getLogin());
         Exercise exercise=exerciseService.findExercisesByName(dto.getName());
         favouritesService.deleteFavourites(employee,exercise);
-        return new FavouritesDetailsResponse.DeleteFavouritesResponse("Favorite deleted");
+        return new FavouritesDetailsResponse.DeleteFavouritesResponse("28");
     }
 }

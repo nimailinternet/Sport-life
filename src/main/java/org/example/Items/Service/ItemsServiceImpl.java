@@ -22,16 +22,15 @@ public class ItemsServiceImpl implements ItemsService {
     public Set<Exercise> findExercisesByInventory(List<Inventory> inventories) {
         List<Items> items=itemsRepository.findByInventoryIn(inventories);
         if(items.isEmpty()){
-            throw new ItemsNotFoundException("упражнений для такого инвентаря не найдено","result");
+            throw new ItemsNotFoundException("","result");
         }
         return items.stream().map(Items::getExercise).collect(Collectors.toSet());
     }
     @Override
     @Transactional(readOnly = true)
-    public Map<Exercise, Set<Inventory>> findInventoryByExercise(List<Exercise> exercises) {
-        List<Items> items=itemsRepository.findByExerciseIn(exercises);
-        return items.stream().collect(Collectors.groupingBy(
-                Items::getExercise,
+    public Map<Long, Set<Inventory>> findInventoryByExercise(List<Long> exercises) {
+        List<Items> items=itemsRepository.findByExerciseIdIn(exercises);
+        return items.stream().collect(Collectors.groupingBy(i->i.getExercise().getId(),
                 Collectors.mapping(Items::getInventory, Collectors.toSet())
         ));
     }

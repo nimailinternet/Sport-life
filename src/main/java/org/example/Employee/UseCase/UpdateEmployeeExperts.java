@@ -17,6 +17,6 @@ public class UpdateEmployeeExperts {
 
     public UpdateEmployeeExpertsResponse updateExperts(UpdateEmployeeExpertsRequest dto, EmployeePrincipal principal){
         employeeService.updateEmployeeExpert(principal.getLogin(),dto.getExperts());
-        return new UpdateEmployeeExpertsResponse("Update experts complete");
+        return new UpdateEmployeeExpertsResponse("21");
     }
 }

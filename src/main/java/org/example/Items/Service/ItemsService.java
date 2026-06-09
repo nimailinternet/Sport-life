@@ -11,5 +11,5 @@ import java.util.Set;
 @Service
 public interface ItemsService{
     Set<Exercise> findExercisesByInventory(List<Inventory> inventories);
-    Map<Exercise,Set<Inventory>> findInventoryByExercise(List<Exercise> exercises);
+    Map<Long,Set<Inventory>> findInventoryByExercise(List<Long> exercises);
 }

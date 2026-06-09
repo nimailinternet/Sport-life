@@ -20,14 +20,14 @@ public class ExerciseServiceImpl implements ExerciseService {
     @Override
     @Transactional(readOnly = true)
     public Exercise findExercisesByName(String name) {
-        return exerciseRepository.findByName(name).orElseThrow(()->new ExerciseNotFoundException("Упражнение не найдено","favourites"));
+        return exerciseRepository.findByName(name).orElseThrow(()->new ExerciseNotFoundException("22","favourites"));
     }
     @Override
     public Page<Exercise> filterExerciseByExperts(String experts, Set<Exercise> agonists, Set<Exercise> items, int page, int size) {
         Pageable pageable= PageRequest.of(page,size);
         Page<Exercise> exercises=exerciseRepository.findByFiltered(agonists,items,experts,pageable);
         if(exercises.isEmpty()){
-            throw new ExerciseNotFoundException("ничего не найдено,странно","result");
+            throw new ExerciseNotFoundException("23","result");
         }
         return exercises;
     }

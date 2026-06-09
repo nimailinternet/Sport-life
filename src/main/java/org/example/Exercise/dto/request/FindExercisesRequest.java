@@ -12,8 +12,8 @@ import java.util.List;
 @AllArgsConstructor
 @NoArgsConstructor
 public class FindExercisesRequest {
-    @NotEmpty(message = "выберете хотя бы одну мышцу")
-    private List<@NotBlank(message = "мышца не может быть пустой") String> muscles;
-    @NotEmpty(message = "выберет хотя бы один инвентарь")
-    private List<@NotBlank(message = "инвентарь не может быть пустым") String> items;
+    @NotEmpty()
+    private List<@NotBlank() String> muscles;
+    @NotEmpty()
+    private List<@NotBlank() String> items;
 }

@@ -23,6 +23,6 @@ public class CreateFavourites {
         Employee employee=employeeService.findEmployeeByLogin(principal.getLogin());
         Exercise exercise=exerciseService.findExercisesByName(dto.getName());
         favouritesService.createFavourites(employee,exercise);
-        return new FavouritesDetailsResponse.CreateFavouritesResponse("Favourite created");
+        return new FavouritesDetailsResponse.CreateFavouritesResponse("27");
     }
 }

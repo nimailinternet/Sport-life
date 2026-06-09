@@ -18,6 +18,7 @@ public class FindExercisesResponse {
     @AllArgsConstructor
     @NoArgsConstructor
     public static class ExerciseObject{
+        private String id;
         private String video;
         private String description;
         private String name;

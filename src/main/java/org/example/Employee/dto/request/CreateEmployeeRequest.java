@@ -11,10 +11,10 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor
 @AllArgsConstructor
 public class CreateEmployeeRequest {
-    @NotBlank(message = "не может быть пустым")
-    @Size(min = 3,message = "длинна login не может быт меньше 3 символов")
+    @NotBlank(message = "6")
+    @Size(min = 3,max=20,message = "8")
     private String login;
-    @NotBlank(message = "пароль не может быть пустым")
-    @Size(min = 8,max = 20,message = "пароль не должен быть короче 8 и длиннее 20 символов ")
+    @NotBlank(message = "7")
+    @Size(min = 8,max = 20,message = "9")
     private String password;
 }

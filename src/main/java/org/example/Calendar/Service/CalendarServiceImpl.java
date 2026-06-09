@@ -21,7 +21,7 @@ public class CalendarServiceImpl implements CalendarService {
     public List<Calendar> findCalendarsByEmployee(Employee employee) {
         List<Calendar> calendars=calendarRepository.findByEmployee(employee);
         if(calendars.isEmpty()){
-            throw new CalendarNotFoundException("","");
+            throw new CalendarNotFoundException("36","Schedule");
         }
         return calendars;
     }
@@ -30,14 +30,14 @@ public class CalendarServiceImpl implements CalendarService {
     public void createCalendar(Calendar calendar) {
         Calendar calendars=calendarRepository.findByEmployeeAndDate(calendar.getEmployee(),calendar.getDate()).orElse(null);
         if(calendars!=null){
-            throw new CalendarFoundException("","time");
+                throw new CalendarFoundException("37","Schedule");
         }
         calendarRepository.save(calendar);
     }
     @Override
     @Transactional
     public void deleteCalendar(Calendar calendar) {
-        Calendar calendars=calendarRepository.findByEmployeeAndDate(calendar.getEmployee(),calendar.getDate()).orElseThrow(()->new CalendarNotFoundException("","time"));
+        Calendar calendars=calendarRepository.findByEmployeeAndDate(calendar.getEmployee(),calendar.getDate()).orElseThrow(()->new CalendarNotFoundException("38","Schedule"));
         calendarRepository.delete(calendars);
     }
 }

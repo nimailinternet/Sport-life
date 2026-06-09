@@ -19,7 +19,7 @@ public class CalendarMapper {
     public Calendar toEntity(CalendarDetailsRequest dto, Employee employee){
         DayOfWeek day=DayOfWeek.valueOf(dto.getName());
         LocalDate data= LocalDate.now().with(day);
-        LocalDateTime date=LocalDateTime.of(data,dto.getTime());
+        LocalDateTime date=LocalDateTime.of(data,LocalTime.parse(dto.getTime()));
         return new Calendar(date,employee);
     }
     public FindCalendarsResponse toDto(List<Calendar> calendars){

@@ -15,7 +15,7 @@ public class UpdateEmployeeActivity {
 
     public UpdateEmployeeActivityResponse updateActivity(EmployeePrincipal principal){
         employeeService.updateEmployeeActivity(principal.getLogin());
-        return new UpdateEmployeeActivityResponse("Update activity complete");
+        return new UpdateEmployeeActivityResponse("20");
 
     }
 }

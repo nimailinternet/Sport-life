@@ -14,6 +14,6 @@ import java.util.List;
 public interface ItemsRepository extends JpaRepository<Items,Long> {
     @Query("select i from Items i join fetch i.exercise where i.inventory in :inventories")
     List<Items> findByInventoryIn(@Param("inventories") List<Inventory> inventories);
-    @Query("select i from Items i join fetch i.inventory where i.exercise in :exercises")
-    List<Items> findByExerciseIn(@Param("exercises") List<Exercise> exercises);
+    @Query("select i from Items i join fetch i.inventory where i.exercise.id in :exercises")
+    List<Items> findByExerciseIdIn(@Param("exercises") List<Long> exercises);
 }

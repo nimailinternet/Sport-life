@@ -9,7 +9,6 @@ import org.example.Exercise.Service.ExerciseService;
 import org.example.Exercise.dto.ExerciseMapper;
 import org.example.Exercise.dto.request.FindExercisesRequest;
 import org.example.Exercise.dto.response.FindExercisesResponse;
-import org.example.Favourites.Favourites;
 import org.example.Favourites.Service.FavouritesService;
 import org.example.Inventory.Service.InventoryService;
 import org.example.Items.Service.ItemsService;
@@ -35,15 +34,17 @@ public class FindExercises {
     private final ExerciseService exerciseService;
 
     public FindExercisesResponse findExercises(FindExercisesRequest dto, EmployeePrincipal principal, int size, int page){
-        Set<Exercise> agonists = agonistsService.getExercises(muscleService.findMusclesByNames(dto.getMuscles()));
-        Set<Exercise> items=itemsService.findExercisesByInventory(inventoryService.findInventoriesByNames(dto.getItems()));
+        List<Long> musclesId=dto.getMuscles().stream().map(Long::parseLong).toList();
+        List<Long> itemsId =dto.getItems().stream().map(Long::parseLong).toList();
+        Set<Exercise> agonists = agonistsService.getExercises(muscleService.findMusclesByIds(musclesId));
+        Set<Exercise> items=itemsService.findExercisesByInventory(inventoryService.findInventoriesByIds(itemsId));
         Employee employee=employeeService.findEmployeeByLogin(principal.getLogin());
         String experts=employeeService.getEmployeeExpert(employee);
         Page<Exercise> exercises=exerciseService.filterExerciseByExperts(experts,items,agonists,size,page);
-        List<Exercise> exercisesList=exercises.getContent();
-        Map<Exercise,List<String>> agonistsMap=muscleService.getMusclesNames(agonistsService.findMuscleByExercise(exercisesList));
-        Map<Exercise,List<String>> itemsMap=inventoryService.getInventoriesNames(itemsService.findInventoryByExercise(exercisesList));
-        Map<Exercise,Boolean> favoritesMap=favouritesService.getFavouritesByExercise(exercisesList,employee);
+        List<Long> exercisesList=exercises.getContent().stream().map(Exercise::getId).toList();
+        Map<Long,List<String>> agonistsMap=muscleService.getMusclesIs(agonistsService.findMuscleByExercise(exercisesList));
+        Map<Long,List<String>> itemsMap=inventoryService.getInventoriesIds(itemsService.findInventoryByExercise(exercisesList));
+        Map<Long,Boolean> favoritesMap=favouritesService.getFavouritesByExerciseId(exercisesList,employee);
         return exerciseMapper.toDto(exercises,agonistsMap,itemsMap,favoritesMap);
     }
 }
